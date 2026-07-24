@@ -626,7 +626,7 @@ function drawConfetti() {
 }
 
 // ═══════════════════════════════════════════════
-//  MOTIVATIONAL QUOTES
+//  MOTIVATIONAL QUOTES & PORTRAIT SWAP
 // ═══════════════════════════════════════════════
 const quotes = [
   'Success is the sum of small efforts repeated day in and day out.',
@@ -648,20 +648,107 @@ function newQuote() {
   let idx;
   do { idx = Math.floor(Math.random() * quotes.length); } while (idx === lastQuoteIdx);
   lastQuoteIdx = idx;
-  const el = document.getElementById('quoteText');
-  el.style.opacity   = '0';
-  el.style.transform = 'translateY(8px)';
-  setTimeout(() => {
-    el.textContent = quotes[idx];
-    el.style.transition = 'opacity 0.4s, transform 0.4s';
-    el.style.opacity   = '1';
-    el.style.transform = 'translateY(0)';
-  }, 200);
+
+  const quoteEl = document.getElementById('quoteText');
+  const avatarEl = document.getElementById('quoteAvatarImg');
+
+  if (quoteEl) {
+    quoteEl.style.opacity   = '0';
+    quoteEl.style.transform = 'translateY(6px)';
+    setTimeout(() => {
+      quoteEl.textContent = quotes[idx];
+      quoteEl.style.transition = 'opacity 0.35s, transform 0.35s';
+      quoteEl.style.opacity   = '1';
+      quoteEl.style.transform = 'translateY(0)';
+    }, 180);
+  }
+
+  if (avatarEl) {
+    const randomPhotoIdx = Math.floor(Math.random() * SHIVANSH_PHOTOS.length);
+    avatarEl.style.transform = 'scale(0.85)';
+    avatarEl.style.opacity   = '0.4';
+    setTimeout(() => {
+      avatarEl.src = SHIVANSH_PHOTOS[randomPhotoIdx];
+      avatarEl.style.transform = 'scale(1)';
+      avatarEl.style.opacity   = '1';
+    }, 180);
+  }
 }
+
+// ═══════════════════════════════════════════════
+//  GALAXY STARDUST PARTICLE ENGINE
+// ═══════════════════════════════════════════════
+const galaxyCanvas = document.getElementById('galaxyCanvas');
+const gCtx = galaxyCanvas ? galaxyCanvas.getContext('2d') : null;
+let galaxyStars = [];
+const starColors = ['#ffffff', '#f5c842', '#a855f7', '#06b6d4', '#e0f2fe'];
+
+function initGalaxyParticles() {
+  if (!galaxyCanvas || !gCtx) return;
+  
+  galaxyCanvas.width = window.innerWidth;
+  galaxyCanvas.height = window.innerHeight;
+  
+  galaxyStars = [];
+  const count = Math.min(85, Math.floor((window.innerWidth * window.innerHeight) / 14000));
+  
+  for (let i = 0; i < count; i++) {
+    galaxyStars.push({
+      x: Math.random() * galaxyCanvas.width,
+      y: Math.random() * galaxyCanvas.height,
+      r: Math.random() * 1.6 + 0.4,
+      color: starColors[Math.floor(Math.random() * starColors.length)],
+      angle: Math.random() * Math.PI * 2,
+      speed: (Math.random() * 0.035 + 0.015) * (Math.random() > 0.5 ? 1 : -1),
+      orbit: Math.random() * 100 + 40,
+      ox: Math.random() * galaxyCanvas.width,
+      oy: Math.random() * galaxyCanvas.height,
+      alpha: Math.random() * 0.6 + 0.25,
+      alphaDirection: Math.random() > 0.5 ? 0.004 : -0.004
+    });
+  }
+  
+  animateGalaxy();
+}
+
+function animateGalaxy() {
+  if (!galaxyCanvas || !gCtx) return;
+  
+  gCtx.clearRect(0, 0, galaxyCanvas.width, galaxyCanvas.height);
+  
+  galaxyStars.forEach(s => {
+    s.angle += s.speed * 0.03;
+    s.x = s.ox + Math.cos(s.angle) * s.orbit;
+    s.y = s.oy + Math.sin(s.angle) * s.orbit;
+    
+    s.alpha += s.alphaDirection;
+    if (s.alpha > 0.8 || s.alpha < 0.25) s.alphaDirection *= -1;
+    
+    gCtx.save();
+    gCtx.globalAlpha = s.alpha;
+    gCtx.beginPath();
+    gCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    gCtx.fillStyle = s.color;
+    gCtx.shadowBlur = s.r * 5;
+    gCtx.shadowColor = s.color;
+    gCtx.fill();
+    gCtx.restore();
+  });
+  
+  requestAnimationFrame(animateGalaxy);
+}
+
+// ── Init ──────────────────────────────────────────────────
+const origInitGallery = initGallery;
+initGallery = function() {
+  origInitGallery();
+  initGalaxyParticles();
+};
 
 // ═══════════════════════════════════════════════
 //  RESIZE
 // ═══════════════════════════════════════════════
 window.addEventListener('resize', () => {
   if (particles.length) { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  if (galaxyCanvas) { galaxyCanvas.width = window.innerWidth; galaxyCanvas.height = window.innerHeight; }
 });
