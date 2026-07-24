@@ -59,6 +59,15 @@ img{
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:rgba(245,200,66,.35);border-radius:4px}
 
+/* ── Global App Container ── */
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1; /* Stay above background galaxy */
+  background: transparent;
+}
+
 /* ── CLASSICAL BACKGROUND & PARTICLES ────────────────────── */
 .classical-bg{
   position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
@@ -755,8 +764,8 @@ img{
 /* ── Gallery Grid ── */
 .gallery-grid{
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:12px;
+  grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));
+  gap:16px;
   width:100%;
 }
 .gallery-item{
