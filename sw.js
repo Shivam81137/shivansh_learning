@@ -9,7 +9,7 @@ const ASSETS_TO_CACHE = [
   './style.css',
   './app.js',
   './manifest.json',
-  './photos/20260713_114519-IMG_STYLE.jpg'
+  './img/logo.jpg'
 ];
 
 self.addEventListener('install', (event) => {

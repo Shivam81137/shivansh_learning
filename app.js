@@ -18,8 +18,9 @@ const SUBJECTS = {
 const ALL_CHAPTER_IDS = Object.values(SUBJECTS).flatMap(s => s.chapters);
 const TOTAL_CHAPTERS = ALL_CHAPTER_IDS.length; // 22
 
-// ── All 22 Photos for Daily Rotation ─────────────────────
+// ── All Photos for Gallery & Daily Rotation ─────────────
 const SHIVANSH_PHOTOS = [
+  "photos/logo.jpg",
   "photos/20260713_114519-IMG_STYLE.jpg",
   "photos/20260713_114401-IMG_STYLE.jpg",
   "photos/20260713_123415-IMG_STYLE.jpg",
