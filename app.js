@@ -123,7 +123,6 @@ function dismissPwaPopup() {
 
 // ── Init ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  updateDailyAvatar();
   loadNotes();
   renderDoneState();
   updateAllProgress();
