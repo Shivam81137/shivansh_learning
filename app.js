@@ -491,11 +491,13 @@ function renderGalleryGrid() {
 
   grid.innerHTML = displayPhotos.map((src, displayIdx) => {
     const originalIdx = galleryPhotos.indexOf(src);
-    const isFeatured = displayIdx === 0 ? 'featured' : '';
     return `
-      <div class="gallery-item ${isFeatured}" onclick="openGallery(${originalIdx})">
+      <div class="gallery-item" onclick="openGallery(${originalIdx})">
         <img src="${src}" alt="Shivansh photo ${originalIdx+1}" loading="lazy"/>
-        <span class="gallery-zoom-icon">🔍</span>
+        <div class="gallery-overlay">
+          <span class="gallery-num">#${originalIdx+1}</span>
+          <span class="gallery-zoom-icon">🔍</span>
+        </div>
       </div>
     `;
   }).join('');
