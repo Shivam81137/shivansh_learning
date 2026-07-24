@@ -132,7 +132,6 @@ function dismissPwaPopup() {
 
 // ── Init ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  loadNotes();
   renderDoneState();
   updateAllProgress();
   if (typeof renderProgressChart === 'function') {
@@ -525,20 +524,6 @@ renderDoneState = function() {
   renderResumeBadges();
 };
 
-// ═══════════════════════════════════════════════
-//  NOTES
-// ═══════════════════════════════════════════════
-function saveNotes(id) {
-  const ta = document.getElementById(`notes-${id}`);
-  if (ta) localStorage.setItem(`shivansh_notes_${id}`, ta.value);
-}
-
-function loadNotes() {
-  ALL_CHAPTER_IDS.forEach(id => {
-    const ta = document.getElementById(`notes-${id}`);
-    if (ta) ta.value = localStorage.getItem(`shivansh_notes_${id}`) || '';
-  });
-}
 
 // ═══════════════════════════════════════════════
 //  SCROLL
