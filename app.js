@@ -236,20 +236,95 @@ function filterSubject(filter) {
 }
 
 // ═══════════════════════════════════════════════
-//  VIDEO PLAYER
+//  VIDEO PLAYER & LECTURE TIME TRACKING (RESUME FEATURE)
 // ═══════════════════════════════════════════════
+let ytPlayers = {};
+let trackingIntervals = {};
+
+function formatTime(seconds) {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.floor(seconds % 60);
+  if (h > 0) {
+    return `${h}:${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+  }
+  return `${m}:${s < 10 ? '0' : ''}${s}`;
+}
+
+function renderResumeBadges() {
+  // Check all videos for saved timestamps
+  const allVideoKeys = [
+    'm4-1','m5-1','m6-1','m7-1','m8-1','m9-1','m10-1',
+    'e7-1','e8-1','e9-1','e10-1','e11-1','e12-1','e13-1','e22-1','e25-1','e27-1','e28-1',
+    'c2-1','c3-1','p2-1','p3-1','b3-1','b4-1','b4-2',
+    'h2-1','h3-1','h4-1','h5-1','g3-1','g4-1','g5-1','cp3-1','cp5-1'
+  ];
+
+  allVideoKeys.forEach(key => {
+    const savedTime = parseInt(localStorage.getItem(`shivansh_time_${key}`) || '0');
+    updateResumeBadge(key, savedTime);
+  });
+}
+
+function updateResumeBadge(videoKey, savedTime) {
+  const thumb = document.getElementById(`thumb-${videoKey}`);
+  if (!thumb) return;
+
+  let badge = thumb.querySelector('.resume-badge');
+  if (savedTime > 10) {
+    if (!badge) {
+      badge = document.createElement('div');
+      badge.className = 'resume-badge';
+      thumb.appendChild(badge);
+    }
+    badge.innerHTML = `⏱️ Resume at ${formatTime(savedTime)}`;
+  } else if (badge) {
+    badge.remove();
+  }
+}
+
 function loadVideo(videoKey, videoId) {
   const thumb     = document.getElementById(`thumb-${videoKey}`);
   const container = document.getElementById(`iframe-${videoKey}`);
   const iframe    = document.getElementById(`yt-${videoKey}`);
   if (!thumb || !container || !iframe) return;
 
-  iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+  const savedTime = parseInt(localStorage.getItem(`shivansh_time_${videoKey}`) || '0');
+  const startParam = savedTime > 5 ? `&start=${savedTime}` : '';
+
+  iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1${startParam}`;
   thumb.style.display     = 'none';
   container.style.display = 'block';
+
+  if (savedTime > 5) {
+    showToast(`▶ Resuming lecture at ${formatTime(savedTime)}`);
+  }
+
+  // Start tracking playback time with YouTube iframe postMessage API
+  startTrackingVideo(videoKey, iframe);
+}
+
+function startTrackingVideo(videoKey, iframe) {
+  stopTrackingVideo(videoKey);
+
+  // Poll video timestamp using YouTube postMessage API
+  trackingIntervals[videoKey] = setInterval(() => {
+    try {
+      iframe.contentWindow.postMessage('{"event":"listening","id":1}', '*');
+      iframe.contentWindow.postMessage('{"event":"command","func":"getCurrentTime","args":""}', '*');
+    } catch(e){}
+  }, 2500);
+}
+
+function stopTrackingVideo(videoKey) {
+  if (trackingIntervals[videoKey]) {
+    clearInterval(trackingIntervals[videoKey]);
+    delete trackingIntervals[videoKey];
+  }
 }
 
 function closeVideo(videoKey) {
+  stopTrackingVideo(videoKey);
   const thumb     = document.getElementById(`thumb-${videoKey}`);
   const container = document.getElementById(`iframe-${videoKey}`);
   const iframe    = document.getElementById(`yt-${videoKey}`);
@@ -258,7 +333,43 @@ function closeVideo(videoKey) {
   iframe.src              = '';
   container.style.display = 'none';
   thumb.style.display     = 'block';
+
+  const savedTime = parseInt(localStorage.getItem(`shivansh_time_${videoKey}`) || '0');
+  if (savedTime > 10) {
+    showToast(`💾 Saved playback progress: ${formatTime(savedTime)}`);
+  }
 }
+
+function resetVideoTime(videoKey, event) {
+  if (event) event.stopPropagation();
+  localStorage.removeItem(`shivansh_time_${videoKey}`);
+  updateResumeBadge(videoKey, 0);
+  showToast(`🔄 Reset video timestamp`);
+}
+
+// Listen for YouTube postMessage response for timestamp updates
+window.addEventListener('message', (event) => {
+  try {
+    const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+    if (data && data.event === 'infoDelivery' && data.info && typeof data.info.currentTime === 'number') {
+      const curTime = Math.floor(data.info.currentTime);
+      if (curTime > 5) {
+        // Update all active tracking keys
+        Object.keys(trackingIntervals).forEach(key => {
+          localStorage.setItem(`shivansh_time_${key}`, curTime);
+          updateResumeBadge(key, curTime);
+        });
+      }
+    }
+  } catch(e){}
+});
+
+// Update renderDoneState to also call renderResumeBadges
+const origRenderDoneState = renderDoneState;
+renderDoneState = function() {
+  origRenderDoneState();
+  renderResumeBadges();
+};
 
 // ═══════════════════════════════════════════════
 //  NOTES
@@ -283,10 +394,66 @@ function scrollToContent() {
 }
 
 // ═══════════════════════════════════════════════
-//  GALLERY / LIGHTBOX
+//  GALLERY / LIGHTBOX / REEL (ALL 22 PHOTOS)
 // ═══════════════════════════════════════════════
 const galleryPhotos = SHIVANSH_PHOTOS;
 let currentLbIdx = 0;
+let currentGalleryFilter = 'all';
+
+function initGallery() {
+  renderPhotoReel();
+  renderGalleryGrid();
+}
+
+function renderPhotoReel() {
+  const reel = document.getElementById('photoReel');
+  if (!reel) return;
+
+  reel.innerHTML = galleryPhotos.map((src, i) => `
+    <div class="reel-item" onclick="openGallery(${i})">
+      <img src="${src}" alt="Shivansh moment ${i+1}" loading="lazy"/>
+      <div class="reel-overlay">
+        <span class="reel-num">#${i+1}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderGalleryGrid() {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+
+  let displayPhotos = [...galleryPhotos];
+
+  if (currentGalleryFilter === 'featured') {
+    // Pick 6 prominent photos
+    displayPhotos = [0, 1, 3, 4, 8, 14].map(idx => galleryPhotos[idx]);
+  } else if (currentGalleryFilter === 'random') {
+    // Shuffle copy
+    displayPhotos = [...galleryPhotos].sort(() => 0.5 - Math.random());
+  }
+
+  grid.innerHTML = displayPhotos.map((src, displayIdx) => {
+    const originalIdx = galleryPhotos.indexOf(src);
+    const isFeatured = displayIdx === 0 ? 'featured' : '';
+    return `
+      <div class="gallery-item ${isFeatured}" onclick="openGallery(${originalIdx})">
+        <img src="${src}" alt="Shivansh photo ${originalIdx+1}" loading="lazy"/>
+        <span class="gallery-zoom-icon">🔍</span>
+      </div>
+    `;
+  }).join('');
+
+  const countBadge = document.getElementById('photoCountBadge');
+  if (countBadge) countBadge.textContent = displayPhotos.length;
+}
+
+function filterGallery(filter) {
+  currentGalleryFilter = filter;
+  document.querySelectorAll('.gfilter-btn').forEach(btn => btn.classList.remove('active'));
+  event.target?.classList.add('active');
+  renderGalleryGrid();
+}
 
 function openGallery(idx) {
   currentLbIdx = idx;

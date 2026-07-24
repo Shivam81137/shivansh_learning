@@ -252,18 +252,35 @@ body{
 .subjects-list{display:flex;flex-direction:column;gap:16px}
 
 /* ============================================================
-   SUBJECT CARD — cinematic banner
+   SUBJECT CARD — cinematic banner with glowing borders
    ============================================================ */
 .subject-card{
   border-radius:var(--r);overflow:hidden;
   box-shadow:var(--shadow);
-  animation:fadeUp .5s var(--ease) both
+  animation:fadeUp .5s var(--ease) both;
+  border:1px solid rgba(255,255,255,0.1);
+  transition:all var(--t);
+  position:relative;
+}
+.subject-card:hover{
+  box-shadow:0 12px 40px rgba(0,0,0,0.7);
+  transform:translateY(-2px);
 }
 .subject-card:nth-child(1){animation-delay:.05s}
 .subject-card:nth-child(2){animation-delay:.12s}
 .subject-card:nth-child(3){animation-delay:.19s}
 .subject-card:nth-child(4){animation-delay:.26s}
 .subject-card.hidden{display:none}
+
+/* Glowing borders per subject card */
+.subject-card[data-subject="maths"]{border:1px solid rgba(245,200,66,0.35);box-shadow:0 6px 24px rgba(245,200,66,0.12)}
+.subject-card[data-subject="eng"]  {border:1px solid rgba(192,132,252,0.35);box-shadow:0 6px 24px rgba(192,132,252,0.12)}
+.subject-card[data-subject="chem"] {border:1px solid rgba(34,211,238,0.35);box-shadow:0 6px 24px rgba(34,211,238,0.12)}
+.subject-card[data-subject="phys"] {border:1px solid rgba(129,140,248,0.35);box-shadow:0 6px 24px rgba(129,140,248,0.12)}
+.subject-card[data-subject="bio"]  {border:1px solid rgba(52,211,153,0.35);box-shadow:0 6px 24px rgba(52,211,153,0.12)}
+.subject-card[data-subject="hist"] {border:1px solid rgba(251,146,60,0.35);box-shadow:0 6px 24px rgba(251,146,60,0.12)}
+.subject-card[data-subject="geo"]  {border:1px solid rgba(45,212,191,0.35);box-shadow:0 6px 24px rgba(45,212,191,0.12)}
+.subject-card[data-subject="comp"] {border:1px solid rgba(56,189,248,0.35);box-shadow:0 6px 24px rgba(56,189,248,0.12)}
 
 /* Banner (the clickable big card) */
 .subject-banner{
@@ -313,7 +330,7 @@ body{
 .sb-badge{
   font-size:12px;font-weight:800;
   padding:5px 12px;border-radius:50px;
-  background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.15);
+  background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.2);
   color:white;backdrop-filter:blur(8px);letter-spacing:.3px
 }
 .sb-bottom{}
@@ -322,7 +339,7 @@ body{
   color:#fff;line-height:1;letter-spacing:-.5px;
   text-shadow:0 2px 16px rgba(0,0,0,.6);margin-bottom:4px
 }
-.sb-meta{font-size:11.5px;color:rgba(255,255,255,.65);margin-bottom:10px;font-weight:500}
+.sb-meta{font-size:11.5px;color:rgba(255,255,255,.75);margin-bottom:10px;font-weight:500}
 .sb-prog-bar{height:4px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}
 .sb-prog-fill{height:100%;border-radius:4px;transition:width .8s var(--ease)}
 .maths-fill{background:linear-gradient(90deg,#f5c842,#f59e0b);box-shadow:0 0 10px rgba(245,200,66,.5)}
@@ -338,7 +355,7 @@ body{
 .sb-chevron{
   position:absolute;right:16px;top:50%;transform:translateY(-50%);
   width:36px;height:36px;border-radius:50%;
-  background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.15);
+  background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.2);
   display:flex;align-items:center;justify-content:center;
   backdrop-filter:blur(8px);z-index:3;
   transition:transform .35s var(--ease),background var(--t-f);
@@ -346,44 +363,26 @@ body{
 }
 .sb-chevron svg{width:18px;height:18px;transition:transform .35s var(--ease)}
 .sb-chevron.open svg{transform:rotate(180deg)}
-.subject-banner:hover .sb-chevron{background:rgba(255,255,255,.18)}
+.subject-banner:hover .sb-chevron{background:rgba(255,255,255,.2)}
 
 /* ── Subject body (chapter list) ── */
 .subject-body{
   max-height:0;overflow:hidden;
   transition:max-height .55s cubic-bezier(.4,0,.2,1);
-  background:rgba(255,255,255,.025);
+  background:rgba(255,255,255,.02);
   border-top:0px solid transparent
 }
 .subject-body.open{
   max-height:6000px;
   border-top:1px solid var(--border)
 }
-.subject-body .chapters-list{padding:10px 10px 12px;display:flex;flex-direction:column;gap:8px}
+.subject-body .chapters-list{padding:10px 10px 12px;display:flex;flex-direction:column;gap:10px}
 
 /* ============================================================
-   CHAPTER CARDS (inside subject)
+   CHAPTER CARDS (glowing boundaries)
    ============================================================ */
 .chapter-card{
   background:rgba(255,255,255,.03);
-  border:1px solid var(--border);
-  border-radius:var(--r-sm);
-  overflow:hidden;
-  transition:transform var(--t-f),box-shadow var(--t-f),border-color var(--t-f);
-  animation:slideDown .35s var(--ease) both
-}
-.chapter-card:hover{transform:translateX(4px);border-color:var(--border2)}
-
-/* Subject accent colours on left border */
-.chapter-card[data-subj="maths"]{border-left:3px solid rgba(245,200,66,.5)}
-.chapter-card[data-subj="eng"]  {border-left:3px solid rgba(192,132,252,.5)}
-.chapter-card[data-subj="chem"] {border-left:3px solid rgba(34,211,238,.5)}
-.chapter-card[data-subj="phys"] {border-left:3px solid rgba(129,140,248,.5)}
-.chapter-card[data-subj="bio"]  {border-left:3px solid rgba(52,211,153,.5)}
-.chapter-card[data-subj="hist"] {border-left:3px solid rgba(251,146,60,.5)}
-.chapter-card[data-subj="geo"]  {border-left:3px solid rgba(45,212,191,.5)}
-.chapter-card[data-subj="comp"] {border-left:3px solid rgba(56,189,248,.5)}
-
 .chapter-card.done-card{background:rgba(16,185,129,.05);border-color:rgba(16,185,129,.25)!important}
 .chapter-card.done-card .card-header{opacity:.72}
 
@@ -448,6 +447,20 @@ body{
 .video-thumb{position:relative;border-radius:var(--r-xs);overflow:hidden;cursor:pointer;aspect-ratio:16/9;background:#000}
 .video-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .45s var(--ease),filter .45s;filter:brightness(.75) saturate(1.1)}
 .video-thumb:hover img{transform:scale(1.05);filter:brightness(.55)}
+
+/* Resume Playback Time Badge */
+.resume-badge{
+  position:absolute;top:8px;right:8px;
+  background:rgba(9,15,30,0.88);
+  border:1px solid rgba(245,200,66,0.45);
+  color:var(--gold);
+  font-size:10px;font-weight:700;letter-spacing:0.3px;
+  padding:3px 9px;border-radius:50px;
+  backdrop-filter:blur(8px);
+  box-shadow:0 4px 14px rgba(0,0,0,0.6);
+  z-index:4;
+  animation:fadeUp 0.3s var(--ease);
+}
 .play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2);transition:background .3s}
 .video-thumb:hover .play-overlay{background:rgba(0,0,0,.38)}
 .play-btn{
