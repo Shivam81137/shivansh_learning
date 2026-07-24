@@ -274,6 +274,44 @@ img{
 }
 
 /* ============================================================
+   PROGRESS ANALYTICS DASHBOARD
+   ============================================================ */
+.analytics-section{
+  padding:16px;
+  position:relative;
+  z-index:1;
+  animation:fadeUp .6s var(--ease) .4s both;
+}
+.analytics-card{
+  background:var(--glass2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px;
+  backdrop-filter:blur(12px);
+  box-shadow:var(--shadow);
+}
+.analytics-header{
+  margin-bottom:16px;
+}
+.analytics-title-wrap{
+  display:flex;align-items:center;gap:8px;margin-bottom:4px;
+}
+.analytics-title-wrap h2{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:16px;font-weight:700;color:var(--text);
+  margin:0;letter-spacing:-0.2px;
+}
+.analytics-subtitle{
+  font-size:11px;color:var(--text3);
+  font-weight:500;
+}
+.chart-container{
+  position:relative;
+  height:180px;
+  width:100%;
+}
+
+/* ============================================================
    STICKY NAV
    ============================================================ */
 .subject-nav{

@@ -64,6 +64,15 @@ function updateDailyAvatar() {
 
 // ── Persistent state ──────────────────────────────────────
 let doneSet = new Set(JSON.parse(localStorage.getItem('shivansh_done_v2') || '[]'));
+let doneDates = JSON.parse(localStorage.getItem('shivansh_done_dates') || '{}');
+
+// Migrate legacy doneSet data to doneDates if missing
+if (doneSet.size > 0 && Object.keys(doneDates).length === 0) {
+  const todayISO = new Date().toISOString();
+  doneSet.forEach(id => doneDates[id] = todayISO);
+  localStorage.setItem('shivansh_done_dates', JSON.stringify(doneDates));
+}
+
 let openSubjects = new Set();
 let openCard = null; // only one chapter open at a time
 
@@ -126,6 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
   loadNotes();
   renderDoneState();
   updateAllProgress();
+  if (typeof renderProgressChart === 'function') {
+    // Slight delay to ensure canvas is painted and Chart.js loaded
+    setTimeout(() => renderProgressChart(), 50);
+  }
   checkAndShowPwaPopup();
 });
 
@@ -205,11 +218,13 @@ function toggleDone(id, event) {
 
   if (doneSet.has(id)) {
     doneSet.delete(id);
+    delete doneDates[id];
     btn.classList.remove('done');
     btn.textContent = '○';
     card?.classList.remove('done-card');
   } else {
     doneSet.add(id);
+    doneDates[id] = new Date().toISOString();
     btn.classList.add('done');
     btn.textContent = '✓';
     card?.classList.add('done-card');
@@ -218,7 +233,9 @@ function toggleDone(id, event) {
   }
 
   localStorage.setItem('shivansh_done_v2', JSON.stringify([...doneSet]));
+  localStorage.setItem('shivansh_done_dates', JSON.stringify(doneDates));
   updateAllProgress();
+  if (typeof renderProgressChart === 'function') renderProgressChart();
 }
 
 function renderDoneState() {
@@ -268,6 +285,88 @@ function animateCount(el, from, to) {
     el.textContent = cur;
     if (cur === to) clearInterval(timer);
   }, 60);
+}
+
+// ═══════════════════════════════════════════════
+//  ANALYTICS CHART
+// ═══════════════════════════════════════════════
+let progressChartInstance = null;
+
+function renderProgressChart() {
+  const ctx = document.getElementById('progressChart')?.getContext('2d');
+  if (!ctx) return;
+
+  // Calculate last 7 days labels and counts
+  const labels = [];
+  const data = [0, 0, 0, 0, 0, 0, 0];
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
+
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    labels.push(d.toLocaleDateString('en-US', { weekday: 'short' }));
+  }
+
+  // Tally up dates
+  Object.values(doneDates).forEach(isoDate => {
+    const d = new Date(isoDate);
+    const diffTime = today - d;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays >= 0 && diffDays <= 6) {
+      // Index 6 is today, 5 is yesterday, etc.
+      const index = 6 - diffDays;
+      data[index]++;
+    }
+  });
+
+  if (progressChartInstance) {
+    progressChartInstance.data.datasets[0].data = data;
+    progressChartInstance.update();
+  } else {
+    // We need to wait for Chart.js to load, so if it's not available yet, just return
+    if (typeof Chart === 'undefined') return;
+
+    progressChartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Chapters Completed',
+          data: data,
+          backgroundColor: 'rgba(245, 200, 66, 0.85)',
+          borderRadius: 6,
+          barPercentage: 0.6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(4, 7, 17, 0.9)',
+            titleColor: '#f5c842',
+            bodyColor: '#fff',
+            cornerRadius: 8,
+            padding: 10
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: 'rgba(255,255,255,0.5)', stepSize: 1 },
+            grid: { color: 'rgba(255,255,255,0.05)', drawBorder: false }
+          },
+          x: {
+            ticks: { color: 'rgba(255,255,255,0.7)' },
+            grid: { display: false, drawBorder: false }
+          }
+        }
+      }
+    });
+  }
 }
 
 // ═══════════════════════════════════════════════
