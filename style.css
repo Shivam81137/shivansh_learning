@@ -609,27 +609,27 @@ img{
   box-shadow:0 0 16px rgba(245,200,66,0.2);
 }
 
-/* ── Gallery Grid ── */
+/* ── Gallery Grid (Vertical Portrait Cards with Picture Framing) ── */
 .gallery-grid{
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:10px;
+  grid-template-columns:repeat(2, 1fr);
+  gap:12px;
   width:100%;
 }
 .gallery-item{
   width:100%;
-  aspect-ratio:1 / 1;
-  border-radius:16px;
+  aspect-ratio:3 / 4;
+  border-radius:18px;
   overflow:hidden;
   cursor:pointer;
   position:relative;
-  border:1px solid rgba(255,255,255,0.1);
-  background:rgba(15,23,42,0.8);
-  box-shadow:0 4px 18px rgba(0,0,0,0.4);
-  transition:transform 0.35s var(--ease), border-color 0.35s, box-shadow 0.35s;
+  padding:5px;
+  background:linear-gradient(145deg, rgba(30,41,59,0.9) 0%, rgba(15,23,42,0.95) 100%);
+  border:1.5px solid rgba(245,200,66,0.4);
+  box-shadow:0 8px 24px rgba(0,0,0,0.6), inset 0 0 10px rgba(0,0,0,0.7), 0 0 14px rgba(245,200,66,0.12);
+  transition:transform 0.35s var(--spring), border-color 0.35s, box-shadow 0.35s;
 }
 .gallery-item:hover{
-  transform:translateY(-4px) scale(1.02);
   border-color:rgba(245,200,66,0.6);
   box-shadow:0 10px 30px rgba(0,0,0,0.7), 0 0 20px rgba(245,200,66,0.2);
 }
