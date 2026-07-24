@@ -1,0 +1,442 @@
+/* ============================================================
+   SHIVANSH'S STUDY HUB — app.js  v4.0
+   7 Subjects: Maths, Chem, Phys, Bio, History, Geo, Computer
+   ============================================================ */
+
+// ── Subject & chapter definitions ─────────────────────────
+const SUBJECTS = {
+  maths: { name: 'Mathematics', total: 7,  badge: 'maths-badge', prog: 'prog-maths', chevron: 'schev-maths', body: 'sbody-maths', chapters: ['m4','m5','m6','m7','m8','m9','m10'] },
+  eng:   { name: 'English',     total: 11, badge: 'eng-badge',   prog: 'prog-eng',   chevron: 'schev-eng',   body: 'sbody-eng',   chapters: ['e7','e8','e9','e10','e11','e12','e13','e22','e25','e27','e28'] },
+  chem:  { name: 'Chemistry',   total: 2,  badge: 'chem-badge',  prog: 'prog-chem',  chevron: 'schev-chem',  body: 'sbody-chem',  chapters: ['c2','c3'] },
+  phys:  { name: 'Physics',     total: 2,  badge: 'phys-badge',  prog: 'prog-phys',  chevron: 'schev-phys',  body: 'sbody-phys',  chapters: ['p2','p3'] },
+  bio:   { name: 'Biology',     total: 2,  badge: 'bio-badge',   prog: 'prog-bio',   chevron: 'schev-bio',   body: 'sbody-bio',   chapters: ['b3','b4'] },
+  hist:  { name: 'History',     total: 4,  badge: 'hist-badge',  prog: 'prog-hist',  chevron: 'schev-hist',  body: 'sbody-hist',  chapters: ['h2','h3','h4','h5'] },
+  geo:   { name: 'Geography',   total: 3,  badge: 'geo-badge',   prog: 'prog-geo',   chevron: 'schev-geo',   body: 'sbody-geo',   chapters: ['g3','g4','g5'] },
+  comp:  { name: 'Computer',    total: 2,  badge: 'comp-badge',  prog: 'prog-comp',  chevron: 'schev-comp',  body: 'sbody-comp',  chapters: ['cp3','cp5'] },
+};
+
+const ALL_CHAPTER_IDS = Object.values(SUBJECTS).flatMap(s => s.chapters);
+const TOTAL_CHAPTERS = ALL_CHAPTER_IDS.length; // 22
+
+// ── All 22 Photos for Daily Rotation ─────────────────────
+const SHIVANSH_PHOTOS = [
+  "photos/20260713_114519-IMG_STYLE.jpg",
+  "photos/20260713_114401-IMG_STYLE.jpg",
+  "photos/20260713_123415-IMG_STYLE.jpg",
+  "photos/20260716_091301-IMG_STYLE.jpg",
+  "photos/20260716_091503-IMG_STYLE.jpg",
+  "photos/IMG_20250714_102124171.jpg",
+  "photos/IMG_20250714_102135846.jpg",
+  "photos/IMG_20251020_192850687.jpg",
+  "photos/IMG_20251021_172955162_HDR.jpg",
+  "photos/IMG_20251025_203727.jpg",
+  "photos/IMG_20251227_172100368.jpg",
+  "photos/IMG_20260226_185802323.jpg",
+  "photos/IMG_20260408_202742608_MP.jpg",
+  "photos/IMG_20260528_114814926_HDR.jpg",
+  "photos/IMG_20260528_184846544.jpg",
+  "photos/IMG_20260627_102617982_MP.jpg",
+  "photos/IMG_20260627_110112829_MP.jpg",
+  "photos/IMG_20260627_111941224_MP.jpg",
+  "photos/IMG_20260627_112428956_MP.jpg",
+  "photos/IMG_20260627_113101743_MP.jpg",
+  "photos/IMG_20260627_123805992.jpg",
+  "photos/IMG_20260702_212248212_MP.jpg"
+];
+
+function getDailyPhotoIndex() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const diff = now - start;
+  const oneDay = 1000 * 60 * 60 * 24;
+  const dayOfYear = Math.floor(diff / oneDay);
+  return dayOfYear % SHIVANSH_PHOTOS.length;
+}
+
+function updateDailyAvatar() {
+  const avatar = document.getElementById('heroAvatar');
+  if (avatar) {
+    const dailyIdx = getDailyPhotoIndex();
+    avatar.src = SHIVANSH_PHOTOS[dailyIdx];
+  }
+}
+
+// ── Persistent state ──────────────────────────────────────
+let doneSet = new Set(JSON.parse(localStorage.getItem('shivansh_done_v2') || '[]'));
+let openSubjects = new Set();
+let openCard = null; // only one chapter open at a time
+
+// ── Init ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  updateDailyAvatar();
+  loadNotes();
+  renderDoneState();
+  updateAllProgress();
+});
+
+// ═══════════════════════════════════════════════
+//  SUBJECT TOGGLE (accordion — one at a time)
+// ═══════════════════════════════════════════════
+function toggleSubject(subjId) {
+  const body  = document.getElementById(`sbody-${subjId}`);
+  const chev  = document.getElementById(`schev-${subjId}`);
+  if (!body) return;
+
+  const isOpen = openSubjects.has(subjId);
+
+  // Close all other subjects
+  openSubjects.forEach(id => {
+    if (id !== subjId) {
+      document.getElementById(`sbody-${id}`)?.classList.remove('open');
+      document.getElementById(`schev-${id}`)?.classList.remove('open');
+    }
+  });
+  openSubjects.clear();
+
+  // Also close any open chapter card
+  if (openCard) {
+    document.getElementById(`body-${openCard}`)?.classList.remove('open');
+    document.getElementById(`chev-${openCard}`)?.classList.remove('open');
+    openCard = null;
+  }
+
+  if (!isOpen) {
+    body.classList.add('open');
+    chev?.classList.add('open');
+    openSubjects.add(subjId);
+    setTimeout(() => body.parentElement.scrollIntoView({ behavior:'smooth', block:'start' }), 80);
+  } else {
+    body.classList.remove('open');
+    chev?.classList.remove('open');
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  CHAPTER TOGGLE
+// ═══════════════════════════════════════════════
+function toggleCard(id) {
+  const body = document.getElementById(`body-${id}`);
+  const chev = document.getElementById(`chev-${id}`);
+  if (!body) return;
+
+  const isOpen = openCard === id;
+
+  // Close previous chapter
+  if (openCard && openCard !== id) {
+    document.getElementById(`body-${openCard}`)?.classList.remove('open');
+    document.getElementById(`chev-${openCard}`)?.classList.remove('open');
+  }
+
+  if (!isOpen) {
+    body.classList.add('open');
+    chev?.classList.add('open');
+    openCard = id;
+    setTimeout(() => body.parentElement.scrollIntoView({ behavior:'smooth', block:'nearest' }), 60);
+  } else {
+    body.classList.remove('open');
+    chev?.classList.remove('open');
+    openCard = null;
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  DONE / COMPLETION
+// ═══════════════════════════════════════════════
+function toggleDone(id, event) {
+  event.stopPropagation();
+  const btn  = document.getElementById(`done-${id}`);
+  const card = document.getElementById(`card-${id}`);
+  if (!btn) return;
+
+  if (doneSet.has(id)) {
+    doneSet.delete(id);
+    btn.classList.remove('done');
+    btn.textContent = '○';
+    card?.classList.remove('done-card');
+  } else {
+    doneSet.add(id);
+    btn.classList.add('done');
+    btn.textContent = '✓';
+    card?.classList.add('done-card');
+    launchConfetti();
+    showToast(`🎉 Chapter done! Great work, Shivansh! 💪`);
+  }
+
+  localStorage.setItem('shivansh_done_v2', JSON.stringify([...doneSet]));
+  updateAllProgress();
+}
+
+function renderDoneState() {
+  doneSet.forEach(id => {
+    const btn  = document.getElementById(`done-${id}`);
+    const card = document.getElementById(`card-${id}`);
+    if (btn)  { btn.classList.add('done'); btn.textContent = '✓'; }
+    if (card) card.classList.add('done-card');
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  PROGRESS
+// ═══════════════════════════════════════════════
+function updateAllProgress() {
+  const totalDone = doneSet.size;
+
+  // Hero count
+  const el = document.getElementById('doneCount');
+  if (el) animateCount(el, parseInt(el.textContent) || 0, totalDone);
+
+  // Overall bar
+  const pct = Math.round((totalDone / TOTAL_CHAPTERS) * 100);
+  const fill = document.getElementById('overallFill');
+  const pctEl = document.getElementById('overallPct');
+  if (fill) fill.style.width = pct + '%';
+  if (pctEl) pctEl.textContent = `${totalDone} / ${TOTAL_CHAPTERS} chapters complete`;
+
+  // Per-subject bars & badges
+  Object.entries(SUBJECTS).forEach(([subjId, subj]) => {
+    const doneCount = subj.chapters.filter(c => doneSet.has(c)).length;
+    const pct = Math.round((doneCount / subj.total) * 100);
+
+    const progEl  = document.getElementById(subj.prog);
+    const badgeEl = document.getElementById(subj.badge);
+    if (progEl)  progEl.style.width  = pct + '%';
+    if (badgeEl) badgeEl.textContent = `${doneCount} / ${subj.total}`;
+  });
+}
+
+function animateCount(el, from, to) {
+  if (from === to) return;
+  const step = to > from ? 1 : -1;
+  let cur = from;
+  const timer = setInterval(() => {
+    cur += step;
+    el.textContent = cur;
+    if (cur === to) clearInterval(timer);
+  }, 60);
+}
+
+// ═══════════════════════════════════════════════
+//  SUBJECT FILTER (nav tabs)
+// ═══════════════════════════════════════════════
+function filterSubject(filter) {
+  // Update tabs
+  document.querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
+  const tabEl = document.getElementById(`tab-${filter}`);
+  if (tabEl) tabEl.classList.add('active');
+
+  // Show/hide subject cards
+  document.querySelectorAll('.subject-card').forEach(card => {
+    const subj = card.dataset.subject;
+    if (filter === 'all' || filter === subj) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  VIDEO PLAYER
+// ═══════════════════════════════════════════════
+function loadVideo(videoKey, videoId) {
+  const thumb     = document.getElementById(`thumb-${videoKey}`);
+  const container = document.getElementById(`iframe-${videoKey}`);
+  const iframe    = document.getElementById(`yt-${videoKey}`);
+  if (!thumb || !container || !iframe) return;
+
+  iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+  thumb.style.display     = 'none';
+  container.style.display = 'block';
+}
+
+function closeVideo(videoKey) {
+  const thumb     = document.getElementById(`thumb-${videoKey}`);
+  const container = document.getElementById(`iframe-${videoKey}`);
+  const iframe    = document.getElementById(`yt-${videoKey}`);
+  if (!thumb || !container || !iframe) return;
+
+  iframe.src              = '';
+  container.style.display = 'none';
+  thumb.style.display     = 'block';
+}
+
+// ═══════════════════════════════════════════════
+//  NOTES
+// ═══════════════════════════════════════════════
+function saveNotes(id) {
+  const ta = document.getElementById(`notes-${id}`);
+  if (ta) localStorage.setItem(`shivansh_notes_${id}`, ta.value);
+}
+
+function loadNotes() {
+  ALL_CHAPTER_IDS.forEach(id => {
+    const ta = document.getElementById(`notes-${id}`);
+    if (ta) ta.value = localStorage.getItem(`shivansh_notes_${id}`) || '';
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  SCROLL
+// ═══════════════════════════════════════════════
+function scrollToContent() {
+  document.getElementById('mainContent')?.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+// ═══════════════════════════════════════════════
+//  GALLERY / LIGHTBOX
+// ═══════════════════════════════════════════════
+const galleryPhotos = SHIVANSH_PHOTOS;
+let currentLbIdx = 0;
+
+function openGallery(idx) {
+  currentLbIdx = idx;
+  document.getElementById('lbImg').src = galleryPhotos[idx];
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function lbPrev() {
+  currentLbIdx = (currentLbIdx - 1 + galleryPhotos.length) % galleryPhotos.length;
+  animateLbImg();
+}
+
+function lbNext() {
+  currentLbIdx = (currentLbIdx + 1) % galleryPhotos.length;
+  animateLbImg();
+}
+
+function animateLbImg() {
+  const img = document.getElementById('lbImg');
+  img.style.opacity   = '0';
+  img.style.transform = 'scale(0.93)';
+  setTimeout(() => {
+    img.src             = galleryPhotos[currentLbIdx];
+    img.style.transition = 'opacity 0.3s, transform 0.3s';
+    img.style.opacity   = '1';
+    img.style.transform = 'scale(1)';
+  }, 150);
+}
+
+document.addEventListener('keydown', e => {
+  const lb = document.getElementById('lightbox');
+  if (!lb?.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft')  lbPrev();
+  if (e.key === 'ArrowRight') lbNext();
+  if (e.key === 'Escape')     closeLightbox();
+});
+
+// Swipe on lightbox
+let lbTouchStart = 0;
+document.getElementById('lightbox')?.addEventListener('touchstart', e => {
+  lbTouchStart = e.touches[0].clientX;
+}, { passive: true });
+document.getElementById('lightbox')?.addEventListener('touchend', e => {
+  const diff = lbTouchStart - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) diff > 0 ? lbNext() : lbPrev();
+});
+
+// ═══════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ═══════════════════════════════════════════════
+//  CONFETTI
+// ═══════════════════════════════════════════════
+const canvas = document.getElementById('confettiCanvas');
+const ctx    = canvas.getContext('2d');
+let particles = [];
+let animFrame = null;
+
+function launchConfetti() {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const colors = ['#f5c842','#22d3ee','#6366f1','#10b981','#f43f5e','#fb923c','#2dd4bf','#38bdf8'];
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: -10,
+      w: Math.random() * 10 + 4,
+      h: Math.random() * 6  + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vy: Math.random() * 3 + 2,
+      vx: (Math.random() - 0.5) * 3,
+      rot: Math.random() * 360,
+      rotV: (Math.random() - 0.5) * 8,
+      opacity: 1,
+    });
+  }
+  cancelAnimationFrame(animFrame);
+  drawConfetti();
+}
+
+function drawConfetti() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles = particles.filter(p => p.opacity > 0.05);
+  particles.forEach(p => {
+    p.x  += p.vx; p.y += p.vy; p.rot += p.rotV; p.vy += 0.08;
+    if (p.y > canvas.height * 0.75) p.opacity -= 0.025;
+    ctx.save();
+    ctx.globalAlpha = p.opacity;
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot * Math.PI / 180);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+    ctx.restore();
+  });
+  if (particles.length) animFrame = requestAnimationFrame(drawConfetti);
+  else ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// ═══════════════════════════════════════════════
+//  MOTIVATIONAL QUOTES
+// ═══════════════════════════════════════════════
+const quotes = [
+  'Success is the sum of small efforts repeated day in and day out.',
+  '"The secret of getting ahead is getting started." — Mark Twain',
+  '"Study while others are sleeping." — William A. Ward',
+  '"Education is the most powerful weapon you can use to change the world." — Nelson Mandela',
+  '"Don\'t wish it were easier, wish you were better." — Jim Rohn',
+  '"Believe you can and you\'re halfway there." — Theodore Roosevelt',
+  'Every expert was once a beginner. Keep going, Shivansh! 💪',
+  'Small progress is still progress. You\'ve got this! 🌟',
+  'Hard work beats talent when talent doesn\'t work hard.',
+  'History is a vision of the past to build a better future. 🏛️',
+  'Geography is the subject which holds the key to our future. 🌍',
+  'Logic is the foundation of computer science. 💻'
+];
+let lastQuoteIdx = -1;
+
+function newQuote() {
+  let idx;
+  do { idx = Math.floor(Math.random() * quotes.length); } while (idx === lastQuoteIdx);
+  lastQuoteIdx = idx;
+  const el = document.getElementById('quoteText');
+  el.style.opacity   = '0';
+  el.style.transform = 'translateY(8px)';
+  setTimeout(() => {
+    el.textContent = quotes[idx];
+    el.style.transition = 'opacity 0.4s, transform 0.4s';
+    el.style.opacity   = '1';
+    el.style.transform = 'translateY(0)';
+  }, 200);
+}
+
+// ═══════════════════════════════════════════════
+//  RESIZE
+// ═══════════════════════════════════════════════
+window.addEventListener('resize', () => {
+  if (particles.length) { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+});

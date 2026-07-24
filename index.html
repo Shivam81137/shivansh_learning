@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="description" content="SHIVANSH PRO — Premium Study Hub & Interactive Learning Suite."/>
+  <title>SHIVANSH PRO 👑</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ████████ CLASSICAL BACKGROUND ELEMENTS ████████ -->
+<div class="classical-bg">
+  <div class="stars-layer"></div>
+  <div class="constellation-svg">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="classicalGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+          <circle cx="30" cy="30" r="1" fill="rgba(245,200,66,0.07)"/>
+          <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(245,200,66,0.03)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#classicalGrid)"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ████████ COMPACT HERO ████████ -->
+<header class="hero" id="hero">
+  <div class="hero-orbs"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+
+  <div class="hero-inner">
+    <!-- Left: avatar (Daily rotation) -->
+    <div class="avatar-wrap" onclick="openGallery(0)" title="Daily Shivansh Photo — Click to view gallery">
+      <div class="avatar-ring"></div>
+      <div class="avatar-ring-mask"></div>
+      <img src="photos/20260713_114519-IMG_STYLE.jpg" alt="Shivansh" class="avatar-img" id="heroAvatar"/>
+      <div class="avatar-badge" title="Daily Featured Avatar">👑</div>
+      <div class="avatar-daily-pill">Daily Photo ✨</div>
+    </div>
+
+    <!-- Right: title + stats -->
+    <div class="hero-text-col">
+      <div class="hero-eyebrow"><span class="crown-icon">👑</span> EXCELLENCE IN LEARNING</div>
+      <h1 class="hero-title"><span class="brand-classy">SHIVANSH</span> <span class="pro-badge">PRO</span></h1>
+      <div class="hero-stats">
+        <div class="hstat"><span class="hstat-n">8</span><span class="hstat-l">Subjects</span></div>
+        <div class="hstat-div"></div>
+        <div class="hstat"><span class="hstat-n">33</span><span class="hstat-l">Chapters</span></div>
+        <div class="hstat-div"></div>
+        <div class="hstat"><span class="hstat-n" id="doneCount">0</span><span class="hstat-l">Completed ✅</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overall progress -->
+  <div class="hero-prog-wrap">
+    <div class="hero-prog-bar"><div class="hero-prog-fill" id="overallFill" style="width:0%"></div></div>
+    <span class="hero-prog-label" id="overallPct">0 / 33 chapters complete</span>
+  </div>
+</header>
+
+<!-- ████████ FILTER NAV ████████ -->
+<nav class="subject-nav" id="subjectNav">
+  <button class="subject-tab active" id="tab-all"   onclick="filterSubject('all')">All</button>
+  <button class="subject-tab"        id="tab-maths" onclick="filterSubject('maths')">🧮 Maths</button>
+  <button class="subject-tab"        id="tab-eng"   onclick="filterSubject('eng')">📝 English</button>
+  <button class="subject-tab"        id="tab-chem"  onclick="filterSubject('chem')">🧪 Chem</button>
+  <button class="subject-tab"        id="tab-phys"  onclick="filterSubject('phys')">⚛️ Physics</button>
+  <button class="subject-tab"        id="tab-bio"   onclick="filterSubject('bio')">🌿 Biology</button>
+  <button class="subject-tab"        id="tab-hist"  onclick="filterSubject('hist')">🏛️ History</button>
+  <button class="subject-tab"        id="tab-geo"   onclick="filterSubject('geo')">🌍 Geo</button>
+  <button class="subject-tab"        id="tab-comp"  onclick="filterSubject('comp')">💻 Computer</button>
+</nav>
+
+<!-- ████████ SUBJECTS ████████ -->
+<main class="main-content" id="mainContent">
+<div class="subjects-list" id="subjectsList">
+
+  <!-- ══════════ MATHS ══════════ -->
+  <div class="subject-card" id="subj-maths" data-subject="maths">
+    <div class="subject-banner" onclick="toggleSubject('maths')" style="--bg:url('img/maths.png')">
+      <div class="sb-img"></div>
+      <div class="sb-overlay maths-overlay"></div>
+      <div class="sb-content">
+        <div class="sb-top">
+          <div class="sb-icon">🧮</div>
+          <div class="sb-badge" id="maths-badge">0 / 7</div>
+        </div>
+        <div class="sb-bottom">
+          <div class="sb-title">Mathematics</div>
+          <div class="sb-meta">7 Chapters · Ch 4–10 · Half-Yearly</div>
+          <div class="sb-prog-bar"><div class="sb-prog-fill maths-fill" id="prog-maths" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="sb-chevron" id="schev-maths"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="subject-body" id="sbody-maths">
+      <div class="chapters-list">
+
+        <div class="chapter-card" id="card-m4" data-chapter="m4" data-subj="maths">
+          <div class="card-header" onclick="toggleCard('m4')">
+            <div class="card-left">
+              <div class="chapter-num maths-num"><span class="ch-label">CH</span><span class="ch-number">4</span></div>
+              <div class="chapter-info"><div class="chapter-name">Integers</div><div class="chapter-meta">Number System · Operations</div></div>
+            </div>
+            <div class="card-right"><button class="done-btn" id="done-m4" onclick="toggleDone('m4',event)">○</button><div class="chevron" id="chev-m4">▾</div></div>
+          </div>
+          <div class="card-body" id="body-m4">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('m4-1','Z1jFXrOLHRA')" id="thumb-m4-1"><img src="https://img.youtube.com/vi/Z1jFXrOLHRA/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 4 – Integers</div></div><div class="video-iframe-container" id="iframe-m4-1" style="display:none"><iframe id="yt-m4-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('m4-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://youtu.be/Z1jFXrOLHRA" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-m4" placeholder="Write key points…" oninput="saveNotes('m4')"></textarea>
+          </div>
+        </div>
+
+        <div class="chapter-card" id="card-m5" data-chapter="m5" data-subj="maths">
+          <div class="card-header" onclick="toggleCard('m5')">
+            <div class="card-left"><div class="chapter-num maths-num"><span class="ch-label">CH</span><span class="ch-number">5</span></div><div class="chapter-info"><div class="chapter-name">Set Theory</div><div class="chapter-meta">Sets · Elements · Operations</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-m5" onclick="toggleDone('m5',event)">○</button><div class="chevron" id="chev-m5">▾</div></div>
+          </div>
+          <div class="card-body" id="body-m5">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('m5-1','VdbSzbIH9Vc')" id="thumb-m5-1"><img src="https://img.youtube.com/vi/VdbSzbIH9Vc/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 5 – Set Theory</div></div><div class="video-iframe-container" id="iframe-m5-1" style="display:none"><iframe id="yt-m5-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('m5-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://youtu.be/VdbSzbIH9Vc" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-m5" placeholder="Write key points…" oninput="saveNotes('m5')"></textarea>
+          </div>
+        </div>
+
+        <div class="chapter-card" id="card-m6" data-chapter="m6" data-subj="maths">
+          <div class="card-header" onclick="toggleCard('m6')">
+            <div class="card-left"><div class="chapter-num maths-num"><span class="ch-label">CH</span><span class="ch-number">6</span></div><div class="chapter-info"><div class="chapter-name">Fraction &amp; Decimals</div><div class="chapter-meta">Fractions · Decimal Fractions</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-m6" onclick="toggleDone('m6',event)">○</button><div class="chevron" id="chev-m6">▾</div></div>
+          </div>
+          <div class="card-body" id="body-m6">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('m6-1','0t4TsZvFMvQ')" id="thumb-m6-1"><img src="https://img.youtube.com/vi/0t4TsZvFMvQ/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 6 – Fractions &amp; Decimals</div></div><div class="video-iframe-container" id="iframe-m6-1" style="display:none"><iframe id="yt-m6-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('m6-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://youtu.be/0t4TsZvFMvQ" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-m6" placeholder="Write key points…" oninput="saveNotes('m6')"></textarea>
+          </div>
+        </div>
+
+        <div class="chapter-card" id="card-m7" data-chapter="m7" data-subj="maths">
+          <div class="card-header" onclick="toggleCard('m7')">
+            <div class="card-left"><div class="chapter-num maths-num"><span class="ch-label">CH</span><span class="ch-number">7</span></div><div class="chapter-info"><div class="chapter-name">Ratio &amp; Proportion</div><div class="chapter-meta">Ratios · Direct Proportion</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-m7" onclick="toggleDone('m7',event)">○</button><div class="chevron" id="chev-m7">▾</div></div>
+          </div>
+          <div class="card-body" id="body-m7">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('m7-1','5wDF_RZMVZ0')" id="thumb-m7-1"><img src="https://img.youtube.com/vi/5wDF_RZMVZ0/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 7 – Ratio &amp; Proportion</div></div><div class="video-iframe-container" id="iframe-m7-1" style="display:none"><iframe id="yt-m7-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('m7-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://youtu.be/5wDF_RZMVZ0" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-m7" placeholder="Write key points…" oninput="saveNotes('m7')"></textarea>
+          </div>
+        </div>
+
+        <div class="chapter-card" id="card-m8" data-chapter="m8" data-subj="maths">
+          <div class="card-header" onclick="toggleCard('m8')">
+            <div class="card-left"><div class="chapter-num maths-num"><span class="ch-label">CH</span><span class="ch-number">8</span></div><div class="chapter-info"><div class="chapter-name">Unitary Method</div><div class="chapter-meta">Unit Value · Problem Solving</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-m8" onclick="toggleDone('m8',event)">○</button><div class="chevron" id="chev-m8">▾</div></div>
+          </div>
+          <div class="card-body" id="body-m8">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('m8-1','FJYH2EnO7QQ')" id="thumb-m8-1"><img src="https://img.youtube.com/vi/FJYH2EnO7QQ/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 8 – Unitary Method</div></div><div class="video-iframe-container" id="iframe-m8-1" style="display:none"><iframe id="yt-m8-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('m8-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://youtu.be/FJYH2EnO7QQ" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-m8" placeholder="Write key points…" oninput="saveNotes('m8')"></textarea>
+          </div>
+        </div>
+
+        <div class="chapter-card" id="card-m9" data-chapter="m9" data-subj="maths">
+          <div class="card-header" onclick="toggleCard('m9')">
+            <div class="card-left"><div class="chapter-num maths-num"><span class="ch-label">CH</span><span class="ch-number">9</span></div><div class="chapter-info"><div class="chapter-name">Percentage</div><div class="chapter-meta">Percent · Conversion · Applications</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-m9" onclick="toggleDone('m9',event)">○</button><div class="chevron" id="chev-m9">▾</div></div>
+          </div>
+          <div class="card-body" id="body-m9">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('m9-1','nNMLEAScK8E')" id="thumb-m9-1"><img src="https://img.youtube.com/vi/nNMLEAScK8E/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 9 – Percentage</div></div><div class="video-iframe-container" id="iframe-m9-1" style="display:none"><iframe id="yt-m9-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('m9-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=nNMLEAScK8E" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-m9" placeholder="Write key points…" oninput="saveNotes('m9')"></textarea>
+          </div>
+        </div>
+
+        <div class="chapter-card" id="card-m10" data-chapter="m10" data-subj="maths">
+          <div class="card-header" onclick="toggleCard('m10')">
+            <div class="card-left"><div class="chapter-num maths-num"><span class="ch-label">CH</span><span class="ch-number">10</span></div><div class="chapter-info"><div class="chapter-name">Profit &amp; Loss</div><div class="chapter-meta">Cost Price · Selling Price · Gain/Loss</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-m10" onclick="toggleDone('m10',event)">○</button><div class="chevron" id="chev-m10">▾</div></div>
+          </div>
+          <div class="card-body" id="body-m10">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('m10-1','hxlCIfF3ZLo')" id="thumb-m10-1"><img src="https://img.youtube.com/vi/hxlCIfF3ZLo/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 10 – Profit &amp; Loss</div></div><div class="video-iframe-container" id="iframe-m10-1" style="display:none"><iframe id="yt-m10-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('m10-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://youtu.be/hxlCIfF3ZLo" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-m10" placeholder="Write key points…" oninput="saveNotes('m10')"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /maths -->
+
+
+  <!-- ══════════ ENGLISH GRAMMAR ══════════ -->
+  <div class="subject-card" id="subj-eng" data-subject="eng">
+    <div class="subject-banner" onclick="toggleSubject('eng')" style="--bg:url('img/english.png')">
+      <div class="sb-img"></div>
+      <div class="sb-overlay eng-overlay"></div>
+      <div class="sb-content">
+        <div class="sb-top">
+          <div class="sb-icon">📝</div>
+          <div class="sb-badge" id="eng-badge">0 / 11</div>
+        </div>
+        <div class="sb-bottom">
+          <div class="sb-title">English Grammar</div>
+          <div class="sb-meta">11 Chapters · Grammar, Writing &amp; Comprehension</div>
+          <div class="sb-prog-bar"><div class="sb-prog-fill eng-fill" id="prog-eng" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="sb-chevron" id="schev-eng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="subject-body" id="sbody-eng">
+      <div class="chapters-list">
+
+        <!-- Ch e7 -->
+        <div class="chapter-card" id="card-e7" data-chapter="e7" data-subj="eng">
+          <div class="card-header" onclick="toggleCard('e7')">
+            <div class="card-left"><div class="chapter-num eng-num"><span class="ch-label">CH</span><span class="ch-number">7</span></div><div class="chapter-info"><div class="chapter-name">Pronoun</div><div class="chapter-meta">Types of Pronouns · Usage</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-e7" onclick="toggleDone('e7',event)">○</button><div class="chevron" id="chev-e7">▾</div></div>
+          </div>
+          <div class="card-body" id="body-e7">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('e7-1','g8BktcPGT_U')" id="thumb-e7-1"><img src="https://img.youtube.com/vi/g8BktcPGT_U/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 7 – Pronoun</div></div><div class="video-iframe-container" id="iframe-e7-1" style="display:none"><iframe id="yt-e7-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('e7-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=g8BktcPGT_U" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-e7" placeholder="Write key points…" oninput="saveNotes('e7')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch e8 -->
+        <div class="chapter-card" id="card-e8" data-chapter="e8" data-subj="eng">
+          <div class="card-header" onclick="toggleCard('e8')">
+            <div class="card-left"><div class="chapter-num eng-num"><span class="ch-label">CH</span><span class="ch-number">8</span></div><div class="chapter-info"><div class="chapter-name">Pronoun: Number, Gender, Case</div><div class="chapter-meta">Singular/Plural · Masculine/Feminine · Nominative/Objective</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-e8" onclick="toggleDone('e8',event)">○</button><div class="chevron" id="chev-e8">▾</div></div>
+          </div>
+          <div class="card-body" id="body-e8">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('e8-1','q_RLW0dD-Pg')" id="thumb-e8-1"><img src="https://img.youtube.com/vi/q_RLW0dD-Pg/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 8 – Pronoun: Number, Gender, Case</div></div><div class="video-iframe-container" id="iframe-e8-1" style="display:none"><iframe id="yt-e8-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('e8-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=q_RLW0dD-Pg" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-e8" placeholder="Write key points…" oninput="saveNotes('e8')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch e9 -->
+        <div class="chapter-card" id="card-e9" data-chapter="e9" data-subj="eng">
+          <div class="card-header" onclick="toggleCard('e9')">
+            <div class="card-left"><div class="chapter-num eng-num"><span class="ch-label">CH</span><span class="ch-number">9</span></div><div class="chapter-info"><div class="chapter-name">Adjectives</div><div class="chapter-meta">Descriptive · Demonstrative · Degrees of Comparison</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-e9" onclick="toggleDone('e9',event)">○</button><div class="chevron" id="chev-e9">▾</div></div>
+          </div>
+          <div class="card-body" id="body-e9">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('e9-1','SGp_MnlkVYs')" id="thumb-e9-1"><img src="https://img.youtube.com/vi/SGp_MnlkVYs/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 9 – Adjectives</div></div><div class="video-iframe-container" id="iframe-e9-1" style="display:none"><iframe id="yt-e9-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('e9-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=SGp_MnlkVYs" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-e9" placeholder="Write key points…" oninput="saveNotes('e9')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch e10 -->
+        <div class="chapter-card" id="card-e10" data-chapter="e10" data-subj="eng">
+          <div class="card-header" onclick="toggleCard('e10')">
+            <div class="card-left"><div class="chapter-num eng-num"><span class="ch-label">CH</span><span class="ch-number">10</span></div><div class="chapter-info"><div class="chapter-name">Articles</div><div class="chapter-meta">A, An, The · Indefinite &amp; Definite</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-e10" onclick="toggleDone('e10',event)">○</button><div class="chevron" id="chev-e10">▾</div></div>
+          </div>
+          <div class="card-body" id="body-e10">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('e10-1','LsPqg0VWYoQ')" id="thumb-e10-1"><img src="https://img.youtube.com/vi/LsPqg0VWYoQ/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 10 – Articles</div></div><div class="video-iframe-container" id="iframe-e10-1" style="display:none"><iframe id="yt-e10-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('e10-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=LsPqg0VWYoQ" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-e10" placeholder="Write key points…" oninput="saveNotes('e10')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch e11 -->
+        <div class="chapter-card" id="card-e11" data-chapter="e11" data-subj="eng">
+          <div class="card-header" onclick="toggleCard('e11')">
+            <div class="card-left"><div class="chapter-num eng-num"><span class="ch-label">CH</span><span class="ch-number">11</span></div><div class="chapter-info"><div class="chapter-name">Verbs</div><div class="chapter-meta">Transitive &amp; Intransitive Verbs</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-e11" onclick="toggleDone('e11',event)">○</button><div class="chevron" id="chev-e11">▾</div></div>
+          </div>
+          <div class="card-body" id="body-e11">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('e11-1','vjzCJxykjzk')" id="thumb-e11-1"><img src="https://img.youtube.com/vi/vjzCJxykjzk/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 11 – Verbs</div></div><div class="video-iframe-container" id="iframe-e11-1" style="display:none"><iframe id="yt-e11-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('e11-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=vjzCJxykjzk" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-e11" placeholder="Write key points…" oninput="saveNotes('e11')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch e12 -->
+        <div class="chapter-card" id="card-e12" data-chapter="e12" data-subj="eng">
+          <div class="card-header" onclick="toggleCard('e12')">
+            <div class="card-left"><div class="chapter-num eng-num"><span class="ch-label">CH</span><span class="ch-number">12</span></div><div class="chapter-info"><div class="chapter-name">Verb: Agreement</div><div class="chapter-meta">Subject-Verb Agreement Rules</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-e12" onclick="toggleDone('e12',event)">○</button><div class="chevron" id="chev-e12">▾</div></div>
+          </div>
+          <div class="card-body" id="body-e12">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('e12-1','dI-6ppn_udc')" id="thumb-e12-1"><img src="https://img.youtube.com/vi/dI-6ppn_udc/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 12 – Verb: Agreement</div></div><div class="video-iframe-container" id="iframe-e12-1" style="display:none"><iframe id="yt-e12-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('e12-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=dI-6ppn_udc" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-e12" placeholder="Write key points…" oninput="saveNotes('e12')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch e13 -->
+        <div class="chapter-card" id="card-e13" data-chapter="e13" data-subj="eng">
+          <div class="card-header" onclick="toggleCard('e13')">
+            <div class="card-left"><div class="chapter-num eng-num"><span class="ch-label">CH</span><span class="ch-number">13</span></div><div class="chapter-info"><div class="chapter-name">The Tense</div><div class="chapter-meta">Present, Past &amp; Future Tenses</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-e13" onclick="toggleDone('e13',event)">○</button><div class="chevron" id="chev-e13">▾</div></div>
+          </div>
+          <div class="card-body" id="body-e13">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('e13-1','UeN6CyVQFNI')" id="thumb-e13-1"><img src="https://img.youtube.com/vi/UeN6CyVQFNI/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 13 – The Tense</div></div><div class="video-iframe-container" id="iframe-e13-1" style="display:none"><iframe id="yt-e13-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('e13-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=UeN6CyVQFNI" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-e13" placeholder="Write key points…" oninput="saveNotes('e13')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch e22 -->
+        <div class="chapter-card" id="card-e22" data-chapter="e22" data-subj="eng">
+          <div class="card-header" onclick="toggleCard('e22')">
+            <div class="card-left"><div class="chapter-num eng-num"><span class="ch-label">CH</span><span class="ch-number">22</span></div><div class="chapter-info"><div class="chapter-name">Synonym</div><div class="chapter-meta">Vocabulary &amp; Similar Words</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-e22" onclick="toggleDone('e22',event)">○</button><div class="chevron" id="chev-e22">▾</div></div>
+          </div>
+          <div class="card-body" id="body-e22">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('e22-1','xM7vgPy9n_A')" id="thumb-e22-1"><img src="https://img.youtube.com/vi/xM7vgPy9n_A/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 22 – Synonym</div></div><div class="video-iframe-container" id="iframe-e22-1" style="display:none"><iframe id="yt-e22-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('e22-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=xM7vgPy9n_A" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-e22" placeholder="Write key points…" oninput="saveNotes('e22')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch e25 -->
+        <div class="chapter-card" id="card-e25" data-chapter="e25" data-subj="eng">
+          <div class="card-header" onclick="toggleCard('e25')">
+            <div class="card-left"><div class="chapter-num eng-num"><span class="ch-label">CH</span><span class="ch-number">25</span></div><div class="chapter-info"><div class="chapter-name">Comprehension Passages</div><div class="chapter-meta">Reading Skills &amp; Answering Questions</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-e25" onclick="toggleDone('e25',event)">○</button><div class="chevron" id="chev-e25">▾</div></div>
+          </div>
+          <div class="card-body" id="body-e25">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('e25-1','g54UfHlv0b4')" id="thumb-e25-1"><img src="https://img.youtube.com/vi/g54UfHlv0b4/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 25 – Comprehension Passages</div></div><div class="video-iframe-container" id="iframe-e25-1" style="display:none"><iframe id="yt-e25-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('e25-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=g54UfHlv0b4" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-e25" placeholder="Write key points…" oninput="saveNotes('e25')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch e27 -->
+        <div class="chapter-card" id="card-e27" data-chapter="e27" data-subj="eng">
+          <div class="card-header" onclick="toggleCard('e27')">
+            <div class="card-left"><div class="chapter-num eng-num"><span class="ch-label">CH</span><span class="ch-number">27</span></div><div class="chapter-info"><div class="chapter-name">Story Writing</div><div class="chapter-meta">Creative Writing &amp; Plot Development</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-e27" onclick="toggleDone('e27',event)">○</button><div class="chevron" id="chev-e27">▾</div></div>
+          </div>
+          <div class="card-body" id="body-e27">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('e27-1','7DQ53h6iG54')" id="thumb-e27-1"><img src="https://img.youtube.com/vi/7DQ53h6iG54/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 27 – Story Writing</div></div><div class="video-iframe-container" id="iframe-e27-1" style="display:none"><iframe id="yt-e27-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('e27-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=7DQ53h6iG54" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-e27" placeholder="Write key points…" oninput="saveNotes('e27')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch e28 -->
+        <div class="chapter-card" id="card-e28" data-chapter="e28" data-subj="eng">
+          <div class="card-header" onclick="toggleCard('e28')">
+            <div class="card-left"><div class="chapter-num eng-num"><span class="ch-label">CH</span><span class="ch-number">28</span></div><div class="chapter-info"><div class="chapter-name">Writing Notices</div><div class="chapter-meta">Notice Writing Format &amp; Practice</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-e28" onclick="toggleDone('e28',event)">○</button><div class="chevron" id="chev-e28">▾</div></div>
+          </div>
+          <div class="card-body" id="body-e28">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('e28-1','bQG5b00a6J8')" id="thumb-e28-1"><img src="https://img.youtube.com/vi/bQG5b00a6J8/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 28 – Writing Notices</div></div><div class="video-iframe-container" id="iframe-e28-1" style="display:none"><iframe id="yt-e28-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('e28-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=bQG5b00a6J8" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-e28" placeholder="Write key points…" oninput="saveNotes('e28')"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /eng -->
+
+
+  <!-- ══════════ CHEMISTRY ══════════ -->
+  <div class="subject-card" id="subj-chem" data-subject="chem">
+    <div class="subject-banner" onclick="toggleSubject('chem')" style="--bg:url('img/chemistry.png')">
+      <div class="sb-img"></div>
+      <div class="sb-overlay chem-overlay"></div>
+      <div class="sb-content">
+        <div class="sb-top">
+          <div class="sb-icon">🧪</div>
+          <div class="sb-badge" id="chem-badge">0 / 2</div>
+        </div>
+        <div class="sb-bottom">
+          <div class="sb-title">Chemistry</div>
+          <div class="sb-meta">2 Chapters · Ch 2–3 · Half-Yearly</div>
+          <div class="sb-prog-bar"><div class="sb-prog-fill chem-fill" id="prog-chem" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="sb-chevron" id="schev-chem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="subject-body" id="sbody-chem">
+      <div class="chapters-list">
+
+        <div class="chapter-card" id="card-c2" data-chapter="c2" data-subj="chem">
+          <div class="card-header" onclick="toggleCard('c2')">
+            <div class="card-left"><div class="chapter-num chem-num"><span class="ch-label">CH</span><span class="ch-number">2</span></div><div class="chapter-info"><div class="chapter-name">Elements, Compounds &amp; Mixtures</div><div class="chapter-meta">Pure Substances · Classification</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-c2" onclick="toggleDone('c2',event)">○</button><div class="chevron" id="chev-c2">▾</div></div>
+          </div>
+          <div class="card-body" id="body-c2">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('c2-1','VXKbjCUQWzA')" id="thumb-c2-1"><img src="https://img.youtube.com/vi/VXKbjCUQWzA/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 2 – Elements, Compounds &amp; Mixtures</div></div><div class="video-iframe-container" id="iframe-c2-1" style="display:none"><iframe id="yt-c2-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('c2-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=VXKbjCUQWzA" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-c2" placeholder="Write key points…" oninput="saveNotes('c2')"></textarea>
+          </div>
+        </div>
+
+        <div class="chapter-card" id="card-c3" data-chapter="c3" data-subj="chem">
+          <div class="card-header" onclick="toggleCard('c3')">
+            <div class="card-left"><div class="chapter-num chem-num"><span class="ch-label">CH</span><span class="ch-number">3</span></div><div class="chapter-info"><div class="chapter-name">Matter</div><div class="chapter-meta">States · Properties · Changes</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-c3" onclick="toggleDone('c3',event)">○</button><div class="chevron" id="chev-c3">▾</div></div>
+          </div>
+          <div class="card-body" id="body-c3">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('c3-1','w5BIuaWF0yk')" id="thumb-c3-1"><img src="https://img.youtube.com/vi/w5BIuaWF0yk/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 3 – Matter</div></div><div class="video-iframe-container" id="iframe-c3-1" style="display:none"><iframe id="yt-c3-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('c3-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=w5BIuaWF0yk" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-c3" placeholder="Write key points…" oninput="saveNotes('c3')"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /chem -->
+
+
+  <!-- ══════════ PHYSICS ══════════ -->
+  <div class="subject-card" id="subj-phys" data-subject="phys">
+    <div class="subject-banner" onclick="toggleSubject('phys')" style="--bg:url('img/physics.png')">
+      <div class="sb-img"></div>
+      <div class="sb-overlay phys-overlay"></div>
+      <div class="sb-content">
+        <div class="sb-top">
+          <div class="sb-icon">⚛️</div>
+          <div class="sb-badge" id="phys-badge">0 / 2</div>
+        </div>
+        <div class="sb-bottom">
+          <div class="sb-title">Physics</div>
+          <div class="sb-meta">2 Chapters · Ch 2–3 · Half-Yearly</div>
+          <div class="sb-prog-bar"><div class="sb-prog-fill phys-fill" id="prog-phys" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="sb-chevron" id="schev-phys"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="subject-body" id="sbody-phys">
+      <div class="chapters-list">
+
+        <div class="chapter-card" id="card-p2" data-chapter="p2" data-subj="phys">
+          <div class="card-header" onclick="toggleCard('p2')">
+            <div class="card-left"><div class="chapter-num phys-num"><span class="ch-label">CH</span><span class="ch-number">2</span></div><div class="chapter-info"><div class="chapter-name">Physical Quantities &amp; Measurement</div><div class="chapter-meta">Units · Instruments · Measurement</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-p2" onclick="toggleDone('p2',event)">○</button><div class="chevron" id="chev-p2">▾</div></div>
+          </div>
+          <div class="card-body" id="body-p2">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('p2-1','-yzvU_rHF8o')" id="thumb-p2-1"><img src="https://img.youtube.com/vi/-yzvU_rHF8o/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 2 – Physical Quantities &amp; Measurement</div></div><div class="video-iframe-container" id="iframe-p2-1" style="display:none"><iframe id="yt-p2-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('p2-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=-yzvU_rHF8o" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-p2" placeholder="Write key points…" oninput="saveNotes('p2')"></textarea>
+          </div>
+        </div>
+
+        <div class="chapter-card" id="card-p3" data-chapter="p3" data-subj="phys">
+          <div class="card-header" onclick="toggleCard('p3')">
+            <div class="card-left"><div class="chapter-num phys-num"><span class="ch-label">CH</span><span class="ch-number">3</span></div><div class="chapter-info"><div class="chapter-name">Force</div><div class="chapter-meta">Types · Effects · Newton's Laws</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-p3" onclick="toggleDone('p3',event)">○</button><div class="chevron" id="chev-p3">▾</div></div>
+          </div>
+          <div class="card-body" id="body-p3">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('p3-1','SWvMdIZZ9w8')" id="thumb-p3-1"><img src="https://img.youtube.com/vi/SWvMdIZZ9w8/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 3 – Force</div></div><div class="video-iframe-container" id="iframe-p3-1" style="display:none"><iframe id="yt-p3-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('p3-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=SWvMdIZZ9w8" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-p3" placeholder="Write key points…" oninput="saveNotes('p3')"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /phys -->
+
+
+  <!-- ══════════ BIOLOGY ══════════ -->
+  <div class="subject-card" id="subj-bio" data-subject="bio">
+    <div class="subject-banner" onclick="toggleSubject('bio')" style="--bg:url('img/biology.png')">
+      <div class="sb-img"></div>
+      <div class="sb-overlay bio-overlay"></div>
+      <div class="sb-content">
+        <div class="sb-top">
+          <div class="sb-icon">🌿</div>
+          <div class="sb-badge" id="bio-badge">0 / 2</div>
+        </div>
+        <div class="sb-bottom">
+          <div class="sb-title">Biology</div>
+          <div class="sb-meta">2 Chapters · Ch 3–4 · Half-Yearly</div>
+          <div class="sb-prog-bar"><div class="sb-prog-fill bio-fill" id="prog-bio" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="sb-chevron" id="schev-bio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="subject-body" id="sbody-bio">
+      <div class="chapters-list">
+
+        <div class="chapter-card" id="card-b3" data-chapter="b3" data-subj="bio">
+          <div class="card-header" onclick="toggleCard('b3')">
+            <div class="card-left"><div class="chapter-num bio-num"><span class="ch-label">CH</span><span class="ch-number">3</span></div><div class="chapter-info"><div class="chapter-name">Cell – Basic Unit of Life</div><div class="chapter-meta">Cell Structure · Organelles · Function</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-b3" onclick="toggleDone('b3',event)">○</button><div class="chevron" id="chev-b3">▾</div></div>
+          </div>
+          <div class="card-body" id="body-b3">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('b3-1','e3Rn-_wGrNM')" id="thumb-b3-1"><img src="https://img.youtube.com/vi/e3Rn-_wGrNM/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 3 – Cell, The Basic Unit of Life</div></div><div class="video-iframe-container" id="iframe-b3-1" style="display:none"><iframe id="yt-b3-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('b3-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=e3Rn-_wGrNM" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-b3" placeholder="Write key points…" oninput="saveNotes('b3')"></textarea>
+          </div>
+        </div>
+
+        <div class="chapter-card" id="card-b4" data-chapter="b4" data-subj="bio">
+          <div class="card-header" onclick="toggleCard('b4')">
+            <div class="card-left"><div class="chapter-num bio-num"><span class="ch-label">CH</span><span class="ch-number">4</span></div><div class="chapter-info"><div class="chapter-name">Human Digestive System</div><div class="chapter-meta">Digestion · Organs · <span class="multi-vid-tag">2 Videos</span></div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-b4" onclick="toggleDone('b4',event)">○</button><div class="chevron" id="chev-b4">▾</div></div>
+          </div>
+          <div class="card-body" id="body-b4">
+            <div class="card-divider"></div>
+            <div class="multi-video-header">🎬 Part 1 — Overview</div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('b4-1','2kab91mDojo')" id="thumb-b4-1"><img src="https://img.youtube.com/vi/2kab91mDojo/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 4 – Digestive System (Part 1)</div></div><div class="video-iframe-container" id="iframe-b4-1" style="display:none"><iframe id="yt-b4-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('b4-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=2kab91mDojo" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="multi-video-header">🎬 Part 2 — Detailed</div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('b4-2','g8Rzp3QaHRc')" id="thumb-b4-2"><img src="https://img.youtube.com/vi/g8Rzp3QaHRc/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 4 – Digestive System (Part 2)</div></div><div class="video-iframe-container" id="iframe-b4-2" style="display:none"><iframe id="yt-b4-2" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('b4-2')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=g8Rzp3QaHRc" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-b4" placeholder="Write key points…" oninput="saveNotes('b4')"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /bio -->
+
+
+  <!-- ══════════ HISTORY ══════════ -->
+  <div class="subject-card" id="subj-hist" data-subject="hist">
+    <div class="subject-banner" onclick="toggleSubject('hist')" style="--bg:url('img/history.png')">
+      <div class="sb-img"></div>
+      <div class="sb-overlay hist-overlay"></div>
+      <div class="sb-content">
+        <div class="sb-top">
+          <div class="sb-icon">🏛️</div>
+          <div class="sb-badge" id="hist-badge">0 / 4</div>
+        </div>
+        <div class="sb-bottom">
+          <div class="sb-title">History</div>
+          <div class="sb-meta">4 Chapters · Ancient Civilizations</div>
+          <div class="sb-prog-bar"><div class="sb-prog-fill hist-fill" id="prog-hist" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="sb-chevron" id="schev-hist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="subject-body" id="sbody-hist">
+      <div class="chapters-list">
+
+        <!-- Ch h2 -->
+        <div class="chapter-card" id="card-h2" data-chapter="h2" data-subj="hist">
+          <div class="card-header" onclick="toggleCard('h2')">
+            <div class="card-left"><div class="chapter-num hist-num"><span class="ch-label">CH</span><span class="ch-number">2</span></div><div class="chapter-info"><div class="chapter-name">The Egyptian Civilization</div><div class="chapter-meta">Nile River · Pyramids · Pharaohs</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-h2" onclick="toggleDone('h2',event)">○</button><div class="chevron" id="chev-h2">▾</div></div>
+          </div>
+          <div class="card-body" id="body-h2">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('h2-1','8VKnGdl4Q3U')" id="thumb-h2-1"><img src="https://img.youtube.com/vi/8VKnGdl4Q3U/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 2 – The Egyptian Civilization</div></div><div class="video-iframe-container" id="iframe-h2-1" style="display:none"><iframe id="yt-h2-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('h2-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=8VKnGdl4Q3U" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-h2" placeholder="Write key points…" oninput="saveNotes('h2')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch h3 -->
+        <div class="chapter-card" id="card-h3" data-chapter="h3" data-subj="hist">
+          <div class="card-header" onclick="toggleCard('h3')">
+            <div class="card-left"><div class="chapter-num hist-num"><span class="ch-label">CH</span><span class="ch-number">3</span></div><div class="chapter-info"><div class="chapter-name">The Indus Valley Civilization</div><div class="chapter-meta">Harappa · Mohenjo-Daro · Town Planning</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-h3" onclick="toggleDone('h3',event)">○</button><div class="chevron" id="chev-h3">▾</div></div>
+          </div>
+          <div class="card-body" id="body-h3">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('h3-1','32XmLQxwhlQ')" id="thumb-h3-1"><img src="https://img.youtube.com/vi/32XmLQxwhlQ/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 3 – Indus Valley Civilization</div></div><div class="video-iframe-container" id="iframe-h3-1" style="display:none"><iframe id="yt-h3-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('h3-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=32XmLQxwhlQ" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-h3" placeholder="Write key points…" oninput="saveNotes('h3')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch h4 -->
+        <div class="chapter-card" id="card-h4" data-chapter="h4" data-subj="hist">
+          <div class="card-header" onclick="toggleCard('h4')">
+            <div class="card-left"><div class="chapter-num hist-num"><span class="ch-label">CH</span><span class="ch-number">4</span></div><div class="chapter-info"><div class="chapter-name">The Chinese Civilization</div><div class="chapter-meta">Yellow River · Dynasties · Inventions</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-h4" onclick="toggleDone('h4',event)">○</button><div class="chevron" id="chev-h4">▾</div></div>
+          </div>
+          <div class="card-body" id="body-h4">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('h4-1','_eMux9jFkt4')" id="thumb-h4-1"><img src="https://img.youtube.com/vi/_eMux9jFkt4/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 4 – The Chinese Civilization</div></div><div class="video-iframe-container" id="iframe-h4-1" style="display:none"><iframe id="yt-h4-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('h4-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=_eMux9jFkt4" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-h4" placeholder="Write key points…" oninput="saveNotes('h4')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch h5 -->
+        <div class="chapter-card" id="card-h5" data-chapter="h5" data-subj="hist">
+          <div class="card-header" onclick="toggleCard('h5')">
+            <div class="card-left"><div class="chapter-num hist-num"><span class="ch-label">CH</span><span class="ch-number">5</span></div><div class="chapter-info"><div class="chapter-name">The Vedic Civilization</div><div class="chapter-meta">Vedas · Early &amp; Later Vedic Period</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-h5" onclick="toggleDone('h5',event)">○</button><div class="chevron" id="chev-h5">▾</div></div>
+          </div>
+          <div class="card-body" id="body-h5">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('h5-1','WPlP4LRPfHQ')" id="thumb-h5-1"><img src="https://img.youtube.com/vi/WPlP4LRPfHQ/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 5 – The Vedic Civilization</div></div><div class="video-iframe-container" id="iframe-h5-1" style="display:none"><iframe id="yt-h5-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('h5-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=WPlP4LRPfHQ" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-h5" placeholder="Write key points…" oninput="saveNotes('h5')"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /hist -->
+
+
+  <!-- ══════════ GEOGRAPHY ══════════ -->
+  <div class="subject-card" id="subj-geo" data-subject="geo">
+    <div class="subject-banner" onclick="toggleSubject('geo')" style="--bg:url('img/geography.png')">
+      <div class="sb-img"></div>
+      <div class="sb-overlay geo-overlay"></div>
+      <div class="sb-content">
+        <div class="sb-top">
+          <div class="sb-icon">🌍</div>
+          <div class="sb-badge" id="geo-badge">0 / 3</div>
+        </div>
+        <div class="sb-bottom">
+          <div class="sb-title">Geography</div>
+          <div class="sb-meta">3 Chapters · Ch 3–5</div>
+          <div class="sb-prog-bar"><div class="sb-prog-fill geo-fill" id="prog-geo" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="sb-chevron" id="schev-geo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="subject-body" id="sbody-geo">
+      <div class="chapters-list">
+
+        <!-- Ch g3 -->
+        <div class="chapter-card" id="card-g3" data-chapter="g3" data-subj="geo">
+          <div class="card-header" onclick="toggleCard('g3')">
+            <div class="card-left"><div class="chapter-num geo-num"><span class="ch-label">CH</span><span class="ch-number">3</span></div><div class="chapter-info"><div class="chapter-name">Water Bodies</div><div class="chapter-meta">Oceans · Rivers · Lakes · Hydrological Cycle</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-g3" onclick="toggleDone('g3',event)">○</button><div class="chevron" id="chev-g3">▾</div></div>
+          </div>
+          <div class="card-body" id="body-g3">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('g3-1','1xbozp4GsnA')" id="thumb-g3-1"><img src="https://img.youtube.com/vi/1xbozp4GsnA/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 3 – Water Bodies</div></div><div class="video-iframe-container" id="iframe-g3-1" style="display:none"><iframe id="yt-g3-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('g3-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=1xbozp4GsnA" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-g3" placeholder="Write key points…" oninput="saveNotes('g3')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch g4 -->
+        <div class="chapter-card" id="card-g4" data-chapter="g4" data-subj="geo">
+          <div class="card-header" onclick="toggleCard('g4')">
+            <div class="card-left"><div class="chapter-num geo-num"><span class="ch-label">CH</span><span class="ch-number">4</span></div><div class="chapter-info"><div class="chapter-name">Agriculture</div><div class="chapter-meta">Farming Types · Major Crops · Methods</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-g4" onclick="toggleDone('g4',event)">○</button><div class="chevron" id="chev-g4">▾</div></div>
+          </div>
+          <div class="card-body" id="body-g4">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('g4-1','SsLnnBqjsKM')" id="thumb-g4-1"><img src="https://img.youtube.com/vi/SsLnnBqjsKM/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 4 – Agriculture</div></div><div class="video-iframe-container" id="iframe-g4-1" style="display:none"><iframe id="yt-g4-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('g4-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=SsLnnBqjsKM" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-g4" placeholder="Write key points…" oninput="saveNotes('g4')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch g5 -->
+        <div class="chapter-card" id="card-g5" data-chapter="g5" data-subj="geo">
+          <div class="card-header" onclick="toggleCard('g5')">
+            <div class="card-left"><div class="chapter-num geo-num"><span class="ch-label">CH</span><span class="ch-number">5</span></div><div class="chapter-info"><div class="chapter-name">Minerals</div><div class="chapter-meta">Metallic &amp; Non-Metallic Minerals</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-g5" onclick="toggleDone('g5',event)">○</button><div class="chevron" id="chev-g5">▾</div></div>
+          </div>
+          <div class="card-body" id="body-g5">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('g5-1','U9WpCHUGYLc')" id="thumb-g5-1"><img src="https://img.youtube.com/vi/U9WpCHUGYLc/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 5 – Minerals</div></div><div class="video-iframe-container" id="iframe-g5-1" style="display:none"><iframe id="yt-g5-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('g5-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=U9WpCHUGYLc" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-g5" placeholder="Write key points…" oninput="saveNotes('g5')"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /geo -->
+
+
+  <!-- ══════════ COMPUTER ══════════ -->
+  <div class="subject-card" id="subj-comp" data-subject="comp">
+    <div class="subject-banner" onclick="toggleSubject('comp')" style="--bg:url('img/computer.png')">
+      <div class="sb-img"></div>
+      <div class="sb-overlay comp-overlay"></div>
+      <div class="sb-content">
+        <div class="sb-top">
+          <div class="sb-icon">💻</div>
+          <div class="sb-badge" id="comp-badge">0 / 2</div>
+        </div>
+        <div class="sb-bottom">
+          <div class="sb-title">Computer</div>
+          <div class="sb-meta">2 Chapters · Excel &amp; Logic</div>
+          <div class="sb-prog-bar"><div class="sb-prog-fill comp-fill" id="prog-comp" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="sb-chevron" id="schev-comp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="subject-body" id="sbody-comp">
+      <div class="chapters-list">
+
+        <!-- Ch cp3 -->
+        <div class="chapter-card" id="card-cp3" data-chapter="cp3" data-subj="comp">
+          <div class="card-header" onclick="toggleCard('cp3')">
+            <div class="card-left"><div class="chapter-num comp-num"><span class="ch-label">CH</span><span class="ch-number">3</span></div><div class="chapter-info"><div class="chapter-name">Formatting &amp; Printing in Excel</div><div class="chapter-meta">MS Excel · Cells · Formatting · Printing</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-cp3" onclick="toggleDone('cp3',event)">○</button><div class="chevron" id="chev-cp3">▾</div></div>
+          </div>
+          <div class="card-body" id="body-cp3">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('cp3-1','YWJqBG5DMgI')" id="thumb-cp3-1"><img src="https://img.youtube.com/vi/YWJqBG5DMgI/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 3 – Formatting &amp; Printing in Excel</div></div><div class="video-iframe-container" id="iframe-cp3-1" style="display:none"><iframe id="yt-cp3-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('cp3-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=YWJqBG5DMgI" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-cp3" placeholder="Write key points…" oninput="saveNotes('cp3')"></textarea>
+          </div>
+        </div>
+
+        <!-- Ch cp5 -->
+        <div class="chapter-card" id="card-cp5" data-chapter="cp5" data-subj="comp">
+          <div class="card-header" onclick="toggleCard('cp5')">
+            <div class="card-left"><div class="chapter-num comp-num"><span class="ch-label">CH</span><span class="ch-number">5</span></div><div class="chapter-info"><div class="chapter-name">Build Logic &amp; Flowchart</div><div class="chapter-meta">Algorithms · Flowchart Symbols · Logic</div></div></div>
+            <div class="card-right"><button class="done-btn" id="done-cp5" onclick="toggleDone('cp5',event)">○</button><div class="chevron" id="chev-cp5">▾</div></div>
+          </div>
+          <div class="card-body" id="body-cp5">
+            <div class="card-divider"></div>
+            <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('cp5-1','Xm6z0_Lb7L0')" id="thumb-cp5-1"><img src="https://img.youtube.com/vi/Xm6z0_Lb7L0/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 5 – Build Logic &amp; Flowchart</div></div><div class="video-iframe-container" id="iframe-cp5-1" style="display:none"><iframe id="yt-cp5-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('cp5-1')">✕ Close</button></div></div>
+            <div class="action-row"><a href="https://www.youtube.com/watch?v=Xm6z0_Lb7L0" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+            <div class="notes-label">📝 Notes</div><textarea class="notes-input" id="notes-cp5" placeholder="Write key points…" oninput="saveNotes('cp5')"></textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /comp -->
+
+</div><!-- /subjects-list -->
+</main>
+
+<!-- ████████ GALLERY & MEMORY REEL ████████ -->
+<section class="gallery-section" id="gallerySection">
+  <div class="section-header-row">
+    <div>
+      <h2 class="gallery-heading">📸 Shivansh's Photo Wall</h2>
+      <p class="gallery-subhead">22 Moments &amp; Memories · Tap to view full size</p>
+    </div>
+    <div class="gallery-counter"><span id="photoCountBadge">22</span> Photos</div>
+  </div>
+
+  <!-- Horizontal Scroll Reel -->
+  <div class="photo-reel-container">
+    <div class="photo-reel" id="photoReel">
+      <!-- Generated via JS -->
+    </div>
+  </div>
+
+  <!-- Filter tabs for Gallery -->
+  <div class="gallery-filter-bar">
+    <button class="gfilter-btn active" onclick="filterGallery('all')">✨ All Photos</button>
+    <button class="gfilter-btn" onclick="filterGallery('featured')">⭐ Highlights</button>
+    <button class="gfilter-btn" onclick="filterGallery('random')">🎲 Shuffle</button>
+  </div>
+
+  <!-- Full Grid -->
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- Generated dynamically via JS -->
+  </div>
+</section>
+
+<!-- ████████ FOOTER QUOTE WITH PORTRAIT ████████ -->
+<footer class="site-footer">
+  <div class="footer-quote-card" id="quoteCard">
+    <div class="fq-avatar-wrap">
+      <img src="photos/20260713_114519-IMG_STYLE.jpg" alt="Shivansh" class="fq-avatar-img" id="quoteAvatarImg"/>
+      <div class="fq-quote-badge">💡</div>
+    </div>
+    <div class="fq-content">
+      <span class="quote-mark">"</span>
+      <div class="quote-text" id="quoteText">Success is the sum of small efforts repeated day in and day out.</div>
+      <button class="new-quote-btn" onclick="newQuote()">✨ New Quote &amp; Photo</button>
+    </div>
+  </div>
+  <div class="footer-credit">SHIVANSH PRO · Built with ❤️ for Learning</div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-inner" onclick="event.stopPropagation()">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <button class="lb-prev" onclick="lbPrev()">‹</button>
+    <div class="lb-img-wrap">
+      <img class="lb-img" id="lbImg" src="" alt=""/>
+      <div class="lb-caption" id="lbCaption">Photo 1 of 22</div>
+    </div>
+    <button class="lb-next" onclick="lbNext()">›</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<canvas id="confettiCanvas"></canvas>
+<script src="app.js"></script>
+</body>
+</html>
