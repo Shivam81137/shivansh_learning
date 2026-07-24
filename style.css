@@ -345,7 +345,7 @@ img{
 /* ============================================================
    MAIN
    ============================================================ */
-.main-content{padding:16px 14px 8px;max-width:540px;margin:0 auto}
+.main-content{padding:16px;width:100%}
 .subjects-list{display:flex;flex-direction:column;gap:16px}
 
 /* ============================================================
