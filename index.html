@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-  <meta name="description" content="SHIVANSH PRO — Premium Study Hub & Interactive Learning Suite."/>
-  <title>SHIVANSH PRO 👑</title>
+  <meta name="theme-color" content="#060b18"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="SHIVANSH PRO"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="apple-touch-icon" href="photos/20260713_114519-IMG_STYLE.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="preconnect" href="https://img.youtube.com" crossorigin/>
@@ -806,6 +809,34 @@
       <div class="lb-caption" id="lbCaption">Photo 1 of 22</div>
     </div>
     <button class="lb-next" onclick="lbNext()">›</button>
+  </div>
+</div>
+
+<!-- ████████ PWA INSTALL APP POPUP ████████ -->
+<div class="pwa-install-popup" id="pwaInstallPopup">
+  <div class="pwa-popup-card">
+    <button class="pwa-close-btn" onclick="dismissPwaPopup()">✕</button>
+    <div class="pwa-header-row">
+      <div class="pwa-icon-wrap">
+        <img src="photos/20260713_114519-IMG_STYLE.jpg" alt="SHIVANSH PRO App Icon" class="pwa-app-icon"/>
+        <div class="pwa-app-badge">👑</div>
+      </div>
+      <div class="pwa-title-wrap">
+        <div class="pwa-app-name">SHIVANSH PRO</div>
+        <div class="pwa-app-desc">Official Mobile Study App</div>
+      </div>
+    </div>
+    
+    <div class="pwa-features-list">
+      <div class="pwa-feat-item">⚡ <span>Instant 1-Tap Home Screen Access</span></div>
+      <div class="pwa-feat-item">📵 <span>Fast &amp; Works Offline / Low Data</span></div>
+      <div class="pwa-feat-item">⏱️ <span>Auto-resumes Lecture Timestamps</span></div>
+    </div>
+
+    <div class="pwa-action-row">
+      <button class="pwa-install-btn" id="pwaInstallBtn" onclick="installPwaApp()">📲 Install App Now</button>
+      <button class="pwa-later-btn" onclick="dismissPwaPopup()">Not Now</button>
+    </div>
   </div>
 </div>
 

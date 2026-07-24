@@ -66,12 +66,67 @@ let doneSet = new Set(JSON.parse(localStorage.getItem('shivansh_done_v2') || '[]
 let openSubjects = new Set();
 let openCard = null; // only one chapter open at a time
 
+// ── PWA & Service Worker Registration ────────────────────
+let deferredPrompt = null;
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(err => console.log('SW reg error:', err));
+  });
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  checkAndShowPwaPopup();
+});
+
+function checkAndShowPwaPopup() {
+  const dismissedTime = parseInt(localStorage.getItem('shivansh_pwa_dismissed') || '0');
+  const now = Date.now();
+  // Show popup if not dismissed in last 3 days and not already running standalone
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (!isStandalone && (now - dismissedTime > 3 * 24 * 60 * 60 * 1000)) {
+    setTimeout(() => {
+      document.getElementById('pwaInstallPopup')?.classList.add('show');
+    }, 1200);
+  }
+}
+
+function installPwaApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        showToast('🎉 App installing to Home Screen!');
+      }
+      deferredPrompt = null;
+      dismissPwaPopup();
+    });
+  } else {
+    // Mobile Safari / iOS or Browser fallback guide
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+      alert("📲 To Install on iPhone / iPad:\n\n1. Tap the Share button (⎋) at the bottom\n2. Scroll down and tap 'Add to Home Screen ➕'");
+    } else {
+      showToast("📲 Tap Chrome menu (⋮) -> 'Install App' or 'Add to Home screen'");
+    }
+    dismissPwaPopup();
+  }
+}
+
+function dismissPwaPopup() {
+  document.getElementById('pwaInstallPopup')?.classList.remove('show');
+  localStorage.setItem('shivansh_pwa_dismissed', Date.now());
+}
+
 // ── Init ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   updateDailyAvatar();
   loadNotes();
   renderDoneState();
   updateAllProgress();
+  checkAndShowPwaPopup();
 });
 
 // ═══════════════════════════════════════════════

@@ -1,0 +1,44 @@
+/* ============================================================
+   SHIVANSH PRO — Service Worker v1.0
+   ============================================================ */
+
+const CACHE_NAME = 'shivansh-pro-v1';
+const ASSETS_TO_CACHE = [
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './manifest.json',
+  './photos/20260713_114519-IMG_STYLE.jpg'
+];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS_TO_CACHE);
+    })
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', (event) => {
+  // Network first fallback to cache for speed
+  event.respondWith(
+    fetch(event.request).catch(() => caches.match(event.request))
+  );
+});
