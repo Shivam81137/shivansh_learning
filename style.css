@@ -49,10 +49,21 @@ body{
   -webkit-tap-highlight-color:transparent;
   line-height:1.55;
   position:relative;
+  text-rendering:optimizeSpeed;
+}
+img{
+  decoding:async;
+  max-width:100%;
 }
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:rgba(245,200,66,.35);border-radius:4px}
+
+/* ── PERFORMANCE OPTIMIZATION FOR OFFSCREEN CARDS ────────── */
+.subject-card, .gallery-section, .site-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 300px;
+}
 
 /* ── CLASSICAL BACKGROUND & PARTICLES ────────────────────── */
 .classical-bg{
