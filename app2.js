@@ -1,28 +1,22 @@
 /* ============================================================
-   SHIVANSH'S STUDY HUB — app.js  v4.0
-   7 Subjects: Maths, Chem, Phys, Bio, History, Geo, Computer
+   SHIVANSH'S STUDY HUB — app2.js  v1.0  ANNUAL
+   Annual Syllabus — Aurora Emerald Theme
    ============================================================ */
 
-// ── Subject & chapter definitions ─────────────────────────
+// ── Subject & chapter definitions (Annual Syllabus) ──────────
 const SUBJECTS = {
-  maths:  { name: 'Mathematics (Term 1)',        total: 7,  badge: 'maths-badge',  prog: 'prog-maths',  chevron: 'schev-maths',  body: 'sbody-maths',  chapters: ['m4','m5','m6','m7','m8','m9','m10'] },
-  amaths: { name: 'Mathematics (New Syllabus)', total: 15, badge: 'amaths-badge', prog: 'prog-amaths', chevron: 'schev-amaths', body: 'sbody-amaths', chapters: ['am11','am12','am13','am14','am15','am16','am17','am18','am19','am20','am21','am22','am23','am24','am25'] },
-  eng:   { name: 'English',     total: 11, badge: 'eng-badge',   prog: 'prog-eng',   chevron: 'schev-eng',   body: 'sbody-eng',   chapters: ['e7','e8','e9','e10','e11','e12','e13','e22','e25','e27','e28'] },
-  chem:  { name: 'Chemistry (Term 1)',           total: 2,  badge: 'chem-badge',  prog: 'prog-chem',  chevron: 'schev-chem',  body: 'sbody-chem',  chapters: ['c2','c3'] },
-  achem: { name: 'Chemistry (New Syllabus)',     total: 2,  badge: 'achem-badge', prog: 'prog-achem', chevron: 'schev-achem', body: 'sbody-achem', chapters: ['ac4','ac5'] },
-  phys:  { name: 'Physics (Term 1)',             total: 2,  badge: 'phys-badge',  prog: 'prog-phys',  chevron: 'schev-phys',  body: 'sbody-phys',  chapters: ['p2','p3'] },
-  aphys: { name: 'Physics (New Syllabus)',       total: 3,  badge: 'aphys-badge', prog: 'prog-aphys', chevron: 'schev-aphys', body: 'sbody-aphys', chapters: ['ap3','ap4','ap5'] },
-  bio:   { name: 'Biology (Term 1)',             total: 2,  badge: 'bio-badge',   prog: 'prog-bio',   chevron: 'schev-bio',   body: 'sbody-bio',   chapters: ['b3','b4'] },
-  abio:  { name: 'Biology (New Syllabus)',       total: 4,  badge: 'abio-badge',  prog: 'prog-abio',  chevron: 'schev-abio',  body: 'sbody-abio',  chapters: ['ab5','ab6','ab7','ab8'] },
-  hist:  { name: 'History (Term 1)',             total: 4,  badge: 'hist-badge',  prog: 'prog-hist',  chevron: 'schev-hist',  body: 'sbody-hist',  chapters: ['h2','h3','h4','h5'] },
-  ahist: { name: 'History (New Syllabus)',       total: 4,  badge: 'ahist-badge', prog: 'prog-ahist', chevron: 'schev-ahist', body: 'sbody-ahist', chapters: ['ah6','ah7','ah8','ah9'] },
-  geo:   { name: 'Geography (Term 1)',           total: 3,  badge: 'geo-badge',   prog: 'prog-geo',   chevron: 'schev-geo',   body: 'sbody-geo',   chapters: ['g3','g4','g5'] },
-  ageo:  { name: 'Geography (New Syllabus)',     total: 4,  badge: 'ageo-badge',  prog: 'prog-ageo',  chevron: 'schev-ageo',  body: 'sbody-ageo',  chapters: ['ag6','ag7','ag8','ag9'] },
-  comp:  { name: 'Computer (Term 1)',            total: 2,  badge: 'comp-badge',  prog: 'prog-comp',  chevron: 'schev-comp',  body: 'sbody-comp',  chapters: ['cp3','cp5'] },
+  maths: { name: 'Mathematics', total: 7,  badge: 'maths-badge', prog: 'prog-maths', chevron: 'schev-maths', body: 'sbody-maths', chapters: ['am4','am5','am6','am7','am8','am9','am10'] },
+  eng:   { name: 'English',     total: 11, badge: 'eng-badge',   prog: 'prog-eng',   chevron: 'schev-eng',   body: 'sbody-eng',   chapters: ['ae7','ae8','ae9','ae10','ae11','ae12','ae13','ae22','ae25','ae27','ae28'] },
+  chem:  { name: 'Chemistry',   total: 2,  badge: 'chem-badge',  prog: 'prog-chem',  chevron: 'schev-chem',  body: 'sbody-chem',  chapters: ['ac2','ac3'] },
+  phys:  { name: 'Physics',     total: 2,  badge: 'phys-badge',  prog: 'prog-phys',  chevron: 'schev-phys',  body: 'sbody-phys',  chapters: ['ap2','ap3'] },
+  bio:   { name: 'Biology',     total: 2,  badge: 'bio-badge',   prog: 'prog-bio',   chevron: 'schev-bio',   body: 'sbody-bio',   chapters: ['ab3','ab4'] },
+  hist:  { name: 'History',     total: 4,  badge: 'hist-badge',  prog: 'prog-hist',  chevron: 'schev-hist',  body: 'sbody-hist',  chapters: ['ah2','ah3','ah4','ah5'] },
+  geo:   { name: 'Geography',   total: 3,  badge: 'geo-badge',   prog: 'prog-geo',   chevron: 'schev-geo',   body: 'sbody-geo',   chapters: ['ag3','ag4','ag5'] },
+  comp:  { name: 'Computer',    total: 2,  badge: 'comp-badge',  prog: 'prog-comp',  chevron: 'schev-comp',  body: 'sbody-comp',  chapters: ['acp3','acp5'] },
 };
 
 const ALL_CHAPTER_IDS = Object.values(SUBJECTS).flatMap(s => s.chapters);
-const TOTAL_CHAPTERS = ALL_CHAPTER_IDS.length; // 22
+const TOTAL_CHAPTERS = ALL_CHAPTER_IDS.length; // 33
 
 // ── All Photos for Gallery & Daily Rotation ─────────────
 const SHIVANSH_PHOTOS = [
@@ -68,19 +62,18 @@ function updateDailyAvatar() {
   }
 }
 
-// ── Persistent state ──────────────────────────────────────
-let doneSet = new Set(JSON.parse(localStorage.getItem('shivansh_done_v2') || '[]'));
-let doneDates = JSON.parse(localStorage.getItem('shivansh_done_dates') || '{}');
+// ── Persistent state (separate from half-yearly) ────────────
+let doneSet = new Set(JSON.parse(localStorage.getItem('shivansh_annual_done') || '[]'));
+let doneDates = JSON.parse(localStorage.getItem('shivansh_annual_dates') || '{}');
 
-// Migrate legacy doneSet data to doneDates if missing
 if (doneSet.size > 0 && Object.keys(doneDates).length === 0) {
   const todayISO = new Date().toISOString();
   doneSet.forEach(id => doneDates[id] = todayISO);
-  localStorage.setItem('shivansh_done_dates', JSON.stringify(doneDates));
+  localStorage.setItem('shivansh_annual_dates', JSON.stringify(doneDates));
 }
 
 let openSubjects = new Set();
-let openCard = null; // only one chapter open at a time
+let openCard = null;
 
 // ── PWA & Service Worker Registration ────────────────────
 let deferredPrompt = null;
@@ -100,7 +93,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
 function checkAndShowPwaPopup() {
   const dismissedTime = parseInt(localStorage.getItem('shivansh_pwa_dismissed') || '0');
   const now = Date.now();
-  // Show popup if not dismissed in last 3 days and not already running standalone
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
   if (!isStandalone && (now - dismissedTime > 3 * 24 * 60 * 60 * 1000)) {
     setTimeout(() => {
@@ -120,7 +112,6 @@ function installPwaApp() {
       dismissPwaPopup();
     });
   } else {
-    // Mobile Safari / iOS or Browser fallback guide
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     if (isIOS) {
       alert("📲 To Install on iPhone / iPad:\n\n1. Tap the Share button (⎋) at the bottom\n2. Scroll down and tap 'Add to Home Screen ➕'");
@@ -141,14 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
   renderDoneState();
   updateAllProgress();
   if (typeof renderProgressChart === 'function') {
-    // Slight delay to ensure canvas is painted and Chart.js loaded
     setTimeout(() => renderProgressChart(), 50);
   }
   checkAndShowPwaPopup();
 });
 
 // ═══════════════════════════════════════════════
-//  EXAM SECTION TOGGLE (half-yearly / annual wrapper)
+//  EXAM SECTION TOGGLE
 // ═══════════════════════════════════════════════
 let openExamSections = new Set();
 
@@ -183,7 +173,6 @@ function toggleSubject(subjId) {
 
   const isOpen = openSubjects.has(subjId);
 
-  // Close all other subjects
   openSubjects.forEach(id => {
     if (id !== subjId) {
       document.getElementById(`sbody-${id}`)?.classList.remove('open');
@@ -192,7 +181,6 @@ function toggleSubject(subjId) {
   });
   openSubjects.clear();
 
-  // Also close any open chapter card
   if (openCard) {
     document.getElementById(`body-${openCard}`)?.classList.remove('open');
     document.getElementById(`chev-${openCard}`)?.classList.remove('open');
@@ -220,7 +208,6 @@ function toggleCard(id) {
 
   const isOpen = openCard === id;
 
-  // Close previous chapter
   if (openCard && openCard !== id) {
     document.getElementById(`body-${openCard}`)?.classList.remove('open');
     document.getElementById(`chev-${openCard}`)?.classList.remove('open');
@@ -260,11 +247,11 @@ function toggleDone(id, event) {
     btn.textContent = '✓';
     card?.classList.add('done-card');
     launchConfetti();
-    showToast(`🎉 Chapter done! Great work, Shivansh! 💪`);
+    showToast(`🎉 Chapter done! Keep going, Shivansh! 💪`);
   }
 
-  localStorage.setItem('shivansh_done_v2', JSON.stringify([...doneSet]));
-  localStorage.setItem('shivansh_done_dates', JSON.stringify(doneDates));
+  localStorage.setItem('shivansh_annual_done', JSON.stringify([...doneSet]));
+  localStorage.setItem('shivansh_annual_dates', JSON.stringify(doneDates));
   updateAllProgress();
   if (typeof renderProgressChart === 'function') renderProgressChart();
 }
@@ -284,35 +271,15 @@ function renderDoneState() {
 function updateAllProgress() {
   const totalDone = doneSet.size;
 
-  // Hero count
   const el = document.getElementById('doneCount');
   if (el) animateCount(el, parseInt(el.textContent) || 0, totalDone);
 
-  // Overall bar
   const pct = Math.round((totalDone / TOTAL_CHAPTERS) * 100);
   const fill = document.getElementById('overallFill');
   const pctEl = document.getElementById('overallPct');
   if (fill) fill.style.width = pct + '%';
   if (pctEl) pctEl.textContent = `${totalDone} / ${TOTAL_CHAPTERS} chapters complete`;
 
-  // Exam Section progress bars (Half-Yearly & Annual/New Syllabus)
-  const hyChapters = ['m4','m5','m6','m7','m8','m9','m10','e7','e8','e9','e10','e11','e12','e13','e22','e25','e27','e28','c2','c3','p2','p3','b3','b4','h2','h3','h4','h5','g3','g4','g5','cp3','cp5'];
-  const hyDone = hyChapters.filter(c => doneSet.has(c)).length;
-  const hyPct = Math.round((hyDone / hyChapters.length) * 100);
-  const hyFill = document.getElementById('esb-prog-halfyearly');
-  const hyPctEl = document.getElementById('esb-pct-halfyearly');
-  if (hyFill) hyFill.style.width = hyPct + '%';
-  if (hyPctEl) hyPctEl.textContent = hyPct + '%';
-
-  const anChapters = ['am11','am12','am13','am14','am15','am16','am17','am18','am19','am20','am21','am22','am23','am24','am25','ag6','ag7','ag8','ag9','ab5','ab6','ab7','ab8','ah6','ah7','ah8','ah9','ap3','ap4','ap5','ac4','ac5'];
-  const anDone = anChapters.filter(c => doneSet.has(c)).length;
-  const anPct = Math.round((anDone / anChapters.length) * 100);
-  const anFill = document.getElementById('esb-prog-annual');
-  const anPctEl = document.getElementById('esb-pct-annual');
-  if (anFill) anFill.style.width = anPct + '%';
-  if (anPctEl) anPctEl.textContent = anPct + '%';
-
-  // Per-subject bars & badges
   Object.entries(SUBJECTS).forEach(([subjId, subj]) => {
     const doneCount = subj.chapters.filter(c => doneSet.has(c)).length;
     const pct = Math.round((doneCount / subj.total) * 100);
@@ -341,94 +308,74 @@ function animateCount(el, from, to) {
 let progressChartInstance = null;
 
 function renderProgressChart() {
-  const chartBody = document.getElementById('chartBody');
-  const canvasCtx = document.getElementById('progressChart')?.getContext('2d');
+  const ctx = document.getElementById('progressChart')?.getContext('2d');
+  if (!ctx) return;
 
-  // Calculate last 7 days (index 0 = 6 days ago, ..., index 6 = today)
-  const days = [];
+  const labels = [];
+  const data = [0, 0, 0, 0, 0, 0, 0];
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  today.setHours(23, 59, 59, 999);
 
   for (let i = 6; i >= 0; i--) {
     const d = new Date(today);
-    d.setDate(today.getDate() - i);
-    const dateStr = d.toISOString().split('T')[0]; // YYYY-MM-DD
-    const dayName = d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
-    days.push({ dateStr, dayName, count: 0 });
+    d.setDate(d.getDate() - i);
+    labels.push(d.toLocaleDateString('en-US', { weekday: 'short' }));
   }
 
-  // Tally completion dates from doneDates
   Object.values(doneDates).forEach(isoDate => {
-    if (!isoDate) return;
-    const dateStr = isoDate.split('T')[0];
-    const dayObj = days.find(d => d.dateStr === dateStr);
-    if (dayObj) {
-      dayObj.count++;
+    const d = new Date(isoDate);
+    const diffTime = today - d;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    if (diffDays >= 0 && diffDays <= 6) {
+      const index = 6 - diffDays;
+      data[index]++;
     }
   });
 
-  // Native HTML/CSS Bar Chart Rendering (in #chartBody)
-  if (chartBody) {
-    const counts = days.map(d => d.count);
-    const maxCount = Math.max(4, ...counts); // Scale against max or baseline 4
+  if (progressChartInstance) {
+    progressChartInstance.data.datasets[0].data = data;
+    progressChartInstance.update();
+  } else {
+    if (typeof Chart === 'undefined') return;
 
-    let html = `
-      <div class="chart-gridline g-50"></div>
-      <div class="chart-gridline g-25"></div>
-    `;
-
-    days.forEach((day, index) => {
-      // Calculate height percentage (6% min baseline when 0, up to 100%)
-      const heightPct = day.count === 0 ? 6 : Math.min(100, Math.round((day.count / maxCount) * 85) + 15);
-      const countText = `${day.count} Chapter${day.count === 1 ? '' : 's'}`;
-      const isToday = index === 6;
-
-      html += `
-        <div class="chart-col ${isToday ? 'today-col' : ''}" data-day="${index}">
-          <div class="chart-tooltip">${countText}</div>
-          <div class="chart-bar-track">
-            <div class="chart-bar-fill" id="bar-day-${index}" style="height: ${heightPct}%;"></div>
-          </div>
-          <span class="chart-day-label">${day.dayName}</span>
-        </div>
-      `;
-    });
-
-    chartBody.innerHTML = html;
-  }
-
-  // Fallback Chart.js Canvas support if #progressChart exists
-  if (canvasCtx) {
-    const labels = days.map(d => d.dayName);
-    const data = days.map(d => d.count);
-
-    if (progressChartInstance) {
-      progressChartInstance.data.datasets[0].data = data;
-      progressChartInstance.update();
-    } else if (typeof Chart !== 'undefined') {
-      progressChartInstance = new Chart(canvasCtx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Chapters Completed',
-            data: data,
-            backgroundColor: 'rgba(0, 242, 254, 0.85)',
-            borderRadius: 6,
-            barPercentage: 0.6
-          }]
+    progressChartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Chapters Completed',
+          data: data,
+          backgroundColor: 'rgba(0, 255, 170, 0.8)',
+          borderRadius: 6,
+          barPercentage: 0.6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(2, 12, 8, 0.92)',
+            titleColor: '#00ffaa',
+            bodyColor: '#e8fff4',
+            cornerRadius: 8,
+            padding: 10
+          }
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            y: { beginAtZero: true, ticks: { color: 'rgba(255,255,255,0.5)', stepSize: 1 } },
-            x: { ticks: { color: 'rgba(255,255,255,0.7)' } }
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: 'rgba(0,255,170,0.45)', stepSize: 1 },
+            grid: { color: 'rgba(0,255,170,0.05)', drawBorder: false }
+          },
+          x: {
+            ticks: { color: 'rgba(232,255,244,0.6)' },
+            grid: { display: false, drawBorder: false }
           }
         }
-      });
-    }
+      }
+    });
   }
 }
 
@@ -436,12 +383,10 @@ function renderProgressChart() {
 //  SUBJECT FILTER (nav tabs)
 // ═══════════════════════════════════════════════
 function filterSubject(filter) {
-  // Update tabs
   document.querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
   const tabEl = document.getElementById(`tab-${filter}`);
   if (tabEl) tabEl.classList.add('active');
 
-  // Show/hide subject cards
   document.querySelectorAll('.subject-card').forEach(card => {
     const subj = card.dataset.subject;
     if (filter === 'all' || filter === subj) {
@@ -453,7 +398,7 @@ function filterSubject(filter) {
 }
 
 // ═══════════════════════════════════════════════
-//  VIDEO PLAYER & LECTURE TIME TRACKING (RESUME FEATURE)
+//  VIDEO PLAYER & LECTURE TIME TRACKING
 // ═══════════════════════════════════════════════
 let ytPlayers = {};
 let trackingIntervals = {};
@@ -469,17 +414,15 @@ function formatTime(seconds) {
 }
 
 function renderResumeBadges() {
-  // Check all videos for saved timestamps
   const allVideoKeys = [
-    'm4-1','m5-1','m6-1','m7-1','m8-1','m9-1','m10-1',
-    'am11-1','am11-2','am12-1','am12-2','am13-1','am13-2','am14-1','am14-2','am15-1','am15-2','am16-1','am17-1','am18-1','am19-1','am20-1','am21-1','am22-1','am23-1','am24-1','am25-1',
-    'e7-1','e8-1','e9-1','e10-1','e11-1','e12-1','e13-1','e22-1','e25-1','e27-1','e28-1',
-    'c2-1','c3-1','p2-1','p3-1','b3-1','b4-1','b4-2',
-    'h2-1','h3-1','h4-1','h5-1','g3-1','g4-1','g5-1','cp3-1','cp5-1'
+    'am4-1','am5-1','am6-1','am7-1','am8-1','am9-1','am10-1',
+    'ae7-1','ae8-1','ae9-1','ae10-1','ae11-1','ae12-1','ae13-1','ae22-1','ae25-1','ae27-1','ae28-1',
+    'ac2-1','ac3-1','ap2-1','ap3-1','ab3-1','ab4-1','ab4-2',
+    'ah2-1','ah3-1','ah4-1','ah5-1','ag3-1','ag4-1','ag5-1','acp3-1','acp5-1'
   ];
 
   allVideoKeys.forEach(key => {
-    const savedTime = parseInt(localStorage.getItem(`shivansh_time_${key}`) || '0');
+    const savedTime = parseInt(localStorage.getItem(`shivansh_annual_time_${key}`) || '0');
     updateResumeBadge(key, savedTime);
   });
 }
@@ -507,7 +450,7 @@ function loadVideo(videoKey, videoId) {
   const iframe    = document.getElementById(`yt-${videoKey}`);
   if (!thumb || !container || !iframe) return;
 
-  const savedTime = parseInt(localStorage.getItem(`shivansh_time_${videoKey}`) || '0');
+  const savedTime = parseInt(localStorage.getItem(`shivansh_annual_time_${videoKey}`) || '0');
   const startParam = savedTime > 5 ? `&start=${savedTime}` : '';
 
   iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1${startParam}`;
@@ -518,14 +461,12 @@ function loadVideo(videoKey, videoId) {
     showToast(`▶ Resuming lecture at ${formatTime(savedTime)}`);
   }
 
-  // Start tracking playback time with YouTube iframe postMessage API
   startTrackingVideo(videoKey, iframe);
 }
 
 function startTrackingVideo(videoKey, iframe) {
   stopTrackingVideo(videoKey);
 
-  // Poll video timestamp using YouTube postMessage API
   trackingIntervals[videoKey] = setInterval(() => {
     try {
       iframe.contentWindow.postMessage('{"event":"listening","id":1}', '*');
@@ -552,29 +493,20 @@ function closeVideo(videoKey) {
   container.style.display = 'none';
   thumb.style.display     = 'block';
 
-  const savedTime = parseInt(localStorage.getItem(`shivansh_time_${videoKey}`) || '0');
+  const savedTime = parseInt(localStorage.getItem(`shivansh_annual_time_${videoKey}`) || '0');
   if (savedTime > 10) {
     showToast(`💾 Saved playback progress: ${formatTime(savedTime)}`);
   }
 }
 
-function resetVideoTime(videoKey, event) {
-  if (event) event.stopPropagation();
-  localStorage.removeItem(`shivansh_time_${videoKey}`);
-  updateResumeBadge(videoKey, 0);
-  showToast(`🔄 Reset video timestamp`);
-}
-
-// Listen for YouTube postMessage response for timestamp updates
 window.addEventListener('message', (event) => {
   try {
     const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
     if (data && data.event === 'infoDelivery' && data.info && typeof data.info.currentTime === 'number') {
       const curTime = Math.floor(data.info.currentTime);
       if (curTime > 5) {
-        // Update all active tracking keys
         Object.keys(trackingIntervals).forEach(key => {
-          localStorage.setItem(`shivansh_time_${key}`, curTime);
+          localStorage.setItem(`shivansh_annual_time_${key}`, curTime);
           updateResumeBadge(key, curTime);
         });
       }
@@ -582,13 +514,11 @@ window.addEventListener('message', (event) => {
   } catch(e){}
 });
 
-// Update renderDoneState to also call renderResumeBadges
 const origRenderDoneState = renderDoneState;
 renderDoneState = function() {
   origRenderDoneState();
   renderResumeBadges();
 };
-
 
 // ═══════════════════════════════════════════════
 //  SCROLL
@@ -598,7 +528,7 @@ function scrollToContent() {
 }
 
 // ═══════════════════════════════════════════════
-//  GALLERY / LIGHTBOX / REEL (ALL 22 PHOTOS)
+//  GALLERY / LIGHTBOX
 // ═══════════════════════════════════════════════
 const galleryPhotos = SHIVANSH_PHOTOS;
 let currentLbIdx = 0;
@@ -628,12 +558,9 @@ function renderGalleryGrid() {
   if (!grid) return;
 
   let displayPhotos = [...galleryPhotos];
-
   if (currentGalleryFilter === 'featured') {
-    // Pick 6 prominent photos
     displayPhotos = [0, 1, 3, 4, 8, 14].map(idx => galleryPhotos[idx]);
   } else if (currentGalleryFilter === 'random') {
-    // Shuffle copy
     displayPhotos = [...galleryPhotos].sort(() => 0.5 - Math.random());
   }
 
@@ -703,7 +630,6 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape')     closeLightbox();
 });
 
-// Swipe on lightbox
 let lbTouchStart = 0;
 document.getElementById('lightbox')?.addEventListener('touchstart', e => {
   lbTouchStart = e.touches[0].clientX;
@@ -726,7 +652,7 @@ function showToast(msg) {
 }
 
 // ═══════════════════════════════════════════════
-//  CONFETTI
+//  CONFETTI — Aurora / emerald green colors
 // ═══════════════════════════════════════════════
 const canvas = document.getElementById('confettiCanvas');
 const ctx    = canvas.getContext('2d');
@@ -736,7 +662,7 @@ let animFrame = null;
 function launchConfetti() {
   canvas.width  = window.innerWidth;
   canvas.height = window.innerHeight;
-  const colors = ['#f5c842','#22d3ee','#6366f1','#10b981','#f43f5e','#fb923c','#2dd4bf','#38bdf8'];
+  const colors = ['#00ffaa','#22d3ee','#4ade80','#a78bfa','#00c875','#7fffd4','#2dd4bf','#38bdf8'];
   for (let i = 0; i < 80; i++) {
     particles.push({
       x: Math.random() * canvas.width,
@@ -774,21 +700,22 @@ function drawConfetti() {
 }
 
 // ═══════════════════════════════════════════════
-//  MOTIVATIONAL QUOTES & PORTRAIT SWAP
+//  MOTIVATIONAL QUOTES
 // ═══════════════════════════════════════════════
 const quotes = [
-  'Success is the sum of small efforts repeated day in and day out.',
+  'Annual exams are won by those who prepare daily. You\'ve got this, Shivansh! 🌟',
   '"The secret of getting ahead is getting started." — Mark Twain',
   '"Study while others are sleeping." — William A. Ward',
   '"Education is the most powerful weapon you can use to change the world." — Nelson Mandela',
   '"Don\'t wish it were easier, wish you were better." — Jim Rohn',
   '"Believe you can and you\'re halfway there." — Theodore Roosevelt',
   'Every expert was once a beginner. Keep going, Shivansh! 💪',
-  'Small progress is still progress. You\'ve got this! 🌟',
+  'Small progress is still progress. You\'ve got this! 🌿',
   'Hard work beats talent when talent doesn\'t work hard.',
   'History is a vision of the past to build a better future. 🏛️',
   'Geography is the subject which holds the key to our future. 🌍',
-  'Logic is the foundation of computer science. 💻'
+  'Logic is the foundation of computer science. 💻',
+  'Consistency is the key to annual success. Keep revising! 📚'
 ];
 let lastQuoteIdx = -1;
 
@@ -824,114 +751,66 @@ function newQuote() {
 }
 
 // ═══════════════════════════════════════════════
-//  GALAXY STARDUST PARTICLE ENGINE
+//  GALAXY STARDUST — AURORA GREEN STARS
 // ═══════════════════════════════════════════════
 const galaxyCanvas = document.getElementById('galaxyCanvas');
 const gCtx = galaxyCanvas ? galaxyCanvas.getContext('2d') : null;
 let galaxyStars = [];
-const starColors = ['#ffffff', '#f5c842', '#a855f7', '#06b6d4', '#e0f2fe'];
+const starColors = ['#ffffff', '#00ffaa', '#22d3ee', '#4ade80', '#a8ffd9'];
 
 function initGalaxyParticles() {
   if (!galaxyCanvas || !gCtx) return;
-  
+
   galaxyCanvas.width = window.innerWidth;
   galaxyCanvas.height = window.innerHeight;
-  
+
   galaxyStars = [];
-  const starColors = ['#00F2FE', '#9d4edd', '#00F5A0', '#ffffff', '#38bdf8'];
-  const count = Math.min(75, Math.floor((window.innerWidth * window.innerHeight) / 16000));
-  
+  const count = Math.min(85, Math.floor((window.innerWidth * window.innerHeight) / 14000));
+
   for (let i = 0; i < count; i++) {
     galaxyStars.push({
       x: Math.random() * galaxyCanvas.width,
       y: Math.random() * galaxyCanvas.height,
-      vx: (Math.random() - 0.5) * 0.45,
-      vy: (Math.random() - 0.5) * 0.45,
-      r: Math.random() * 1.8 + 0.6,
+      r: Math.random() * 1.6 + 0.4,
       color: starColors[Math.floor(Math.random() * starColors.length)],
-      alpha: Math.random() * 0.6 + 0.35,
-      pulse: Math.random() * 0.02 + 0.005
+      angle: Math.random() * Math.PI * 2,
+      speed: (Math.random() * 0.035 + 0.015) * (Math.random() > 0.5 ? 1 : -1),
+      orbit: Math.random() * 100 + 40,
+      ox: Math.random() * galaxyCanvas.width,
+      oy: Math.random() * galaxyCanvas.height,
+      alpha: Math.random() * 0.6 + 0.25,
+      alphaDirection: Math.random() > 0.5 ? 0.004 : -0.004
     });
   }
-  
-  initCard3DTilt();
+
   animateGalaxy();
 }
 
 function animateGalaxy() {
   if (!galaxyCanvas || !gCtx) return;
-  
+
   gCtx.clearRect(0, 0, galaxyCanvas.width, galaxyCanvas.height);
-  const maxDist = 120;
-  
-  for (let i = 0; i < galaxyStars.length; i++) {
-    let s = galaxyStars[i];
-    s.x += s.vx;
-    s.y += s.vy;
-    
-    if (s.x < 0 || s.x > galaxyCanvas.width) s.vx *= -1;
-    if (s.y < 0 || s.y > galaxyCanvas.height) s.vy *= -1;
-    
-    s.alpha += Math.sin(Date.now() * 0.002) * s.pulse * 0.1;
-    s.alpha = Math.max(0.2, Math.min(0.85, s.alpha));
-    
-    // Draw star particle
+
+  galaxyStars.forEach(s => {
+    s.angle += s.speed * 0.03;
+    s.x = s.ox + Math.cos(s.angle) * s.orbit;
+    s.y = s.oy + Math.sin(s.angle) * s.orbit;
+
+    s.alpha += s.alphaDirection;
+    if (s.alpha > 0.8 || s.alpha < 0.25) s.alphaDirection *= -1;
+
     gCtx.save();
     gCtx.globalAlpha = s.alpha;
     gCtx.beginPath();
     gCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
     gCtx.fillStyle = s.color;
-    gCtx.shadowBlur = s.r * 6;
+    gCtx.shadowBlur = s.r * 5;
     gCtx.shadowColor = s.color;
     gCtx.fill();
     gCtx.restore();
-    
-    // Draw constellation connection lines
-    for (let j = i + 1; j < galaxyStars.length; j++) {
-      let s2 = galaxyStars[j];
-      let dx = s.x - s2.x;
-      let dy = s.y - s2.y;
-      let dist = Math.sqrt(dx * dx + dy * dy);
-      
-      if (dist < maxDist) {
-        let lineAlpha = (1 - dist / maxDist) * 0.18;
-        gCtx.save();
-        gCtx.globalAlpha = lineAlpha;
-        gCtx.beginPath();
-        gCtx.moveTo(s.x, s.y);
-        gCtx.lineTo(s2.x, s2.y);
-        gCtx.strokeStyle = s.color;
-        gCtx.lineWidth = 0.7;
-        gCtx.stroke();
-        gCtx.restore();
-      }
-    }
-  }
-  
-  requestAnimationFrame(animateGalaxy);
-}
-
-/* ── 3D Card Tilt Micro-interactions ───────────────────── */
-function initCard3DTilt() {
-  const cards = document.querySelectorAll('.exam-section-card, .subject-card, .analytics-card');
-  cards.forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = ((y - centerY) / centerY) * -5;
-      const rotateY = ((x - centerX) / centerX) * 5;
-      
-      card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
-    });
   });
+
+  requestAnimationFrame(animateGalaxy);
 }
 
 // ── Init ──────────────────────────────────────────────────
@@ -939,13 +818,15 @@ const origInitGallery = initGallery;
 initGallery = function() {
   origInitGallery();
   initGalaxyParticles();
+  updateDailyAvatar();
 };
 
-// ═══════════════════════════════════════════════
-//  RESIZE
-// ═══════════════════════════════════════════════
 window.addEventListener('resize', () => {
-  if (particles && particles.length) { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  if (particles.length) { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
   if (galaxyCanvas) { galaxyCanvas.width = window.innerWidth; galaxyCanvas.height = window.innerHeight; }
+});
+
+window.addEventListener('load', () => {
+  initGallery();
 });
 
