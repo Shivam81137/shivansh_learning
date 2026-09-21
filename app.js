@@ -72,13 +72,6 @@ function updateDailyAvatar() {
 let doneSet = new Set(JSON.parse(localStorage.getItem('shivansh_done_v2') || '[]'));
 let doneDates = JSON.parse(localStorage.getItem('shivansh_done_dates') || '{}');
 
-// Migrate legacy doneSet data to doneDates if missing
-if (doneSet.size > 0 && Object.keys(doneDates).length === 0) {
-  const todayISO = new Date().toISOString();
-  doneSet.forEach(id => doneDates[id] = todayISO);
-  localStorage.setItem('shivansh_done_dates', JSON.stringify(doneDates));
-}
-
 let openSubjects = new Set();
 let openCard = null; // only one chapter open at a time
 
@@ -378,8 +371,8 @@ function renderProgressChart() {
     `;
 
     days.forEach((day, index) => {
-      // Calculate height percentage (6% min baseline when 0, up to 100%)
-      const heightPct = day.count === 0 ? 6 : Math.min(100, Math.round((day.count / maxCount) * 85) + 15);
+      // Calculate height percentage (0% when 0, raising by 25% per chapter up to 100%)
+      const heightPct = day.count === 0 ? 0 : Math.min(100, day.count * 25);
       const countText = `${day.count} Chapter${day.count === 1 ? '' : 's'}`;
       const isToday = index === 6;
 
