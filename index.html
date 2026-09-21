@@ -566,24 +566,20 @@
 <!-- ══════════ ANNUAL & NEW SYLLABUS SECTION WRAPPER ══════════ -->
 <div class="exam-section-card" id="examSection-annual" >
   <div class="esb-glow-ring"></div>
-  <div class="exam-section-banner" onclick="toggleExamSection('annual')" id="esb-annual">
-    <div class="esb-left">
-      <div class="esb-icon-wrap" style="background: linear-gradient(135deg, rgba(6,182,212,0.2) 0%, rgba(16,185,129,0.15) 100%); border-color: rgba(6,182,212,0.35); box-shadow: 0 2px 12px rgba(6,182,212,0.18);">
-        <span class="esb-emoji">🚀</span>
-        <div class="esb-pulse" style="border-color: rgba(6,182,212,0.45);"></div>
-      </div>
-      <div class="esb-info">
-        <div class="esb-label" style="color: #22d3ee; opacity: 0.9;">TERM · 2 &nbsp;·&nbsp; NEW SYLLABUS</div>
-        <div class="esb-title" style="background: linear-gradient(120deg, #ffffff 0%, #22d3ee 55%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Annual &amp; New Syllabus</div>
-        <div class="esb-progress-row">
-          <div class="esb-prog-track"><div class="esb-prog-fill-bar" id="esb-prog-annual" style="width:0%; background: linear-gradient(90deg, #22d3ee, #10b981);"></div></div>
+  <div class="exam-section-banner" onclick="toggleExamSection('annual')" id="esb-annual" style="position: relative; justify-content: center; text-align: center; padding: 18px 20px;">
+    <div class="esb-left" style="justify-content: center; text-align: center; flex-direction: column; gap: 6px; width: 100%;">
+      <div class="esb-info" style="align-items: center; text-align: center;">
+        <div class="esb-title" style="font-size: 20px; font-weight: 800; background: linear-gradient(120deg, #ffffff 0%, #22d3ee 55%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <span>Syllabus 🚀</span>
+        </div>
+        <div class="esb-progress-row" style="justify-content: center;">
+          <div class="esb-prog-track" style="width: 80px;"><div class="esb-prog-fill-bar" id="esb-prog-annual" style="width:0%; background: linear-gradient(90deg, #22d3ee, #10b981);"></div></div>
           <span class="esb-prog-pct" id="esb-pct-annual" style="color: #22d3ee;">0%</span>
           <div class="esb-meta">6 Subjects · 32 Chapters</div>
         </div>
       </div>
     </div>
-    <div class="esb-right">
-      <div class="esb-badge-new" style="background: linear-gradient(135deg, rgba(6,182,212,0.18) 0%, rgba(16,185,129,0.12) 100%); border-color: rgba(6,182,212,0.45); color: #22d3ee;">NEW SYLLABUS ✨</div>
+    <div class="esb-right" style="position: absolute; right: 20px;">
       <div class="esb-chevron" id="esbchev-annual" style="background: rgba(6,182,212,0.08); border-color: rgba(6,182,212,0.25); color: #22d3ee;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
