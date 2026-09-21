@@ -366,49 +366,125 @@
     .subject-body.open { max-height: 8000px; border-top: 1px solid var(--glass-border); }
     .chapters-list { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
 
-    /* Chapter Cards & Interactive Checkmark Glow */
+    /* Chapter Cards & Professional Glassmorphic Theme */
     .chapter-card {
-      background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border);
-      border-radius: 14px; overflow: hidden; transition: all 0.25s var(--ease-out);
+      background: rgba(13, 20, 36, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 14px; overflow: hidden;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition: border-color 0.3s var(--ease-out), background 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
     }
     .chapter-card:hover {
-      background: rgba(255, 255, 255, 0.04); border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(18, 28, 50, 0.7);
+      border-color: rgba(0, 242, 254, 0.35);
+      box-shadow: 0 6px 20px rgba(0, 242, 254, 0.12), inset 0 1px 0 rgba(0, 242, 254, 0.15);
+      transform: none !important;
     }
     .chapter-card.done-card {
-      background: rgba(0, 245, 160, 0.04); border-color: rgba(0, 245, 160, 0.3);
+      background: rgba(0, 245, 160, 0.05);
+      border-color: rgba(0, 245, 160, 0.35);
+      box-shadow: 0 4px 20px rgba(0, 245, 160, 0.12), inset 0 1px 0 rgba(0, 245, 160, 0.2);
     }
 
     .card-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 16px; cursor: pointer; user-select: none; gap: 10px;
+      padding: 14px 18px; cursor: pointer; user-select: none; gap: 14px;
     }
-    .card-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
-    .chapter-num {
-      width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(255, 255, 255, 0.06); border: 1px solid var(--glass-border);
-      font-weight: 800; font-size: 13px; color: var(--text-white);
-    }
-    .chapter-info { min-width: 0; flex: 1; }
-    .chapter-name { font-size: 13.5px; font-weight: 700; color: var(--text-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .chapter-meta { font-size: 10.5px; color: var(--text-gray); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    .card-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .card-left { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0; }
     
-    /* Interactive Checkmark Transition: Slate -> Soft Emerald Green */
+    .chapter-num {
+      min-width: 48px; height: 38px; border-radius: 10px; flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.12) 0%, rgba(157, 78, 221, 0.08) 100%);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+      padding: 0 8px; transition: all 0.3s var(--ease-out);
+    }
+    .ch-label {
+      font-size: 8px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--neon-cyan); line-height: 1; opacity: 0.9; margin-bottom: 1px;
+    }
+    .ch-number {
+      font-size: 15px; font-weight: 800; color: #FFFFFF; line-height: 1;
+      text-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
+    }
+
+    /* Subject-specific badge accent colors */
+    .maths-num { background: rgba(251, 191, 36, 0.12); border-color: rgba(251, 191, 36, 0.3); }
+    .maths-num .ch-label { color: #fbbf24; }
+    .maths-num .ch-number { text-shadow: 0 0 8px rgba(251, 191, 36, 0.4); }
+
+    .eng-num { background: rgba(192, 132, 252, 0.12); border-color: rgba(192, 132, 252, 0.3); }
+    .eng-num .ch-label { color: #c084fc; }
+    .eng-num .ch-number { text-shadow: 0 0 8px rgba(192, 132, 252, 0.4); }
+
+    .chem-num { background: rgba(0, 242, 254, 0.12); border-color: rgba(0, 242, 254, 0.3); }
+    .chem-num .ch-label { color: #00f2fe; }
+    .chem-num .ch-number { text-shadow: 0 0 8px rgba(0, 242, 254, 0.4); }
+
+    .phys-num { background: rgba(157, 78, 221, 0.12); border-color: rgba(157, 78, 221, 0.3); }
+    .phys-num .ch-label { color: #9d4edd; }
+    .phys-num .ch-number { text-shadow: 0 0 8px rgba(157, 78, 221, 0.4); }
+
+    .bio-num { background: rgba(0, 245, 160, 0.12); border-color: rgba(0, 245, 160, 0.3); }
+    .bio-num .ch-label { color: #00f5a0; }
+    .bio-num .ch-number { text-shadow: 0 0 8px rgba(0, 245, 160, 0.4); }
+
+    .hist-num { background: rgba(251, 146, 60, 0.12); border-color: rgba(251, 146, 60, 0.3); }
+    .hist-num .ch-label { color: #fb923c; }
+    .hist-num .ch-number { text-shadow: 0 0 8px rgba(251, 146, 60, 0.4); }
+
+    .geo-num { background: rgba(45, 212, 191, 0.12); border-color: rgba(45, 212, 191, 0.3); }
+    .geo-num .ch-label { color: #2dd4bf; }
+    .geo-num .ch-number { text-shadow: 0 0 8px rgba(45, 212, 191, 0.4); }
+
+    .comp-num { background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.3); }
+    .comp-num .ch-label { color: #38bdf8; }
+    .comp-num .ch-number { text-shadow: 0 0 8px rgba(56, 189, 248, 0.4); }
+
+    .chapter-info { min-width: 0; flex: 1; }
+    .chapter-name {
+      font-size: 15px; font-weight: 700; color: #F8FAFC;
+      letter-spacing: 0.2px; line-height: 1.35;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      transition: color 0.25s var(--ease-out);
+    }
+    .chapter-card:hover .chapter-name {
+      color: #00F2FE; text-shadow: 0 0 10px rgba(0, 242, 254, 0.35);
+    }
+    .chapter-meta {
+      font-size: 11.5px; font-weight: 500; color: #94A3B8; margin-top: 3px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .card-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    
     .done-btn {
-      width: 30px; height: 30px; border-radius: 50%;
-      border: 1.5px solid var(--text-muted); background: transparent; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.3s var(--ease-out); color: var(--text-muted); font-size: 12px;
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.18); background: rgba(255, 255, 255, 0.04);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s var(--ease-out); color: var(--text-muted); font-size: 12px;
+    }
+    .done-btn:hover {
+      border-color: var(--neon-emerald); color: var(--neon-emerald);
+      background: rgba(0, 245, 160, 0.12); box-shadow: 0 0 12px rgba(0, 245, 160, 0.3);
     }
     .done-btn.done {
-      border-color: var(--neon-emerald); background: var(--neon-emerald); color: #04070c;
-      box-shadow: 0 0 12px rgba(0, 245, 160, 0.4); font-weight: 800;
+      border-color: var(--neon-emerald); background: linear-gradient(135deg, #00F5A0 0%, #00D2FF 100%);
+      color: #04070c; font-size: 14px; font-weight: 800;
+      box-shadow: 0 0 14px rgba(0, 245, 160, 0.5);
     }
 
-    .chevron { color: var(--text-gray); font-size: 12px; transition: transform 0.3s; }
-    .chevron.open { transform: rotate(180deg); color: var(--neon-cyan); }
+    .chevron {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-gray); font-size: 11px; transition: all 0.3s;
+    }
+    .chevron.open {
+      transform: rotate(180deg); color: var(--neon-cyan);
+      border-color: rgba(0, 242, 254, 0.35); background: rgba(0, 242, 254, 0.1);
+    }
 
     .card-body { max-height: 0; overflow: hidden; transition: max-height 0.4s var(--ease-out); padding: 0 16px; }
     .card-body.open { max-height: 800px; padding: 6px 16px 14px; }
