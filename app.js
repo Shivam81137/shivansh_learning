@@ -1,6 +1,6 @@
 /* ============================================================
    SHIVANSH'S STUDY HUB — app.js  v4.0
-   7 Subjects: Maths, Chem, Phys, Bio, History, Geo, Computer
+   8 Subjects: Maths, Chem, Phys, Bio, History, Geo, Computer, IMO
    ============================================================ */
 
 // ── Subject & chapter definitions ─────────────────────────
@@ -19,10 +19,12 @@ const SUBJECTS = {
   geo:   { name: 'Geography (Term 1)',           total: 3,  badge: 'geo-badge',   prog: 'prog-geo',   chevron: 'schev-geo',   body: 'sbody-geo',   chapters: ['g3','g4','g5'] },
   ageo:  { name: 'Geography (New Syllabus)',     total: 4,  badge: 'ageo-badge',  prog: 'prog-ageo',  chevron: 'schev-ageo',  body: 'sbody-ageo',  chapters: ['ag6','ag7','ag8','ag9'] },
   comp:  { name: 'Computer (Term 1)',            total: 2,  badge: 'comp-badge',  prog: 'prog-comp',  chevron: 'schev-comp',  body: 'sbody-comp',  chapters: ['cp3','cp5'] },
+  acomp: { name: 'Computer (New Syllabus)',     total: 1,  badge: 'acomp-badge', prog: 'prog-acomp', chevron: 'schev-acomp', body: 'sbody-acomp', chapters: ['acp4'] },
+  aimo:  { name: 'IMO',                        total: 10, badge: 'aimo-badge',  prog: 'prog-aimo',  chevron: 'schev-aimo',  body: 'sbody-aimo',  chapters: ['aimo1','aimo2','aimo3','aimo4','aimo5','aimo6','aimo7','aimo8','aimo9','aimo10'] },
 };
 
 const ALL_CHAPTER_IDS = Object.values(SUBJECTS).flatMap(s => s.chapters);
-const TOTAL_CHAPTERS = ALL_CHAPTER_IDS.length; // 22
+const TOTAL_CHAPTERS = ALL_CHAPTER_IDS.length; // 75
 
 // ── All Photos for Gallery & Daily Rotation ─────────────
 const SHIVANSH_PHOTOS = [
@@ -297,7 +299,7 @@ function updateAllProgress() {
   if (hyFill) hyFill.style.width = hyPct + '%';
   if (hyPctEl) hyPctEl.textContent = hyPct + '%';
 
-  const anChapters = ['am11','am12','am13','am14','am15','am16','am17','am18','am19','am20','am21','am22','am23','am24','am25','ag6','ag7','ag8','ag9','ab5','ab6','ab7','ab8','ah6','ah7','ah8','ah9','ap3','ap4','ap5','ac4','ac5'];
+  const anChapters = ['am11','am12','am13','am14','am15','am16','am17','am18','am19','am20','am21','am22','am23','am24','am25','ag6','ag7','ag8','ag9','ab5','ab6','ab7','ab8','ah6','ah7','ah8','ah9','ap3','ap4','ap5','ac4','ac5','acp4','aimo1','aimo2','aimo3','aimo4','aimo5','aimo6','aimo7','aimo8','aimo9','aimo10'];
   const anDone = anChapters.filter(c => doneSet.has(c)).length;
   const anPct = Math.round((anDone / anChapters.length) * 100);
   const anFill = document.getElementById('esb-prog-annual');

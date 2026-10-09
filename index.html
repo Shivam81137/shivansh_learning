@@ -361,6 +361,7 @@
     .hist-fill  { background: #fb923c; box-shadow: 0 0 10px #fb923c; }
     .geo-fill   { background: #2dd4bf; box-shadow: 0 0 10px #2dd4bf; }
     .comp-fill  { background: #38bdf8; box-shadow: 0 0 10px #38bdf8; }
+    .imo-fill   { background: #ffd700; box-shadow: 0 0 10px #ffd700; }
 
     .subject-body { max-height: 0; overflow: hidden; transition: max-height 0.5s var(--ease-out); }
     .subject-body.open { max-height: 8000px; border-top: 1px solid var(--glass-border); }
@@ -441,6 +442,10 @@
     .comp-num { background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.3); }
     .comp-num .ch-label { color: #38bdf8; }
     .comp-num .ch-number { text-shadow: 0 0 8px rgba(56, 189, 248, 0.4); }
+
+    .imo-num { background: rgba(255, 215, 0, 0.12); border-color: rgba(255, 215, 0, 0.3); }
+    .imo-num .ch-label { color: #ffd700; }
+    .imo-num .ch-number { text-shadow: 0 0 8px rgba(255, 215, 0, 0.4); }
 
     .chapter-info { min-width: 0; flex: 1; }
     .chapter-name {
@@ -632,6 +637,7 @@
       <button class="filter-pill" id="tab-hist" onclick="filterSubject('hist')">🏛️ History</button>
       <button class="filter-pill" id="tab-geo" onclick="filterSubject('geo')">🌍 Geo</button>
       <button class="filter-pill" id="tab-comp" onclick="filterSubject('comp')">💻 Computer</button>
+      <button class="filter-pill" id="tab-imo" onclick="filterSubject('imo')">🏅 IMO</button>
     </nav>
 
     <!-- MAIN SYLLABUS ACCORDIONS -->
@@ -651,7 +657,7 @@
         <div class="esb-progress-row" style="justify-content: center;">
           <div class="esb-prog-track" style="width: 80px;"><div class="esb-prog-fill-bar" id="esb-prog-annual" style="width:0%; background: linear-gradient(90deg, #22d3ee, #10b981);"></div></div>
           <span class="esb-prog-pct" id="esb-pct-annual" style="color: #22d3ee;">0%</span>
-          <div class="esb-meta">6 Subjects · 32 Chapters</div>
+          <div class="esb-meta">8 Subjects · 43 Chapters</div>
         </div>
       </div>
     </div>
@@ -1262,6 +1268,198 @@
           </div>
         </div>
       </div><!-- /subj-achem -->
+
+      <!-- ══════════ COMPUTER (NEW SYLLABUS) ══════════ -->
+      <div class="subject-card" id="subj-acomp" data-subject="comp">
+        <div class="subject-banner" onclick="toggleSubject('acomp')" style="--bg:url('img/computer.png')">
+          <div class="sb-img"></div>
+          <div class="sb-overlay comp-overlay"></div>
+          <div class="sb-content">
+            <div class="sb-top">
+              <div class="sb-icon">💻</div>
+              <div class="sb-badge" id="acomp-badge">0 / 1</div>
+            </div>
+            <div class="sb-bottom">
+              <div class="sb-title">Computer</div>
+              <div class="sb-meta">1 Chapter · EduBlocks &amp; Turtle · Term 2</div>
+              <div class="sb-prog-bar"><div class="sb-prog-fill comp-fill" id="prog-acomp" style="width:0%"></div></div>
+            </div>
+          </div>
+          <div class="sb-chevron" id="schev-acomp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="subject-body" id="sbody-acomp">
+          <div class="chapters-list">
+
+            <!-- Ch acp4 – Coding with EduBlocks & Draw Using Turtle -->
+            <div class="chapter-card" id="card-acp4" data-chapter="acp4" data-subj="comp">
+              <div class="card-header" onclick="toggleCard('acp4')">
+                <div class="card-left"><div class="chapter-num comp-num"><span class="ch-label">CH</span><span class="ch-number">4</span></div><div class="chapter-info"><div class="chapter-name">Coding with EduBlocks &amp; Draw Using Turtle in Edublocks</div><div class="chapter-meta">EduBlocks · Coding · Turtle Graphics · Drawing</div></div></div>
+                <div class="card-right"><button class="done-btn" id="done-acp4" onclick="toggleDone('acp4',event)">○</button><div class="chevron" id="chev-acp4">▾</div></div>
+              </div>
+              <div class="card-body" id="body-acp4">
+                <div class="card-divider"></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('acp4-1','nZs48vYVgX4')" id="thumb-acp4-1"><img src="https://img.youtube.com/vi/nZs48vYVgX4/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 4 – Coding with EduBlocks &amp; Turtle</div></div><div class="video-iframe-container" id="iframe-acp4-1" style="display:none"><iframe id="yt-acp4-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('acp4-1')">✕ Close</button></div></div>
+                <div class="action-row"><a href="https://www.youtube.com/watch?v=nZs48vYVgX4" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- /subj-acomp -->
+
+      <!-- ══════════ IMO (NEW SYLLABUS) ══════════ -->
+      <div class="subject-card" id="subj-aimo" data-subject="imo">
+        <div class="subject-banner" onclick="toggleSubject('aimo')" style="--bg:url('img/imo.png')">
+          <div class="sb-img"></div>
+          <div class="sb-overlay imo-overlay"></div>
+          <div class="sb-content">
+            <div class="sb-top">
+              <div class="sb-icon">🏅</div>
+              <div class="sb-badge" id="aimo-badge">0 / 10</div>
+            </div>
+            <div class="sb-bottom">
+              <div class="sb-title">IMO</div>
+              <div class="sb-meta">10 Chapters · Ch 1–10 · Olympiad</div>
+              <div class="sb-prog-bar"><div class="sb-prog-fill imo-fill" id="prog-aimo" style="width:0%"></div></div>
+            </div>
+          </div>
+          <div class="sb-chevron" id="schev-aimo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="subject-body" id="sbody-aimo">
+          <div class="chapters-list">
+
+            <!-- Ch aimo1 – Know Our Numbers -->
+            <div class="chapter-card" id="card-aimo1" data-chapter="aimo1" data-subj="imo">
+              <div class="card-header" onclick="toggleCard('aimo1')">
+                <div class="card-left"><div class="chapter-num imo-num"><span class="ch-label">CH</span><span class="ch-number">1</span></div><div class="chapter-info"><div class="chapter-name">Know Our Numbers</div><div class="chapter-meta">Comparing Numbers · Large Numbers · Estimation · Roman Numerals</div></div></div>
+                <div class="card-right"><button class="done-btn" id="done-aimo1" onclick="toggleDone('aimo1',event)">○</button><div class="chevron" id="chev-aimo1">▾</div></div>
+              </div>
+              <div class="card-body" id="body-aimo1">
+                <div class="card-divider"></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('aimo1-1','oiqJVI8EZQQ')" id="thumb-aimo1-1"><img src="https://img.youtube.com/vi/oiqJVI8EZQQ/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 1 – Know Our Numbers</div></div><div class="video-iframe-container" id="iframe-aimo1-1" style="display:none"><iframe id="yt-aimo1-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('aimo1-1')">✕ Close</button></div></div>
+                <div class="action-row"><a href="https://www.youtube.com/watch?v=oiqJVI8EZQQ" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+              </div>
+            </div>
+
+            <!-- Ch aimo2 – Number Systems -->
+            <div class="chapter-card" id="card-aimo2" data-chapter="aimo2" data-subj="imo">
+              <div class="card-header" onclick="toggleCard('aimo2')">
+                <div class="card-left"><div class="chapter-num imo-num"><span class="ch-label">CH</span><span class="ch-number">2</span></div><div class="chapter-info"><div class="chapter-name">Number Systems</div><div class="chapter-meta">Place Value · Face Value · Indian &amp; International Systems · Expanded Form</div></div></div>
+                <div class="card-right"><button class="done-btn" id="done-aimo2" onclick="toggleDone('aimo2',event)">○</button><div class="chevron" id="chev-aimo2">▾</div></div>
+              </div>
+              <div class="card-body" id="body-aimo2">
+                <div class="card-divider"></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('aimo2-1','gzWIIdxb_Uc')" id="thumb-aimo2-1"><img src="https://img.youtube.com/vi/gzWIIdxb_Uc/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 2 – Number Systems</div></div><div class="video-iframe-container" id="iframe-aimo2-1" style="display:none"><iframe id="yt-aimo2-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('aimo2-1')">✕ Close</button></div></div>
+                <div class="action-row"><a href="https://www.youtube.com/watch?v=gzWIIdxb_Uc" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+              </div>
+            </div>
+
+            <!-- Ch aimo3 – Playing with Numbers -->
+            <div class="chapter-card" id="card-aimo3" data-chapter="aimo3" data-subj="imo">
+              <div class="card-header" onclick="toggleCard('aimo3')">
+                <div class="card-left"><div class="chapter-num imo-num"><span class="ch-label">CH</span><span class="ch-number">3</span></div><div class="chapter-info"><div class="chapter-name">Playing with Numbers</div><div class="chapter-meta">Factors &amp; Multiples · Prime &amp; Composite · Divisibility Rules · HCF &amp; LCM</div></div></div>
+                <div class="card-right"><button class="done-btn" id="done-aimo3" onclick="toggleDone('aimo3',event)">○</button><div class="chevron" id="chev-aimo3">▾</div></div>
+              </div>
+              <div class="card-body" id="body-aimo3">
+                <div class="card-divider"></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('aimo3-1','fJxzfooKceE')" id="thumb-aimo3-1"><img src="https://img.youtube.com/vi/fJxzfooKceE/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 3 – Playing with Numbers</div></div><div class="video-iframe-container" id="iframe-aimo3-1" style="display:none"><iframe id="yt-aimo3-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('aimo3-1')">✕ Close</button></div></div>
+                <div class="action-row"><a href="https://www.youtube.com/watch?v=fJxzfooKceE" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+              </div>
+            </div>
+
+            <!-- Ch aimo4 – Integers -->
+            <div class="chapter-card" id="card-aimo4" data-chapter="aimo4" data-subj="imo">
+              <div class="card-header" onclick="toggleCard('aimo4')">
+                <div class="card-left"><div class="chapter-num imo-num"><span class="ch-label">CH</span><span class="ch-number">4</span></div><div class="chapter-info"><div class="chapter-name">Integers</div><div class="chapter-meta">Positive &amp; Negative Numbers · Number Line · Addition &amp; Subtraction</div></div></div>
+                <div class="card-right"><button class="done-btn" id="done-aimo4" onclick="toggleDone('aimo4',event)">○</button><div class="chevron" id="chev-aimo4">▾</div></div>
+              </div>
+              <div class="card-body" id="body-aimo4">
+                <div class="card-divider"></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('aimo4-1','EJYbJj3hFaQ')" id="thumb-aimo4-1"><img src="https://img.youtube.com/vi/EJYbJj3hFaQ/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 4 – Integers</div></div><div class="video-iframe-container" id="iframe-aimo4-1" style="display:none"><iframe id="yt-aimo4-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('aimo4-1')">✕ Close</button></div></div>
+                <div class="action-row"><a href="https://www.youtube.com/watch?v=EJYbJj3hFaQ" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+              </div>
+            </div>
+
+            <!-- Ch aimo5 – Fraction -->
+            <div class="chapter-card" id="card-aimo5" data-chapter="aimo5" data-subj="imo">
+              <div class="card-header" onclick="toggleCard('aimo5')">
+                <div class="card-left"><div class="chapter-num imo-num"><span class="ch-label">CH</span><span class="ch-number">5</span></div><div class="chapter-info"><div class="chapter-name">Fraction</div><div class="chapter-meta">Proper, Improper &amp; Mixed Fractions · Equivalent · Operations</div></div></div>
+                <div class="card-right"><button class="done-btn" id="done-aimo5" onclick="toggleDone('aimo5',event)">○</button><div class="chevron" id="chev-aimo5">▾</div></div>
+              </div>
+              <div class="card-body" id="body-aimo5">
+                <div class="card-divider"></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('aimo5-1','rEvO5iE-WzM')" id="thumb-aimo5-1"><img src="https://img.youtube.com/vi/rEvO5iE-WzM/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 5 – Fraction</div></div><div class="video-iframe-container" id="iframe-aimo5-1" style="display:none"><iframe id="yt-aimo5-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('aimo5-1')">✕ Close</button></div></div>
+                <div class="action-row"><a href="https://www.youtube.com/watch?v=rEvO5iE-WzM" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+              </div>
+            </div>
+
+            <!-- Ch aimo6 – Decimals -->
+            <div class="chapter-card" id="card-aimo6" data-chapter="aimo6" data-subj="imo">
+              <div class="card-header" onclick="toggleCard('aimo6')">
+                <div class="card-left"><div class="chapter-num imo-num"><span class="ch-label">CH</span><span class="ch-number">6</span></div><div class="chapter-info"><div class="chapter-name">Decimals</div><div class="chapter-meta">Tenths &amp; Hundredths · Comparison · Addition &amp; Subtraction · Word Problems</div></div></div>
+                <div class="card-right"><button class="done-btn" id="done-aimo6" onclick="toggleDone('aimo6',event)">○</button><div class="chevron" id="chev-aimo6">▾</div></div>
+              </div>
+              <div class="card-body" id="body-aimo6">
+                <div class="card-divider"></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('aimo6-1','4lkhORzn18c')" id="thumb-aimo6-1"><img src="https://img.youtube.com/vi/4lkhORzn18c/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 6 – Decimals</div></div><div class="video-iframe-container" id="iframe-aimo6-1" style="display:none"><iframe id="yt-aimo6-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('aimo6-1')">✕ Close</button></div></div>
+                <div class="action-row"><a href="https://www.youtube.com/watch?v=4lkhORzn18c" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+              </div>
+            </div>
+
+            <!-- Ch aimo7 – Algebra -->
+            <div class="chapter-card" id="card-aimo7" data-chapter="aimo7" data-subj="imo">
+              <div class="card-header" onclick="toggleCard('aimo7')">
+                <div class="card-left"><div class="chapter-num imo-num"><span class="ch-label">CH</span><span class="ch-number">7</span></div><div class="chapter-info"><div class="chapter-name">Algebra</div><div class="chapter-meta">Introduction to Variables · Expressions · Simple Equations</div></div></div>
+                <div class="card-right"><button class="done-btn" id="done-aimo7" onclick="toggleDone('aimo7',event)">○</button><div class="chevron" id="chev-aimo7">▾</div></div>
+              </div>
+              <div class="card-body" id="body-aimo7">
+                <div class="card-divider"></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('aimo7-1','k92epPma0gk')" id="thumb-aimo7-1"><img src="https://img.youtube.com/vi/k92epPma0gk/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 7 – Algebra</div></div><div class="video-iframe-container" id="iframe-aimo7-1" style="display:none"><iframe id="yt-aimo7-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('aimo7-1')">✕ Close</button></div></div>
+                <div class="action-row"><a href="https://www.youtube.com/watch?v=k92epPma0gk" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+              </div>
+            </div>
+
+            <!-- Ch aimo8 – Ratio, Proportion & Unitary Method -->
+            <div class="chapter-card" id="card-aimo8" data-chapter="aimo8" data-subj="imo">
+              <div class="card-header" onclick="toggleCard('aimo8')">
+                <div class="card-left"><div class="chapter-num imo-num"><span class="ch-label">CH</span><span class="ch-number">8</span></div><div class="chapter-info"><div class="chapter-name">Ratio, Proportion &amp; Unitary Method</div><div class="chapter-meta">Concept of Ratio · Proportion · Unitary Method Application</div></div></div>
+                <div class="card-right"><button class="done-btn" id="done-aimo8" onclick="toggleDone('aimo8',event)">○</button><div class="chevron" id="chev-aimo8">▾</div></div>
+              </div>
+              <div class="card-body" id="body-aimo8">
+                <div class="card-divider"></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('aimo8-1','XamaF7LEYIE')" id="thumb-aimo8-1"><img src="https://img.youtube.com/vi/XamaF7LEYIE/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 8 – Ratio, Proportion &amp; Unitary Method</div></div><div class="video-iframe-container" id="iframe-aimo8-1" style="display:none"><iframe id="yt-aimo8-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('aimo8-1')">✕ Close</button></div></div>
+                <div class="action-row"><a href="https://www.youtube.com/watch?v=XamaF7LEYIE" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+              </div>
+            </div>
+
+            <!-- Ch aimo9 – Mensuration -->
+            <div class="chapter-card" id="card-aimo9" data-chapter="aimo9" data-subj="imo">
+              <div class="card-header" onclick="toggleCard('aimo9')">
+                <div class="card-left"><div class="chapter-num imo-num"><span class="ch-label">CH</span><span class="ch-number">9</span></div><div class="chapter-info"><div class="chapter-name">Mensuration</div><div class="chapter-meta">Perimeter of Regular Shapes · Area of Rectangle &amp; Square</div></div></div>
+                <div class="card-right"><button class="done-btn" id="done-aimo9" onclick="toggleDone('aimo9',event)">○</button><div class="chevron" id="chev-aimo9">▾</div></div>
+              </div>
+              <div class="card-body" id="body-aimo9">
+                <div class="card-divider"></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('aimo9-1','lvSlbOLQM8g')" id="thumb-aimo9-1"><img src="https://img.youtube.com/vi/lvSlbOLQM8g/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 9 – Mensuration</div></div><div class="video-iframe-container" id="iframe-aimo9-1" style="display:none"><iframe id="yt-aimo9-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('aimo9-1')">✕ Close</button></div></div>
+                <div class="action-row"><a href="https://www.youtube.com/watch?v=lvSlbOLQM8g" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+              </div>
+            </div>
+
+            <!-- Ch aimo10 – Geometry -->
+            <div class="chapter-card" id="card-aimo10" data-chapter="aimo10" data-subj="imo">
+              <div class="card-header" onclick="toggleCard('aimo10')">
+                <div class="card-left"><div class="chapter-num imo-num"><span class="ch-label">CH</span><span class="ch-number">10</span></div><div class="chapter-info"><div class="chapter-name">Geometry</div><div class="chapter-meta">Basic Geometrical Ideas · 2D &amp; 3D Shapes · Angles · Triangles &amp; Circles</div></div></div>
+                <div class="card-right"><button class="done-btn" id="done-aimo10" onclick="toggleDone('aimo10',event)">○</button><div class="chevron" id="chev-aimo10">▾</div></div>
+              </div>
+              <div class="card-body" id="body-aimo10">
+                <div class="card-divider"></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('aimo10-1','r8XBwcdQh8g')" id="thumb-aimo10-1"><img src="https://img.youtube.com/vi/r8XBwcdQh8g/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 10 – Geometry</div></div><div class="video-iframe-container" id="iframe-aimo10-1" style="display:none"><iframe id="yt-aimo10-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('aimo10-1')">✕ Close</button></div></div>
+                <div class="action-row"><a href="https://www.youtube.com/watch?v=r8XBwcdQh8g" target="_blank" class="yt-link-btn">🎬 YouTube</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /subj-aimo -->
 
     </div><!-- /subjects-list -->
   </div><!-- /exam-section-body -->
@@ -1974,11 +2172,13 @@
       ahist: { name: 'History', total: 4, badge: 'ahist-badge', prog: 'prog-ahist', chevron: 'schev-ahist', body: 'sbody-ahist', chapters: ['ah6','ah7','ah8','ah9'] },
       geo:   { name: 'Geography (Term 1)', total: 3, badge: 'geo-badge', prog: 'prog-geo', chevron: 'schev-geo', body: 'sbody-geo', chapters: ['g3','g4','g5'] },
       ageo:  { name: 'Geography', total: 4, badge: 'ageo-badge', prog: 'prog-ageo', chevron: 'schev-ageo', body: 'sbody-ageo', chapters: ['ag6','ag7','ag8','ag9'] },
-      comp:  { name: 'Computer (Term 1)', total: 2, badge: 'comp-badge', prog: 'prog-comp', chevron: 'schev-comp', body: 'sbody-comp', chapters: ['cp3','cp5'] }
+      comp:  { name: 'Computer (Term 1)', total: 2, badge: 'comp-badge', prog: 'prog-comp', chevron: 'schev-comp', body: 'sbody-comp', chapters: ['cp3','cp5'] },
+      acomp: { name: 'Computer', total: 1, badge: 'acomp-badge', prog: 'prog-acomp', chevron: 'schev-acomp', body: 'sbody-acomp', chapters: ['acp4'] },
+      aimo:  { name: 'IMO', total: 10, badge: 'aimo-badge', prog: 'prog-aimo', chevron: 'schev-aimo', body: 'sbody-aimo', chapters: ['aimo1','aimo2','aimo3','aimo4','aimo5','aimo6','aimo7','aimo8','aimo9','aimo10'] }
     };
 
     const ALL_CHAPTER_IDS = Object.values(SUBJECTS).flatMap(s => s.chapters);
-    const TOTAL_CHAPTERS = ALL_CHAPTER_IDS.length; // 65
+    const TOTAL_CHAPTERS = ALL_CHAPTER_IDS.length; // 75
 
     // State management
     let doneSet = new Set(JSON.parse(localStorage.getItem('shivansh_done_v2') || '[]'));
@@ -2264,6 +2464,23 @@
         if (b) b.textContent = `${count} / ${data.total}`;
         if (p) p.style.width = Math.round((count / data.total) * 100) + '%';
       });
+
+      // Exam Section progress bars (Half-Yearly & Annual/New Syllabus)
+      const hyChapters = ['m4','m5','m6','m7','m8','m9','m10','e7','e8','e9','e10','e11','e12','e13','e22','e25','e27','e28','c2','c3','p2','p3','b3','b4','h2','h3','h4','h5','g3','g4','g5','cp3','cp5'];
+      const hyDone = hyChapters.filter(c => doneSet.has(c)).length;
+      const hyPct = Math.round((hyDone / hyChapters.length) * 100);
+      const hyFill = document.getElementById('esb-prog-halfyearly');
+      const hyPctEl = document.getElementById('esb-pct-halfyearly');
+      if (hyFill) hyFill.style.width = hyPct + '%';
+      if (hyPctEl) hyPctEl.textContent = hyPct + '%';
+
+      const anChapters = ['am11','am12','am13','am14','am15','am16','am17','am18','am19','am20','am21','am22','am23','am24','am25','ag6','ag7','ag8','ag9','ab5','ab6','ab7','ab8','ah6','ah7','ah8','ah9','ap3','ap4','ap5','ac4','ac5','acp4','aimo1','aimo2','aimo3','aimo4','aimo5','aimo6','aimo7','aimo8','aimo9','aimo10'];
+      const anDone = anChapters.filter(c => doneSet.has(c)).length;
+      const anPct = Math.round((anDone / anChapters.length) * 100);
+      const anFill = document.getElementById('esb-prog-annual');
+      const anPctEl = document.getElementById('esb-pct-annual');
+      if (anFill) anFill.style.width = anPct + '%';
+      if (anPctEl) anPctEl.textContent = anPct + '%';
     }
 
     function filterSubject(filter) {

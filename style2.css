@@ -466,6 +466,9 @@ img{decoding:async;max-width:100%}
 .subject-card[data-subject="geo"]:hover{box-shadow:0 12px 40px rgba(0,0,0,0.7), 0 0 25px rgba(45,212,191,0.35), inset 0 0 30px rgba(45,212,191,0.12);border-color:rgba(45,212,191,0.8);}
 .subject-card[data-subject="comp"] {border:1px solid rgba(56,189,248,0.35);box-shadow:0 6px 24px rgba(56,189,248,0.1), inset 0 0 20px rgba(56,189,248,0.04);}
 .subject-card[data-subject="comp"]:hover{box-shadow:0 12px 40px rgba(0,0,0,0.7), 0 0 25px rgba(56,189,248,0.35), inset 0 0 30px rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.8);}
+.subject-card[data-subject="imo"]  {border:1px solid rgba(255,215,0,0.35);box-shadow:0 6px 24px rgba(255,215,0,0.15), 0 0 20px rgba(255,215,0,0.08), inset 0 0 20px rgba(255,215,0,0.04);animation:imoGlow 2.5s ease-in-out infinite alternate;}
+.subject-card[data-subject="imo"]:hover{box-shadow:0 12px 40px rgba(0,0,0,0.7), 0 0 35px rgba(255,215,0,0.45), 0 0 60px rgba(255,215,0,0.2), inset 0 0 30px rgba(255,215,0,0.12);border-color:rgba(255,215,0,0.9);}
+@keyframes imoGlow{0%{box-shadow:0 6px 24px rgba(255,215,0,0.1), 0 0 15px rgba(255,215,0,0.06), inset 0 0 20px rgba(255,215,0,0.04);border-color:rgba(255,215,0,0.3);}100%{box-shadow:0 6px 30px rgba(255,215,0,0.25), 0 0 30px rgba(255,215,0,0.15), inset 0 0 25px rgba(255,215,0,0.08);border-color:rgba(255,215,0,0.55);}}
 
 /* Banner */
 .subject-banner{position:relative;height:170px;cursor:pointer;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;}
@@ -478,6 +481,7 @@ img{decoding:async;max-width:100%}
 [data-subject="hist"]  .sb-img{background-image:url('img/history.png')}
 [data-subject="geo"]   .sb-img{background-image:url('img/geography.png')}
 [data-subject="comp"]  .sb-img{background-image:url('img/computer.png')}
+[data-subject="imo"]   .sb-img{background-image:url('img/imo.png')}
 
 .sb-overlay{position:absolute;inset:0}
 .maths-overlay{background:linear-gradient(135deg,rgba(2,12,8,.90) 0%,rgba(0,120,60,.48) 100%)}
@@ -488,6 +492,7 @@ img{decoding:async;max-width:100%}
 .hist-overlay {background:linear-gradient(135deg,rgba(2,12,8,.90) 0%,rgba(140,50,10,.5) 100%)}
 .geo-overlay  {background:linear-gradient(135deg,rgba(2,12,8,.90) 0%,rgba(0,100,90,.5) 100%)}
 .comp-overlay {background:linear-gradient(135deg,rgba(2,12,8,.90) 0%,rgba(10,80,140,.5) 100%)}
+.imo-overlay  {background:linear-gradient(135deg,rgba(12,8,2,.90) 0%,rgba(180,140,0,.55) 100%)}
 
 .sb-content{position:relative;z-index:2;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;height:100%}
 .sb-top{display:flex;align-items:flex-start;justify-content:space-between}
@@ -505,6 +510,7 @@ img{decoding:async;max-width:100%}
 .hist-fill {background:linear-gradient(90deg,#fb923c,#ea580c);box-shadow:0 0 10px rgba(251,146,60,.5)}
 .geo-fill  {background:linear-gradient(90deg,#2dd4bf,#0d9488);box-shadow:0 0 10px rgba(45,212,191,.5)}
 .comp-fill {background:linear-gradient(90deg,#38bdf8,#0284c7);box-shadow:0 0 10px rgba(56,189,248,.5)}
+.imo-fill  {background:linear-gradient(90deg,#ffd700,#f59e0b);box-shadow:0 0 10px rgba(255,215,0,.5)}
 
 /* Chevron */
 .sb-chevron{position:absolute;right:16px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);z-index:3;transition:transform .35s var(--ease),background var(--t-f);color:white}
@@ -537,6 +543,7 @@ img{decoding:async;max-width:100%}
 .chapter-card[data-subj="hist"]{border:1px solid rgba(251,146,60,0.3);box-shadow:0 0 14px rgba(251,146,60,0.1), inset 0 0 12px rgba(251,146,60,0.04);}
 .chapter-card[data-subj="geo"]{border:1px solid rgba(45,212,191,0.3);box-shadow:0 0 14px rgba(45,212,191,0.1), inset 0 0 12px rgba(45,212,191,0.04);}
 .chapter-card[data-subj="comp"]{border:1px solid rgba(56,189,248,0.3);box-shadow:0 0 14px rgba(56,189,248,0.1), inset 0 0 12px rgba(56,189,248,0.04);}
+.chapter-card[data-subj="imo"]{border:1px solid rgba(255,215,0,0.3);box-shadow:0 0 14px rgba(255,215,0,0.1), inset 0 0 12px rgba(255,215,0,0.04);}
 
 .chapter-card:hover{transform:translateY(-2px) scale(1.01);background:rgba(0,255,170,0.04);}
 .chapter-card[data-subj="maths"]:hover{border-color:rgba(0,255,170,0.7);box-shadow:0 0 22px rgba(0,255,170,0.3), inset 0 0 15px rgba(0,255,170,0.08)}
@@ -547,6 +554,7 @@ img{decoding:async;max-width:100%}
 .chapter-card[data-subj="hist"]:hover {border-color:rgba(251,146,60,0.6);box-shadow:0 0 22px rgba(251,146,60,0.25), inset 0 0 15px rgba(251,146,60,0.08)}
 .chapter-card[data-subj="geo"]:hover  {border-color:rgba(45,212,191,0.6);box-shadow:0 0 22px rgba(45,212,191,0.25), inset 0 0 15px rgba(45,212,191,0.08)}
 .chapter-card[data-subj="comp"]:hover {border-color:rgba(56,189,248,0.6);box-shadow:0 0 22px rgba(56,189,248,0.25), inset 0 0 15px rgba(56,189,248,0.08)}
+.chapter-card[data-subj="imo"]:hover  {border-color:rgba(255,215,0,0.6);box-shadow:0 0 22px rgba(255,215,0,0.25), inset 0 0 15px rgba(255,215,0,0.08)}
 
 .chapter-card.done-card{background:rgba(0,255,170,.04);border-color:rgba(0,255,170,.25)!important}
 .chapter-card.done-card .card-header{opacity:.72}
@@ -564,6 +572,7 @@ img{decoding:async;max-width:100%}
 .hist-num {background:linear-gradient(135deg,#fb923c,#c2410c)}
 .geo-num  {background:linear-gradient(135deg,#2dd4bf,#0f766e)}
 .comp-num {background:linear-gradient(135deg,#38bdf8,#1d4ed8)}
+.imo-num  {background:linear-gradient(135deg,#ffd700,#b8860b)}
 .ch-label {font-size:7.5px;font-weight:700;color:rgba(255,255,255,.8);line-height:1;letter-spacing:.3px}
 .ch-number{font-family:'Poppins',sans-serif;font-size:16px;font-weight:900;color:#fff;line-height:1}
 
