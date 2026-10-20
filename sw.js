@@ -2,14 +2,18 @@
    SHIVANSH PRO — Service Worker v1.0
    ============================================================ */
 
-const CACHE_NAME = 'shivansh-pro-v1';
+const CACHE_NAME = 'shivansh-pro-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './style.css',
   './app.js',
   './manifest.json',
-  './img/logo_v2.png'
+  './img/logo_v2.png',
+  './img/icon-192.png',
+  './img/icon-512.png',
+  './img/apple-touch-icon.png',
+  './img/favicon.ico'
 ];
 
 self.addEventListener('install', (event) => {
