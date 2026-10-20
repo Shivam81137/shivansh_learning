@@ -28,10 +28,17 @@
        ============================================================ */
     :root {
       --bg-base:        #04070c; /* Deepest Void Black */
-      --glass-bg:       rgba(10, 16, 30, 0.5); /* Deepest Navy Glass */
-      --glass-border:   rgba(255, 255, 255, 0.04); /* Fine Hairline Border */
-      --glass-glow:     inset 0 1px 1px rgba(255, 255, 255, 0.05); /* Interior Refinement Glow */
-      --glass-shadow:   0 12px 36px rgba(0, 0, 0, 0.6);
+
+      /* Glass surfaces that sit ON TOP of the fixed video sequence.
+         Kept translucent so the footage keeps moving underneath. */
+      --glass-bg:           rgba(13, 17, 26, 0.68);
+      --glass-border:       rgba(255, 255, 255, 0.12);
+      --glass-bg-inner:     rgba(20, 26, 38, 0.78);
+      --glass-border-inner: rgba(255, 255, 255, 0.08);
+      --glass-glow:         inset 0 1px 1px rgba(255, 255, 255, 0.05); /* Interior Refinement Glow */
+      --glass-shadow:       0 8px 32px rgba(0, 0, 0, 0.45);
+      --glass-blur:         blur(12px);
+      --card-text-shadow:   0 2px 10px rgba(0, 0, 0, 0.5);
       
       --neon-cyan:      #00F2FE;
       --neon-violet:    #9d4edd;
@@ -40,22 +47,28 @@
       --neon-amber:     #fbbf24;
 
       --text-white:     #FFFFFF;
-      --text-gray:      #CBD5E1; /* Ice Gray */
-      --text-muted:     #64748B; /* Muted Slate */
+      --text-gray:      rgba(255, 255, 255, 0.75); /* Secondary copy over video */
+      --text-muted:     rgba(255, 255, 255, 0.60); /* Muted labels over video */
 
       --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
       --ease-smooth:    cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; overflow-y: hidden; }
+
+    /* The document is the single scroll container again, so the frame
+       sequence can be scrubbed by the browser's own scroll progress. */
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg-base);
+    }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-base);
+      /* Transparent so the fixed frame sequence shows through the UI. */
+      background-color: transparent !important;
       color: var(--text-white);
       min-height: 100dvh;
       overflow-x: hidden;
-      overflow-y: hidden;
       -webkit-tap-highlight-color: transparent;
       line-height: 1.5;
     }
@@ -66,8 +79,12 @@
     ::-webkit-scrollbar-track { background: var(--bg-base); }
     ::-webkit-scrollbar-thumb { background: rgba(0, 242, 254, 0.25); border-radius: 6px; }
 
-    /* ── EXTRAORDINARY 3D VOLUMETRIC AURORA & COSMIC MESH BACKGROUND ──────── */
+    /* ── LEGACY AURORA LAYER ──────────────────────────────────────────────
+       The scroll-driven frame sequence is now the full-screen backdrop and
+       paints over this layer completely, so it is disabled to save a
+       continuous full-viewport canvas render on phones. */
     .fixed-bg {
+      display: none;
       position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
       background: #030712;
       background-image: 
@@ -166,23 +183,47 @@
     }
 
     /* ── DASHBOARD LAYOUT CONTAINER ────────────────────────── */
+    /* Sits directly on top of the fixed sequence from the first pixel of
+       the viewport — no spacer, no 100vh hero. */
+    .content-wrap {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      padding-bottom: 80px;
+      background: transparent !important;
+    }
     .app-container {
       max-width: 820px;
       margin: 0 auto;
-      padding: 24px 16px 48px;
+      padding: 20px 16px 48px;
       position: relative;
-      z-index: 1;
+      z-index: 10;
+      background: transparent !important;
+    }
+    main.main-content {
+      position: relative;
+      z-index: 10;
+      background: transparent !important;
     }
 
-    /* ── HIGH-END FROSTED GLASS PANELS ────────────────────── */
-    .cyber-header, .analytics-card, .exam-section-card, .subject-card, .footer-quote-card {
+    /* ── FROSTED GLASS PANELS OVER THE MOTION BACKGROUND ──── */
+    .cyber-header, .analytics-card, .exam-section-card, .subject-card,
+    .footer-quote-card, .heatmap-card {
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      box-shadow: var(--glass-glow), var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      box-shadow: var(--glass-shadow);
+      text-shadow: var(--card-text-shadow);
       transition: transform 0.35s var(--ease-out), box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    /* Nested cards read as a slightly denser layer of the same glass */
+    .metric-card, .chapter-card {
+      background: var(--glass-bg-inner);
+      border: 1px solid var(--glass-border-inner);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
 
     /* Stable Frosted Glass Panels on Hover (Zero Physical Movement / Displacement) */
@@ -235,8 +276,11 @@
       display: flex; gap: 12px; margin-bottom: 18px;
     }
     .metric-card {
-      flex: 1; background: rgba(255, 255, 255, 0.025); border: 1px solid var(--glass-border);
+      flex: 1; background: var(--glass-bg-inner); border: 1px solid var(--glass-border-inner);
       border-radius: 14px; padding: 10px 14px; display: flex; align-items: center; gap: 10px;
+      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      text-shadow: var(--card-text-shadow);
     }
     .metric-icon-wrap {
       width: 32px; height: 32px; border-radius: 10px;
@@ -245,7 +289,7 @@
     }
     .metric-icon-wrap.green { background: rgba(0, 245, 160, 0.1); color: var(--neon-emerald); }
     .metric-info { display: flex; flex-direction: column; }
-    .metric-val { font-weight: 800; font-size: 17px; color: var(--text-white); line-height: 1; }
+    .metric-val { font-weight: 800; font-size: 17px; color: #ffffff; opacity: 1; line-height: 1; }
     .metric-lbl { font-size: 9.5px; color: var(--text-gray); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
 
     .global-prog-wrap { position: relative; }
@@ -327,7 +371,8 @@
       padding: 7px 16px; font-size: 12.5px; font-weight: 600;
       cursor: pointer; background: var(--glass-bg); color: var(--text-gray);
       transition: all 0.3s var(--ease-out); outline: none; flex-shrink: 0;
-      backdrop-filter: blur(16px);
+      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      text-shadow: var(--card-text-shadow);
     }
     .filter-pill:hover {
       background: rgba(255, 255, 255, 0.06); color: var(--text-white); border-color: rgba(0, 242, 254, 0.3);
@@ -394,8 +439,11 @@
 
     /* Subject Card Banner */
     .subject-card {
-      border-radius: 16px; overflow: hidden; background: rgba(10, 16, 30, 0.4);
-      border: 1px solid var(--glass-border);
+      border-radius: 16px; overflow: hidden;
+      background: rgba(17, 22, 33, 0.72);
+      border: 1px solid var(--glass-border-inner);
+      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.38);
     }
     .subject-banner {
       padding: 14px 18px; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
@@ -428,21 +476,22 @@
 
     /* Chapter Cards & Professional Glassmorphic Theme */
     .chapter-card {
-      background: rgba(13, 20, 36, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: var(--glass-bg-inner);
+      border: 1px solid var(--glass-border-inner);
       border-radius: 14px; overflow: hidden;
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      text-shadow: var(--card-text-shadow);
       transition: border-color 0.3s var(--ease-out), background 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
     }
     .chapter-card:hover {
-      background: rgba(18, 28, 50, 0.7);
+      background: rgba(24, 31, 45, 0.86);
       border-color: rgba(0, 242, 254, 0.35);
       box-shadow: 0 6px 20px rgba(0, 242, 254, 0.12), inset 0 1px 0 rgba(0, 242, 254, 0.15);
       transform: none !important;
     }
     .chapter-card.done-card {
-      background: rgba(0, 245, 160, 0.05);
+      background: rgba(6, 45, 36, 0.82);
       border-color: rgba(0, 245, 160, 0.35);
       box-shadow: 0 4px 20px rgba(0, 245, 160, 0.12), inset 0 1px 0 rgba(0, 245, 160, 0.2);
     }
@@ -617,11 +666,12 @@
 
     .heatmap-card {
       background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px;
-      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      box-shadow: var(--glass-glow), var(--glass-shadow); padding: 18px 20px; margin-top: 16px;
+      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      box-shadow: var(--glass-shadow); padding: 18px 20px; margin-top: 16px;
+      text-shadow: var(--card-text-shadow);
     }
     .heatmap-header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 13px; }
-    .heatmap-title { font-size: 14px; font-weight: 800; color: var(--text-white); }
+    .heatmap-title { font-size: 14px; font-weight: 800; color: #ffffff; }
     .heatmap-sub { font-size: 10px; color: var(--text-muted); }
     .heatmap-wrap { width: 100%; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
     .heatmap-wrap::-webkit-scrollbar { height: 4px; }
@@ -645,66 +695,48 @@
     .heatmap-legend { margin-top: 10px; display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--text-muted); }
     .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
 
-    /* ── SCROLL-CONTROLLED CANVAS SEQUENCE (APPLE-STYLE) ──
-       IMPORTANT: the scroll container itself must stay one viewport tall.
-       The 500vh intro lives on an inner track, otherwise the container's
-       scroll range collapses to (content - 500vh) and the dashboard below
-       becomes unreachable. */
-    .scroll-stage {
-      position: relative;
+    /* ── FIXED FULL-SCREEN FRAME-SEQUENCE BACKDROP ─────────────
+       The scroll-scrubbed sequence is pinned to the viewport and sits
+       behind the entire dashboard. Progress is driven by the document's
+       own scroll (see the IMAGE SEQUENCE script at the bottom). */
+    #seq-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;   /* fallback for older browsers */
       height: 100dvh;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      scroll-behavior: smooth;
-      background: var(--bg-base);
-    }
-    .sequence-track {
-      position: relative;
-      width: 100vw;
-      height: 500vh; /* large scrollable height mapped to the frame sequence */
-    }
-    .canvas-pin {
-      position: sticky;
-      top: 0;
-      width: 100vw;
-      height: 100dvh;
-      z-index: 1;
+      z-index: 0;
+      pointer-events: none;
       overflow: hidden;
-      background: #000;
+      background: #04070c;
     }
     #seqCanvas {
       width: 100%;
       height: 100%;
       display: block;
-      background: #000;
+      object-fit: cover;
+      background: #04070c;
     }
-    /* Scroll cue over the pinned intro */
-    .scroll-cue {
-      position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
-      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 4px;
-      color: rgba(255, 255, 255, 0.75); font-size: 10.5px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase; pointer-events: none;
-      animation: cuePulse 2.4s ease-in-out infinite;
-      transition: opacity 0.4s ease;
-    }
-    .scroll-cue svg { width: 20px; height: 20px; }
-    @keyframes cuePulse {
-      0%, 100% { opacity: 0.45; transform: translate(-50%, 0); }
-      50%      { opacity: 1;    transform: translate(-50%, 8px); }
-    }
-    .content-wrap {
-      position: relative;
-      z-index: 2;
-      padding-bottom: 80px;
+    /* Soft scrim: keeps the footage from fighting the interface while the
+       motion still reads clearly through the translucent cards. */
+    #seq-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg,
+          rgba(4, 7, 12, 0.55) 0%,
+          rgba(4, 7, 12, 0.10) 22%,
+          rgba(4, 7, 12, 0.10) 70%,
+          rgba(4, 7, 12, 0.65) 100%);
     }
   </style>
 </head>
 <body>
 
-  <!-- EXTRAORDINARY VOLUMETRIC AURORA BACKGROUND & VIGNETTE MASK -->
+  <!-- Dormant aurora layer: superseded by the fixed frame sequence.
+       Kept in the DOM as a fallback if the backdrop is ever disabled. -->
   <div class="fixed-bg">
     <div class="bg-grid"></div>
     <div class="blob blob-1"></div>
@@ -716,17 +748,12 @@
     <div class="bg-vignette"></div>
   </div>
 
-  <div id="scrollStage" class="scroll-stage">
-    <div class="sequence-track">
-      <div class="canvas-pin">
-        <canvas id="seqCanvas"></canvas>
-        <div class="scroll-cue" id="scrollCue">
-          <span>Scroll</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
-      </div>
-    </div>
-    <div class="content-wrap">
+  <!-- FIXED FULL-SCREEN FRAME SEQUENCE (scroll-scrubbed backdrop) -->
+  <div id="seq-bg" aria-hidden="true">
+    <canvas id="seqCanvas"></canvas>
+  </div>
+
+  <div class="content-wrap">
 
   <div class="app-container">
 
@@ -2339,7 +2366,6 @@
 
   </div> <!-- End app-container -->
   </div> <!-- End content-wrap -->
-</div> <!-- End scroll-stage -->
 
   <div class="toast" id="toast"></div>
   <canvas id="confettiCanvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:900;"></canvas>
@@ -2355,16 +2381,15 @@
       const FRAME_COUNT = 261;                    // total frames (ezgif-frame-001.jpg … ezgif-frame-261.jpg)
       const FRAME_FILE = (n) => 'ezgif-frame-' + String(n).padStart(3, '0') + '.jpg';
 
-      const scrollStage = document.getElementById('scrollStage');
       const canvas = document.getElementById('seqCanvas');
+      if (!canvas) return;
       const ctx = canvas.getContext('2d', { alpha: false });
 
       const frames = [];
-      let loaded = 0;
-      let ready = false;
       let painted = false;   // true once we have drawn something on screen
       let current = 0;
       let target = 0;
+      let lastDrawn = -1;
       let frameId = null;
 
       function preload() {
@@ -2377,19 +2402,12 @@
         }
         function handleLoad() {
           frames[this.index] = this;
-          loaded += 1;
-          // Paint the very first usable frame immediately so the hero is not
+          // Paint the very first usable frame immediately so the page is not
           // an empty black screen while the rest of the sequence downloads.
           if (!painted && this.complete && this.naturalWidth) {
             painted = true;
             resize();
             draw(this.index);
-          }
-          if (loaded === FRAME_COUNT) {
-            ready = true;
-            scrollStage.addEventListener('scroll', onScroll, { passive: true });
-            onScroll();
-            frameId = requestAnimationFrame(tick);
           }
         }
       }
@@ -2431,28 +2449,41 @@
         const y = (ch - ih * scale) * 0.5;
         ctx.clearRect(0, 0, cw, ch);
         ctx.drawImage(img, x, y, iw * scale, ih * scale);
+        // Only mark the exact frame as painted; if we had to fall back to a
+        // neighbouring frame, keep retrying so the real one appears as soon
+        // as it finishes downloading.
+        if (img === frames[index]) lastDrawn = index;
       }
 
+      /* Scrub the whole sequence across the document's normal scroll range
+         (window.scrollY / (scrollHeight - innerHeight)). */
       function onScroll() {
-        const max = scrollStage.scrollHeight - scrollStage.clientHeight;
-        const p = max <= 0 ? 0 : Math.min(1, Math.max(0, scrollStage.scrollTop / max));
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - window.innerHeight;
+        const y = window.scrollY || window.pageYOffset || 0;
+        const p = max <= 0 ? 0 : Math.min(1, Math.max(0, y / max));
         target = Math.round(p * (FRAME_COUNT - 1));
-
-        // Fade the scroll cue out as soon as the visitor starts scrolling
-        const cue = document.getElementById('scrollCue');
-        if (cue) cue.style.opacity = scrollStage.scrollTop > 40 ? '0' : '';
       }
 
       function tick() {
         current += (target - current) * 0.2;
         if (Math.abs(target - current) < 0.4) current = target;
-        draw(Math.floor(current));
+        const index = Math.floor(current);
+        if (index !== lastDrawn) draw(index);
         frameId = requestAnimationFrame(tick);
       }
 
-      window.addEventListener('resize', resize);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', () => { resize(); onScroll(); }, { passive: true });
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', resize, { passive: true });
+      }
       resize();
+      onScroll();
       preload();
+      // Start the scrub loop straight away — the sequence draws whatever
+      // frames have arrived and fills in the rest as they decode.
+      frameId = requestAnimationFrame(tick);
     })();
   </script>
 
@@ -2517,7 +2548,10 @@
     /* ── EXTRAORDINARY AMBIENT AURORA & CELESTIAL PARTICLE ENGINE ────────── */
     function initLavaParticleCanvas() {
       const canvas = document.getElementById('bg-canvas');
-      if (!canvas) return;
+      // The aurora layer is switched off while the frame-sequence backdrop
+      // is running, so skip the whole render loop instead of animating an
+      // invisible full-screen canvas.
+      if (!canvas || canvas.offsetParent === null) return;
       const ctx = canvas.getContext('2d');
       let w = 0, h = 0, dpr = 1, isRunning = true, animId = null;
 
