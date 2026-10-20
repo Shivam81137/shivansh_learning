@@ -620,7 +620,19 @@
     .heatmap-header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 13px; }
     .heatmap-title { font-size: 14px; font-weight: 800; color: var(--text-white); }
     .heatmap-sub { font-size: 10px; color: var(--text-muted); }
-    .heatmap-wrap { display: flex; gap: 3px; }
+    .heatmap-wrap { width: 100%; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
+    .heatmap-wrap::-webkit-scrollbar { height: 4px; }
+    .heatmap-wrap::-webkit-scrollbar-thumb { background: rgba(0, 242, 254, 0.2); border-radius: 4px; }
+    /* 53 weeks across × 7 days down (GitHub-style contribution grid).
+       Without this the 371 day cells stack vertically and blow up the header. */
+    .heatmap-grid {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-rows: repeat(7, 10px);
+      grid-auto-columns: 10px;
+      gap: 3px;
+      width: max-content;
+    }
     .heatmap-day { width: 10px; height: 10px; border-radius: 2px; background: #0b1120; border: 1px solid rgba(255,255,255,0.03); }
     .heatmap-day.empty { background: transparent; border: none; }
     .heatmap-day.lvl0 { background: #0e1626; }
@@ -630,15 +642,26 @@
     .heatmap-legend { margin-top: 10px; display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--text-muted); }
     .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
 
-    /* ── SCROLL-CONTROLLED CANVAS SEQUENCE (APPLE-STYLE) ── */
+    /* ── SCROLL-CONTROLLED CANVAS SEQUENCE (APPLE-STYLE) ──
+       IMPORTANT: the scroll container itself must stay one viewport tall.
+       The 500vh intro lives on an inner track, otherwise the container's
+       scroll range collapses to (content - 500vh) and the dashboard below
+       becomes unreachable. */
     .scroll-stage {
       position: relative;
       width: 100vw;
-      height: 500vh; /* large scrollable height mapped to the frame sequence */
+      height: 100vh;   /* fallback for older browsers */
+      height: 100dvh;
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
       background: var(--bg-base);
+    }
+    .sequence-track {
+      position: relative;
+      width: 100vw;
+      height: 500vh; /* large scrollable height mapped to the frame sequence */
     }
     .canvas-pin {
       position: sticky;
@@ -654,6 +677,20 @@
       height: 100%;
       display: block;
       background: #000;
+    }
+    /* Scroll cue over the pinned intro */
+    .scroll-cue {
+      position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 4px;
+      color: rgba(255, 255, 255, 0.75); font-size: 10.5px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; pointer-events: none;
+      animation: cuePulse 2.4s ease-in-out infinite;
+      transition: opacity 0.4s ease;
+    }
+    .scroll-cue svg { width: 20px; height: 20px; }
+    @keyframes cuePulse {
+      0%, 100% { opacity: 0.45; transform: translate(-50%, 0); }
+      50%      { opacity: 1;    transform: translate(-50%, 8px); }
     }
     .content-wrap {
       position: relative;
@@ -677,8 +714,14 @@
   </div>
 
   <div id="scrollStage" class="scroll-stage">
-    <div class="canvas-pin">
-      <canvas id="seqCanvas"></canvas>
+    <div class="sequence-track">
+      <div class="canvas-pin">
+        <canvas id="seqCanvas"></canvas>
+        <div class="scroll-cue" id="scrollCue">
+          <span>Scroll</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
     </div>
     <div class="content-wrap">
 
@@ -708,14 +751,14 @@
         <div class="metric-card">
           <div class="metric-icon-wrap">📚</div>
           <div class="metric-info">
-            <span class="metric-val">8</span>
+            <span class="metric-val" id="subjectCount">9</span>
             <span class="metric-lbl">Subjects</span>
           </div>
         </div>
         <div class="metric-card">
           <div class="metric-icon-wrap">⚡</div>
           <div class="metric-info">
-            <span class="metric-val">65</span>
+            <span class="metric-val" id="chapterCount">76</span>
             <span class="metric-lbl">Chapters</span>
           </div>
         </div>
@@ -735,7 +778,7 @@
         </div>
         <div class="global-prog-label">
           <span>Overall Course Mastery</span>
-          <span id="overallPct">0 / 65 completed (0%)</span>
+          <span id="overallPct">0 / 76 completed (0%)</span>
         </div>
       </div>
 
@@ -849,7 +892,7 @@
               <div class="card-body" id="body-am11">
                 <div class="card-divider"></div>
                 <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('am11-1','hOxJ03Cgi3Q')" id="thumb-am11-1"><img src="https://img.youtube.com/vi/hOxJ03Cgi3Q/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 11 – Simple Interest (Part 1)</div></div><div class="video-iframe-container" id="iframe-am11-1" style="display:none"><iframe id="yt-am11-1" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('am11-1')">✕ Close</button></div></div>
-                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('am11-2','bPBDJBrAyRg')" id="thumb-am11-2"><img src="https://img.youtube.com/vi/bPBDJBrAyRg" id="thumb-am11-2"><img src="https://img.youtube.com/vi/bPBDJBrAyRg/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 11 – Simple Interest (Part 2)</div></div><div class="video-iframe-container" id="iframe-am11-2" style="display:none"><iframe id="yt-am11-2" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('am11-2')">✕ Close</button></div></div>
+                <div class="video-embed-wrap"><div class="video-thumb" onclick="loadVideo('am11-2','bPBDJBrAyRg')" id="thumb-am11-2"><img src="https://img.youtube.com/vi/bPBDJBrAyRg/hqdefault.jpg" alt="" loading="lazy"/><div class="play-overlay"><div class="play-btn">▶</div></div><div class="video-label">Ch 11 – Simple Interest (Part 2)</div></div><div class="video-iframe-container" id="iframe-am11-2" style="display:none"><iframe id="yt-am11-2" width="100%" height="210" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe><button class="close-video-btn" onclick="closeVideo('am11-2')">✕ Close</button></div></div>
                 <div class="action-row"><a href="https://youtu.be/hOxJ03Cgi3Q" target="_blank" class="yt-link-btn">🎬 Part 1</a><a href="https://www.youtube.com/watch?v=bPBDJBrAyRg" target="_blank" class="yt-link-btn">🎬 Part 2</a></div>
               </div>
             </div>
@@ -2305,7 +2348,7 @@
        Configure FRAMES_DIR, FRAME_COUNT and FRAME_FILE below to match your assets.
        ============================================================ */
     (function () {
-      const FRAMES_DIR = '../frames/';            // folder with your frames
+      const FRAMES_DIR = 'frames/';               // folder with your frames (relative to index.html)
       const FRAME_COUNT = 261;                    // total frames (ezgif-frame-001.jpg … ezgif-frame-261.jpg)
       const FRAME_FILE = (n) => 'ezgif-frame-' + String(n).padStart(3, '0') + '.jpg';
 
@@ -2316,6 +2359,7 @@
       const frames = [];
       let loaded = 0;
       let ready = false;
+      let painted = false;   // true once we have drawn something on screen
       let current = 0;
       let target = 0;
       let frameId = null;
@@ -2331,7 +2375,13 @@
         function handleLoad() {
           frames[this.index] = this;
           loaded += 1;
-          if (this.index === 0 && this.complete) draw(0);
+          // Paint the very first usable frame immediately so the hero is not
+          // an empty black screen while the rest of the sequence downloads.
+          if (!painted && this.complete && this.naturalWidth) {
+            painted = true;
+            resize();
+            draw(this.index);
+          }
           if (loaded === FRAME_COUNT) {
             ready = true;
             scrollStage.addEventListener('scroll', onScroll, { passive: true });
@@ -2350,14 +2400,24 @@
         canvas.style.width = w + 'px';
         canvas.style.height = h + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        if (ready) draw(Math.floor(current));
+        draw(Math.floor(current));
       }
 
       /* object-fit: cover — scale to cover, center, no distortion */
       function draw(index) {
-        if (!ready) return;
-        const img = frames[index];
-        if (!img || !img.complete) return;
+        if (!frames.length) return;
+        let img = frames[index];
+        // While the sequence is still downloading, fall back to the nearest
+        // frame that has actually arrived instead of showing nothing.
+        if (!img || !img.complete || !img.naturalWidth) {
+          for (let d = 1; d < FRAME_COUNT; d++) {
+            const a = frames[index - d];
+            const b = frames[index + d];
+            if (a && a.complete && a.naturalWidth) { img = a; break; }
+            if (b && b.complete && b.naturalWidth) { img = b; break; }
+          }
+        }
+        if (!img || !img.complete || !img.naturalWidth) return;
         const cw = canvas.clientWidth;
         const ch = canvas.clientHeight;
         if (!cw || !ch) return;
@@ -2374,6 +2434,10 @@
         const max = scrollStage.scrollHeight - scrollStage.clientHeight;
         const p = max <= 0 ? 0 : Math.min(1, Math.max(0, scrollStage.scrollTop / max));
         target = Math.round(p * (FRAME_COUNT - 1));
+
+        // Fade the scroll cue out as soon as the visitor starts scrolling
+        const cue = document.getElementById('scrollCue');
+        if (cue) cue.style.opacity = scrollStage.scrollTop > 40 ? '0' : '';
       }
 
       function tick() {
@@ -2790,7 +2854,7 @@
         for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
           const d = new Date(weekStart);
           d.setDate(weekStart.getDate() + dayOfWeek);
-          const ds = d.toISOString().split('T')[0];
+          const ds = getLocalDateStr(d);
           const c = dailyCounts[ds] || 0;
           const lvl = c === 0 ? 0 : Math.min(3, c);
           const inRange = d <= today;
@@ -2798,6 +2862,10 @@
         }
       }
       grid.innerHTML = html;
+
+      // Show the most recent weeks first when the grid overflows on narrow screens
+      const wrap = grid.parentElement;
+      if (wrap) wrap.scrollLeft = wrap.scrollWidth;
     }
 
     function renderDoneState() {
@@ -2814,6 +2882,12 @@
 
       const el = document.getElementById('doneCount');
       if (el) el.textContent = totalDone;
+
+      // Keep the header counters in sync with the real syllabus data
+      const subjEl = document.getElementById('subjectCount');
+      if (subjEl) subjEl.textContent = Math.max(0, document.querySelectorAll('.filter-pill').length - 1);
+      const chapEl = document.getElementById('chapterCount');
+      if (chapEl) chapEl.textContent = TOTAL_CHAPTERS;
 
       const pct = Math.round((totalDone / TOTAL_CHAPTERS) * 100);
       const fill = document.getElementById('overallFill');
@@ -2880,7 +2954,9 @@
       const iframe = document.getElementById(`yt-${id}`);
       if (!thumb || !container || !iframe) return;
 
-      iframe.src = '';
+      // Use about:blank instead of '' — an empty string would re-load the
+      // page itself inside the iframe.
+      iframe.src = 'about:blank';
       container.style.display = 'none';
       thumb.style.display = 'block';
     }
