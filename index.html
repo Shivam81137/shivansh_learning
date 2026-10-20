@@ -2798,7 +2798,11 @@
       // repaint the current frame as soon as the page is visible again.
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) return;
+        // A frame requested before the tab was hidden may never have run,
+        // which would leave the loop parked — restart it explicitly.
+        frameId = null;
         lastKey = null;
+        lastIndex = -1;
         resize();
         onScroll();
         pump();
