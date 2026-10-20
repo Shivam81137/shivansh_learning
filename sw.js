@@ -2,7 +2,7 @@
    SHIVANSH PRO — Service Worker v1.0
    ============================================================ */
 
-const CACHE_NAME = 'shivansh-pro-v2';
+const CACHE_NAME = 'shivansh-pro-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -41,8 +41,31 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Network first fallback to cache for speed
+  const req = event.request;
+  if (req.method !== 'GET') return;
+
+  const url = new URL(req.url);
+
+  // Frame sequence never changes: serve it from cache and fill the cache
+  // in the background. Network-first here meant re-downloading several
+  // megabytes of frames on every single visit.
+  if (url.origin === self.location.origin && url.pathname.indexOf('/frames/') !== -1) {
+    event.respondWith(
+      caches.open(CACHE_NAME).then((cache) =>
+        cache.match(req).then((hit) => {
+          if (hit) return hit;
+          return fetch(req).then((res) => {
+            if (res && res.ok) cache.put(req, res.clone());
+            return res;
+          });
+        })
+      )
+    );
+    return;
+  }
+
+  // Network first fallback to cache for everything else
   event.respondWith(
-    fetch(event.request).catch(() => caches.match(event.request))
+    fetch(req).catch(() => caches.match(req))
   );
 });
