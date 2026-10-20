@@ -605,6 +605,31 @@
     }
     .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
+    /* ── LIVE CLOCK & DAILY HEATMAP ── */
+    .live-clock { margin-top: 9px; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+    #liveDay { font-size: 12px; font-weight: 700; color: var(--neon-cyan); letter-spacing: 1.2px; text-transform: uppercase; }
+    #liveDate { font-size: 10.5px; color: var(--text-gray); margin-top: 1px; }
+    #liveTime { font-size: 21px; font-weight: 800; color: var(--text-white); margin-top: 1px; font-variant-numeric: tabular-nums; letter-spacing: -0.5px; }
+    #liveMotiv { font-size: 10px; color: var(--text-muted); margin-top: 3px; font-style: italic; letter-spacing: 0.4px; }
+
+    .heatmap-card {
+      background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px;
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      box-shadow: var(--glass-glow), var(--glass-shadow); padding: 18px 20px; margin-top: 16px;
+    }
+    .heatmap-header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 13px; }
+    .heatmap-title { font-size: 14px; font-weight: 800; color: var(--text-white); }
+    .heatmap-sub { font-size: 10px; color: var(--text-muted); }
+    .heatmap-wrap { display: flex; gap: 3px; }
+    .heatmap-day { width: 10px; height: 10px; border-radius: 2px; background: #0b1120; border: 1px solid rgba(255,255,255,0.03); }
+    .heatmap-day.empty { background: transparent; border: none; }
+    .heatmap-day.lvl0 { background: #0e1626; }
+    .heatmap-day.lvl1 { background: #0e453a; }
+    .heatmap-day.lvl2 { background: #00b885; box-shadow: 0 0 6px rgba(0,184,133,0.35); }
+    .heatmap-day.lvl3 { background: #00f5a0; box-shadow: 0 0 10px rgba(0,245,160,0.55); }
+    .heatmap-legend { margin-top: 10px; display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--text-muted); }
+    .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
     /* ── SCROLL-CONTROLLED CANVAS SEQUENCE (APPLE-STYLE) ── */
     .scroll-stage {
       position: relative;
@@ -669,6 +694,12 @@
         </div>
         <div class="user-info">
           <h1 class="brand-title">SHIVANSH <span class="pro-badge">PRO</span></h1>
+          <div class="live-clock">
+            <div id="liveDay">Monday</div>
+            <div id="liveDate">October 20, 2026</div>
+            <div id="liveTime">05:32 AM</div>
+            <div id="liveMotiv">Keep going, Shivansh! 💪</div>
+          </div>
         </div>
       </div>
 
@@ -705,6 +736,23 @@
         <div class="global-prog-label">
           <span>Overall Course Mastery</span>
           <span id="overallPct">0 / 65 completed (0%)</span>
+        </div>
+      </div>
+
+      <!-- Daily Activity Heatmap -->
+      <div class="heatmap-card">
+        <div class="heatmap-header">
+          <span class="heatmap-title">Daily Activity</span>
+          <span class="heatmap-sub">Chapters completed per day</span>
+        </div>
+        <div class="heatmap-wrap">
+          <div class="heatmap-grid" id="heatmapGrid"></div>
+        </div>
+        <div class="heatmap-legend">
+          <div class="heatmap-leg swatch lvl0"></div><span>0</span>
+          <div class="heatmap-leg swatch lvl1"></div><span>1</span>
+          <div class="heatmap-leg swatch lvl2"></div><span>2</span>
+          <div class="heatmap-leg swatch lvl3"></div><span>3+</span>
         </div>
       </div>
     </header>
@@ -2390,7 +2438,10 @@
       renderDoneState();
       updateAllProgress();
       renderProgressChart();
-      
+      updateLiveClock();
+      setInterval(updateLiveClock, 1000);
+      renderHeatmap();
+
       // Auto-open annual section wrapper
       document.getElementById('esbody-annual')?.classList.add('open');
       document.getElementById('esbchev-annual')?.classList.add('open');
@@ -2685,6 +2736,68 @@
       localStorage.setItem('shivansh_done_dates', JSON.stringify(doneDates));
       updateAllProgress();
       renderProgressChart();
+      renderHeatmap();
+    }
+
+    function updateLiveClock() {
+      const now = new Date();
+      const dEl = document.getElementById('liveDay');
+      const dateEl = document.getElementById('liveDate');
+      const tEl = document.getElementById('liveTime');
+      const mEl = document.getElementById('liveMotiv');
+      if (!dEl) return;
+      const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      const motivMsgs = [
+        'Keep going, Shivansh! 💪',
+        'Small daily improvements lead to stunning results.',
+        'Focus on progress, not perfection.',
+        'Every expert was once a beginner.',
+        'Study while others are sleeping. 🌙',
+        'You\'ve got this! 🌟',
+        'Hard work beats talent when talent doesn\'t work hard.'
+      ];
+      dEl.textContent = dayNames[now.getDay()];
+      dateEl.textContent = `${monthNames[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+      tEl.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+      if (now.getSeconds() === 0) {
+        liveClockIdx = (liveClockIdx + 1) % motivMsgs.length;
+        if (mEl) mEl.textContent = motivMsgs[liveClockIdx];
+      }
+    }
+    let liveClockIdx = 0;
+
+    function renderHeatmap() {
+      const grid = document.getElementById('heatmapGrid');
+      if (!grid) return;
+      const today = new Date(); today.setHours(0,0,0,0);
+      const start = new Date(today);
+      start.setDate(today.getDate() - today.getDay() - 364);
+      start.setHours(0,0,0,0);
+
+      const dailyCounts = {};
+      Object.values(doneDates).forEach(iso => {
+        if (!iso) return;
+        const ds = iso.split('T')[0];
+        dailyCounts[ds] = (dailyCounts[ds] || 0) + 1;
+      });
+      const max = Math.max(4, ...Object.values(dailyCounts));
+
+      let html = '';
+      for (let w = 0; w < 53; w++) {
+        const weekStart = new Date(start);
+        weekStart.setDate(start.getDate() + w * 7);
+        for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+          const d = new Date(weekStart);
+          d.setDate(weekStart.getDate() + dayOfWeek);
+          const ds = d.toISOString().split('T')[0];
+          const c = dailyCounts[ds] || 0;
+          const lvl = c === 0 ? 0 : Math.min(3, c);
+          const inRange = d <= today;
+          html += `<div class="heatmap-day ${inRange ? '' : 'empty'} lvl${lvl}" title="${ds}: ${c} chapter${c===1?'':'s'}"></div>`;
+        }
+      }
+      grid.innerHTML = html;
     }
 
     function renderDoneState() {
