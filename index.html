@@ -2414,13 +2414,22 @@
 
       function resize() {
         const dpr = Math.max(1, window.devicePixelRatio || 1);
+        // Measure the CSS box (100% x 100% of the fixed layer) instead of
+        // writing inline pixel sizes — otherwise the canvas would be pinned
+        // to whatever size the viewport had on first paint.
         const w = canvas.clientWidth;
         const h = canvas.clientHeight;
-        canvas.width = Math.max(1, Math.floor(w * dpr));
-        canvas.height = Math.max(1, Math.floor(h * dpr));
-        canvas.style.width = w + 'px';
-        canvas.style.height = h + 'px';
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (!w || !h) return;   // mid-layout (rotation, mobile URL bar)
+        const bw = Math.max(1, Math.floor(w * dpr));
+        const bh = Math.max(1, Math.floor(h * dpr));
+        if (canvas.width !== bw || canvas.height !== bh) {
+          // Assigning width/height discards the bitmap, so only do it when
+          // the viewport really changed size.
+          canvas.width = bw;
+          canvas.height = bh;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          lastDrawn = -1;
+        }
         draw(Math.floor(current));
       }
 
@@ -2478,6 +2487,14 @@
       if (window.visualViewport) {
         window.visualViewport.addEventListener('resize', resize, { passive: true });
       }
+      // Browsers may discard canvas pixels while a tab is backgrounded —
+      // repaint the current frame as soon as the page is visible again.
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) return;
+        lastDrawn = -1;
+        resize();
+        onScroll();
+      });
       resize();
       onScroll();
       preload();
