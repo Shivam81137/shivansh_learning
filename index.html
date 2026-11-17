@@ -19,6 +19,7 @@
   <link rel="dns-prefetch" href="https://img.youtube.com"/>
   <link rel="dns-prefetch" href="https://www.youtube-nocookie.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="cloud.css"/>
 
   <!-- Device profile, decided before the first paint so the expensive
        glass effects are already tuned when the page renders. -->
@@ -1725,6 +1726,33 @@
   </div><!-- /exam-section-body -->
 </div><!-- /exam-section-card annual -->
 
+    <!-- STUDY HISTORY + SHARED PDFs (stored in the cloud, same on every device) -->
+    <section class="cloud-card" id="cloudSection" style="margin-top: 24px;">
+      <div class="cloud-head">
+        <span class="cloud-title">☁️ History &amp; Study Files</span>
+        <button type="button" class="cloud-device" id="cloudDeviceChip"></button>
+      </div>
+      <div class="cloud-tabs">
+        <button type="button" class="cloud-tab" id="cloudTabPdfs">📄 PDFs &amp; Images</button>
+        <button type="button" class="cloud-tab" id="cloudTabHistory">📜 History</button>
+      </div>
+
+      <div class="cloud-pane" id="cloudPanePdfs">
+        <div class="cloud-upload">
+          <input type="file" id="cloudPdfFile" accept="application/pdf,image/*,.pdf,.jpg,.jpeg,.png,.webp,.gif"/>
+          <input type="text" id="cloudPdfTitle" placeholder="Title (e.g. Maths Ch 11 notes)" maxlength="120"/>
+          <button type="button" class="cloud-primary" id="cloudPdfUploadBtn">⬆ Upload PDF / Image</button>
+        </div>
+        <div class="cloud-list" id="cloudPdfList"></div>
+      </div>
+
+      <div class="cloud-pane" id="cloudPaneHistory">
+        <div class="cloud-list" id="cloudHistoryList"></div>
+        <button type="button" class="cloud-btn cloud-more" id="cloudHistoryMore" style="display:none">Load older</button>
+      </div>
+    </section>
+
+
 <!-- ══════════ HALF-YEARLY SECTION WRAPPER ══════════ -->
 <div class="exam-section-card" id="examSection-halfyearly" style="margin-top: 24px;">
   <div class="esb-glow-ring"></div>
@@ -3165,6 +3193,7 @@
       updateAllProgress();
       renderProgressChart();
       renderHeatmap();
+      if (window.cloudRecordToggle) window.cloudRecordToggle(id, doneSet.has(id));
     }
 
     function updateLiveClock() {
@@ -3385,5 +3414,6 @@
       render();
     }
   </script>
+<script src="cloud.js"></script>
 </body>
 </html>

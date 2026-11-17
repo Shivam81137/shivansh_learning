@@ -2,12 +2,14 @@
    SHIVANSH PRO — Service Worker v1.0
    ============================================================ */
 
-const CACHE_NAME = 'shivansh-pro-v3';
+const CACHE_NAME = 'shivansh-pro-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './style.css',
   './app.js',
+  './cloud.js',
+  './cloud.css',
   './manifest.json',
   './img/logo_v2.png',
   './img/icon-192.png',
