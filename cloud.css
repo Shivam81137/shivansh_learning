@@ -28,17 +28,25 @@ html.low-power .cloud-card {
 .cloud-pane { display: none; }
 .cloud-pane.active { display: block; }
 
-.cloud-upload {
-  display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;
-  padding: 12px; border: 1px dashed var(--glass-border); border-radius: 14px;
+.cloud-upload { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.cloud-file-hidden { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.cloud-drop {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;
+  padding: 18px 12px; border: 1.5px dashed rgba(0, 242, 254, 0.35); border-radius: 14px;
+  background: rgba(0, 242, 254, 0.04); cursor: pointer; transition: background .2s, border-color .2s;
 }
-.cloud-upload input[type="text"] {
-  width: 100%; box-sizing: border-box; padding: 9px 11px; border-radius: 10px;
+.cloud-drop:hover, .cloud-drop.has-file { background: rgba(0, 242, 254, 0.1); border-color: rgba(0, 242, 254, 0.7); }
+.cloud-drop-ico { font-size: 18px; color: var(--neon-cyan, #00F2FE); }
+.cloud-drop-text { font-size: 13px; font-weight: 700; color: #fff; overflow-wrap: anywhere; }
+.cloud-drop-hint { font-size: 10.5px; color: var(--text-muted, #8b95a7); }
+.cloud-upload-row { display: flex; gap: 8px; }
+.cloud-upload-row input[type="text"] {
+  flex: 1; min-width: 0; box-sizing: border-box; padding: 10px 12px; border-radius: 12px;
   border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: #fff; font-size: 13px;
 }
-.cloud-upload input[type="file"] { color: var(--text-gray, #aab3c2); font-size: 12px; width: 100%; }
+.cloud-upload-row input[type="text"]:focus { outline: none; border-color: rgba(0, 242, 254, 0.6); }
 .cloud-primary {
-  border: 0; border-radius: 12px; padding: 10px 14px; font-weight: 800; font-size: 13px; cursor: pointer;
+  border: 0; border-radius: 12px; padding: 10px 20px; font-weight: 800; font-size: 13px; cursor: pointer;
   color: #04070c; background: linear-gradient(135deg, var(--neon-cyan, #00F2FE), var(--neon-emerald, #00F5A0));
 }
 .cloud-primary:disabled { opacity: 0.6; cursor: wait; }

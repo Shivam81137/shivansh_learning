@@ -376,6 +376,13 @@
       .catch(function () { toast('⚠️ Could not delete. Try again.'); });
   }
 
+  function setDropLabel(f) {
+    var t = $('cloudDropText'), d = $('cloudDrop');
+    if (!t) return;
+    t.textContent = f ? f.name + ' (' + fmtSize(f.size) + ')' : 'Tap to choose a PDF or image';
+    d.classList.toggle('has-file', !!f);
+  }
+
   function uploadPdf() {
     var input = $('cloudPdfFile');
     var titleInput = $('cloudPdfTitle');
@@ -408,7 +415,7 @@
         throw e;
       });
     }).then(function () {
-      input.value = ''; titleInput.value = '';
+      input.value = ''; titleInput.value = ''; setDropLabel(null);
       toast('✅ Uploaded');
       return loadPdfs();
     }).catch(function () {
@@ -443,6 +450,7 @@
     $('cloudPdfFile').addEventListener('change', function () {
       var f = this.files && this.files[0];
       if (f && !$('cloudPdfTitle').value) $('cloudPdfTitle').value = stripExt(f.name);
+      setDropLabel(f);
     });
 
     showPane('pdfs');

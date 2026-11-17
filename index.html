@@ -1739,9 +1739,16 @@
 
       <div class="cloud-pane" id="cloudPanePdfs">
         <div class="cloud-upload">
-          <input type="file" id="cloudPdfFile" accept="application/pdf,image/*,.pdf,.jpg,.jpeg,.png,.webp,.gif"/>
-          <input type="text" id="cloudPdfTitle" placeholder="Title (e.g. Maths Ch 11 notes)" maxlength="120"/>
-          <button type="button" class="cloud-primary" id="cloudPdfUploadBtn">⬆ Upload PDF / Image</button>
+          <label class="cloud-drop" for="cloudPdfFile" id="cloudDrop">
+            <span class="cloud-drop-ico">⬆</span>
+            <span class="cloud-drop-text" id="cloudDropText">Tap to choose a PDF or image</span>
+            <span class="cloud-drop-hint">PDF, JPG, PNG, WebP, GIF · up to 50 MB</span>
+          </label>
+          <input type="file" id="cloudPdfFile" class="cloud-file-hidden" accept="application/pdf,image/*,.pdf,.jpg,.jpeg,.png,.webp,.gif"/>
+          <div class="cloud-upload-row">
+            <input type="text" id="cloudPdfTitle" placeholder="Title (optional)" maxlength="120"/>
+            <button type="button" class="cloud-primary" id="cloudPdfUploadBtn">Upload</button>
+          </div>
         </div>
         <div class="cloud-list" id="cloudPdfList"></div>
       </div>
